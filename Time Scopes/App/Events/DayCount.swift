@@ -6,29 +6,18 @@
 //
 
 import Foundation
-import SwiftUI
-import Combine
 
-class DayCount: ObservableObject {
-    @Published var leftDays: Int = 0 {
-        didSet {
-            print("Remaining days: \(leftDays)")
-        }
+final class DayCount: RemainingCount {
+    var leftDays: Int {
+        remaining
     }
-    
-    @ObservedObject var userData: UserData
-    private var cancellables: Set<AnyCancellable> = []
-    
+
     init(viewModel: UserData) {
-        self.userData = viewModel
-        calculateDays(from: viewModel)
+        super.init(userData: viewModel)
     }
 
-    func calculateDays(from userData: UserData) {
+    override func calculateRemaining(from userData: UserData) -> Int {
         let deathDate = userData.deathDate
-        
-        let remainingDays = calendar.dateComponents([.day], from: now, to: deathDate).day ?? 0
-        leftDays = max(remainingDays, 0)
-        print(#file, #line, #function, "Remaining days: \(self.leftDays)")
+        return DateUtility.calendar.dateComponents([.day], from: DateUtility.now(), to: deathDate).day ?? 0
     }
 }

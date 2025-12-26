@@ -11,7 +11,12 @@ import Combine
 class UserData: ObservableObject {
     
     @Published var name: String = ""
-    @Published var birthday: Date = Date()
+    @Published var birthday: Date = Date() {
+        didSet {
+            setAge()
+            calculateDeathAge()
+        }
+    }
     @Published var deathDate: Date = Date() {
         didSet {
             calculateDeathAge()
@@ -26,20 +31,30 @@ class UserData: ObservableObject {
 
     init() {
         self.loadFromUserDefaults()
+        configureDateObservers()
+        setAge()
+        calculateDeathAge()
     }
     
     private func calculateDeathAge() {
-        let calculatedDeathAge = Calendar.current.dateComponents([.year], from: birthday, to: deathDate).year ?? 0
+        let calculatedDeathAge = DateUtility.calendar.dateComponents([.year], from: birthday, to: deathDate).year ?? 0
         self.deathAge = calculatedDeathAge
-        print(#file, #line, #function, "calculatedDeathAge: \(deathAge)")
     }
     
     func setAge() {
-        let calculatedAge = Calendar.current.dateComponents([.year], from: birthday, to: Date()).year ?? 0
+        let calculatedAge = DateUtility.calendar.dateComponents([.year], from: birthday, to: DateUtility.now()).year ?? 0
         self.age = calculatedAge
-        print(#file, #line, #function, "calculatedAge: \(age)")
     }
 
+    private func configureDateObservers() {
+        NotificationCenter.default.publisher(for: .NSCalendarDayChanged)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.setAge()
+                self?.calculateDeathAge()
+            }
+            .store(in: &cancellables)
+    }
     
     
     

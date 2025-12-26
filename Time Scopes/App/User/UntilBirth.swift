@@ -9,9 +9,9 @@ import Foundation
 
 extension UserData {
     func daysUntilBirth() -> Int {
-        let today = Calendar.current.startOfDay(for: Date())
+        let today = DateUtility.today()
         if birthday > today {
-            return Calendar.current.dateComponents([.day], from: today, to: birthday).day ?? 0
+            return DateUtility.calendar.dateComponents([.day], from: today, to: birthday).day ?? 0
         }
         return 0
     }
