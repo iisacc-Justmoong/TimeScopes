@@ -18,35 +18,31 @@ struct AnnualChristmasProperties {
     
     static func remainingChristmasDays() -> Int {
 
-        let currentYear = calendar.component(.year, from: now)
+        let now = DateUtility.now()
+        let currentYear = DateUtility.calendar.component(.year, from: now)
         
-        guard let christmasDate = calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) else {
-            print(#file, #line, #function, "[remainingChristmasDays] Failed to calculate Christmas date.")
+        guard let christmasDate = DateUtility.calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) else {
             return 0
         }
         
         if now > christmasDate {
-            guard let nextChristmasDate = calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) else {
-                print(#file, #line, #function, "[remainingChristmasDays] Failed to calculate next year's Christmas date.")
+            guard let nextChristmasDate = DateUtility.calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) else {
                 return 0
             }
-            let days = calendar.dateComponents([.day], from: now, to: nextChristmasDate).day ?? 0
-            print(#file, #line, #function, "[remainingChristmasDays] Days until next Christmas: \(days)")
+            let days = DateUtility.calendar.dateComponents([.day], from: now, to: nextChristmasDate).day ?? 0
             return days
         }
         
-        let days = calendar.dateComponents([.day], from: now, to: christmasDate).day ?? 0
-        print(#file, #line, #function, "[remainingChristmasDays] Days until Christmas: \(days)")
+        let days = DateUtility.calendar.dateComponents([.day], from: now, to: christmasDate).day ?? 0
         return days + 1
     }
     static func daysPassedInYear() -> Int {
         
-        guard let startOfYear = calendar.date(from: DateComponents(year: calendar.component(.year, from: now), month: 1, day: 1)) else {
-            print(#file, #line, #function, "Failed to calculate start of year date.")
+        let now = DateUtility.now()
+        guard let startOfYear = DateUtility.calendar.date(from: DateComponents(year: DateUtility.calendar.component(.year, from: now), month: 1, day: 1)) else {
             return 0
         }
-        print(#file, #line, #function, "[daysPassedInYear] Passed days in this year calculated: \(calendar.dateComponents([.day], from: startOfYear, to: now).day ?? 0)")
-        return calendar.dateComponents([.day], from: startOfYear, to: now).day ?? 0
+        return DateUtility.calendar.dateComponents([.day], from: startOfYear, to: now).day ?? 0
     }
     
     mutating func update() {

@@ -6,32 +6,31 @@
 //
 
 import Foundation
-import SwiftUI
 
-var dateComponents = DateComponents()
+enum DateUtility {
+    static let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
 
-let dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd"
-    return formatter
-}()
-
-let lengthOfYear = daysInYear(for: dateComponents.year ?? 0)
-
-func daysInYear(for year: Int) -> Int {
-    func isLeapYear(_ year: Int) -> Bool {
-        if year % 4 == 0 {
-            if year % 100 == 0 {
-                return year % 400 == 0
-            }
-            return true
-        }
-        return false
+    static var calendar: Calendar {
+        Calendar.current
     }
-    print(#file, #line, #function, "Days in this year: \(isLeapYear(year) ? 366 : 365)")
-    return isLeapYear(year) ? 366 : 365
-}
 
-var now = Date()
-let calendar = Calendar.current
-let today = calendar.startOfDay(for: now)
+    static func now() -> Date {
+        Date()
+    }
+
+    static func startOfDay(for date: Date) -> Date {
+        calendar.startOfDay(for: date)
+    }
+
+    static func today() -> Date {
+        startOfDay(for: now())
+    }
+
+    static func daysInYear(for date: Date) -> Int {
+        calendar.range(of: .day, in: .year, for: date)?.count ?? 365
+    }
+}

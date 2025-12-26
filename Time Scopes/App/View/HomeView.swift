@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct HomeView: View {
     
@@ -35,7 +34,7 @@ struct HomeView: View {
                 Section(header: EmptyView()) {
                     UserProfileView()
                         .sheet(isPresented: $isPresented) {
-                            InputView(userData: userData, userLivedTime: userLivedTime)
+                            InputView()
                                 .environmentObject(userData)
                                 .interactiveDismissDisabled(true)
                         }
@@ -57,9 +56,11 @@ struct HomeView: View {
                 }
                 // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
                 Section(header: Text("Your Next events")) {
-                    let today = Calendar.current.startOfDay(for: Date())
-                    let nextBirthday = Calendar.current.nextDate(after: today, matching: Calendar.current.dateComponents([.month, .day], from: userData.birthday), matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
-                    let daysUntilNextBirthday = Calendar.current.dateComponents([.day], from: today, to: nextBirthday).day ?? 0
+                    let today = DateUtility.today()
+                    let calendar = DateUtility.calendar
+                    let nextBirthday = calendar.nextDate(after: today, matching: calendar.dateComponents([.month, .day], from: userData.birthday), matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
+                    let daysUntilNextBirthday = calendar.dateComponents([.day], from: today, to: nextBirthday).day ?? 0
+                    let daysInYear = DateUtility.daysInYear(for: today)
                     
                     let currentAge = userData.age
                     let nextDecade = ((currentAge / 10) + 1) * 10
@@ -75,9 +76,9 @@ struct HomeView: View {
                     EventGaugeView(
                         title: "To Next Birthday :",
                         count: daysUntilNextBirthday,
-                        gaugeValue: lengthOfYear - daysUntilNextBirthday,
+                        gaugeValue: daysInYear - daysUntilNextBirthday,
                         min: 0,
-                        max: lengthOfYear,
+                        max: daysInYear,
                         unit: "days"
                     )
                     EventGaugeView(title: "Remaining Weekdays in Scope",
@@ -88,11 +89,12 @@ struct HomeView: View {
                                    unit: "days")
                 }
                 Section(header: Text("Annual Events")) {
+                    let daysInYear = DateUtility.daysInYear(for: DateUtility.now())
                     EventGaugeView(title: "This Year",
-                                   count: lengthOfYear - elapsedDateInThisYear.daysElapsedThisYear,
+                                   count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
                                    gaugeValue: elapsedDateInThisYear.daysElapsedThisYear,
                                    min: 0,
-                                   max: lengthOfYear,
+                                   max: daysInYear,
                                    unit: "days"
                     )
                     EventPlainView(title: christmas.name,

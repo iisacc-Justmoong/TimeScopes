@@ -23,7 +23,7 @@ struct UserProfileView: View {
                         .font(.title3)
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("\(dateFormatter.string(from: userData.birthday))")
+                    Text("\(DateUtility.dateFormatter.string(from: userData.birthday))")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
                         .frame(maxWidth: .infinity, alignment: .leading)

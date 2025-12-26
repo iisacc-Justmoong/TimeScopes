@@ -7,8 +7,6 @@
 
 import Foundation
 
-import Foundation
-
 struct ElapsedDateInThisYear {
     
     var daysElapsedThisWeek: Int {
@@ -24,24 +22,25 @@ struct ElapsedDateInThisYear {
     
     static func daysElapsedThisWeek() -> Int {
        
-        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
+        let today = DateUtility.today()
+        let startOfWeek = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
         
-        return calendar.dateComponents([.day], from: startOfWeek, to: today).day ?? 0
+        return DateUtility.calendar.dateComponents([.day], from: startOfWeek, to: today).day ?? 0
     }
     
     static func daysElapsedThisMonth() -> Int {
         
-        let today = calendar.startOfDay(for: Date())
-        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: today))!
+        let today = DateUtility.today()
+        let startOfMonth = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.year, .month], from: today))!
 
-        return calendar.dateComponents([.day], from: startOfMonth, to: today).day ?? 0
+        return DateUtility.calendar.dateComponents([.day], from: startOfMonth, to: today).day ?? 0
     }
     
     static func daysElapsedThisYear() -> Int {
      
-        let today = calendar.startOfDay(for: Date())
-        let startOfYear = calendar.date(from: calendar.dateComponents([.year], from: today))!
+        let today = DateUtility.today()
+        let startOfYear = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.year], from: today))!
 
-        return calendar.dateComponents([.day], from: startOfYear, to: today).day ?? 0
+        return DateUtility.calendar.dateComponents([.day], from: startOfYear, to: today).day ?? 0
     }
 }
