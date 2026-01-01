@@ -15,10 +15,7 @@ final class MonthCount: RemainingCount {
         super.init(userData: viewModel)
     }
 
-    override func calculateRemaining(from userData: UserData) -> Int {
-        let deathDate = userData.deathDate
-        let now = DateUtility.now()
-        let leftComponents = DateUtility.calendar.dateComponents([.year, .month], from: now, to: deathDate)
-        return (leftComponents.year ?? 0) * 12 + (leftComponents.month ?? 0)
+    override func remainingUnit() -> RemainingTimeUnit {
+        .months
     }
 }

@@ -8,39 +8,40 @@
 import Foundation
 
 struct ElapsedDateInThisYear {
-    
+    private let dateProvider: DateProviding
+
+    init(dateProvider: DateProviding = SystemDateProvider()) {
+        self.dateProvider = dateProvider
+    }
+
     var daysElapsedThisWeek: Int {
-        Self.daysElapsedThisWeek()
+        daysElapsedThisWeek()
     }
     var daysElapsedThisMonth: Int {
-        Self.daysElapsedThisMonth()
+        daysElapsedThisMonth()
     }
     var daysElapsedThisYear: Int {
-        Self.daysElapsedThisYear()
+        daysElapsedThisYear()
     }
-    
-    
-    static func daysElapsedThisWeek() -> Int {
-       
-        let today = DateUtility.today()
-        let startOfWeek = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today))!
-        
-        return DateUtility.calendar.dateComponents([.day], from: startOfWeek, to: today).day ?? 0
-    }
-    
-    static func daysElapsedThisMonth() -> Int {
-        
-        let today = DateUtility.today()
-        let startOfMonth = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.year, .month], from: today))!
 
-        return DateUtility.calendar.dateComponents([.day], from: startOfMonth, to: today).day ?? 0
-    }
-    
-    static func daysElapsedThisYear() -> Int {
-     
-        let today = DateUtility.today()
-        let startOfYear = DateUtility.calendar.date(from: DateUtility.calendar.dateComponents([.year], from: today))!
+    func daysElapsedThisWeek() -> Int {
+        let today = dateProvider.today()
+        let startOfWeek = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) ?? today
 
-        return DateUtility.calendar.dateComponents([.day], from: startOfYear, to: today).day ?? 0
+        return dateProvider.calendar.dateComponents([.day], from: startOfWeek, to: today).day ?? 0
+    }
+
+    func daysElapsedThisMonth() -> Int {
+        let today = dateProvider.today()
+        let startOfMonth = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.year, .month], from: today)) ?? today
+
+        return dateProvider.calendar.dateComponents([.day], from: startOfMonth, to: today).day ?? 0
+    }
+
+    func daysElapsedThisYear() -> Int {
+        let today = dateProvider.today()
+        let startOfYear = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.year], from: today)) ?? today
+
+        return dateProvider.calendar.dateComponents([.day], from: startOfYear, to: today).day ?? 0
     }
 }

@@ -8,39 +8,46 @@
 import Foundation
 import Combine
 
-class UserLivedTime: ObservableObject {
+final class UserLivedTime: ObservableObject {
     @Published var livedMonths: Int = 0
     @Published var livedDays: Int = 0
     @Published var livedHours: Int = 0
     @Published var livedMinutes: Int = 0
     @Published var livedSeconds: Int = 0
-    
+
     let userData: UserData
+    private let livedTimeCalculator: LivedTimeCalculating
+    private let dateProvider: DateProviding
     private var timerCancellable: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = []
-    
-    init(model: UserData) {
+
+    init(
+        model: UserData,
+        livedTimeCalculator: LivedTimeCalculating = LivedTimeCalculator(),
+        dateProvider: DateProviding = SystemDateProvider()
+    ) {
         userData = model
+        self.livedTimeCalculator = livedTimeCalculator
+        self.dateProvider = dateProvider
         updateTimeLived()
         bindUserData()
         startTimer()
     }
-    
+
     deinit {
         stopTimer()
     }
-    
+
     func updateTimeLived() {
-        let now = DateUtility.now()
-        let calendar = DateUtility.calendar
-        let components = calendar.dateComponents([.month, .day, .hour, .minute, .second], from: userData.birthday, to: now)
-        livedMonths = components.month ?? 0
-        livedDays = components.day ?? 0
-        livedHours = components.hour ?? 0
-        livedMinutes = components.minute ?? 0
-        livedSeconds = components.second ?? 0
+        let now = dateProvider.now()
+        let livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: now)
+        livedMonths = livedTime.months
+        livedDays = livedTime.days
+        livedHours = livedTime.hours
+        livedMinutes = livedTime.minutes
+        livedSeconds = livedTime.seconds
     }
-    
+
     func startTimer() {
         stopTimer()
         timerCancellable = Timer.publish(every: 1.0, on: .main, in: .common)

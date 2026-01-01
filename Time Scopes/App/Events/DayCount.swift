@@ -16,8 +16,7 @@ final class DayCount: RemainingCount {
         super.init(userData: viewModel)
     }
 
-    override func calculateRemaining(from userData: UserData) -> Int {
-        let deathDate = userData.deathDate
-        return DateUtility.calendar.dateComponents([.day], from: DateUtility.now(), to: deathDate).day ?? 0
+    override func remainingUnit() -> RemainingTimeUnit {
+        .days
     }
 }
