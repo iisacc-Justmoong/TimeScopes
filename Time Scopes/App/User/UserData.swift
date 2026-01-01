@@ -8,95 +8,76 @@
 import Foundation
 import Combine
 
-class UserData: ObservableObject {
-    
+final class UserData: ObservableObject {
     @Published var name: String = ""
     @Published var birthday: Date = Date() {
         didSet {
-            setAge()
-            calculateDeathAge()
+            updateDerivedFields()
         }
     }
     @Published var deathDate: Date = Date() {
         didSet {
-            calculateDeathAge()
+            updateDerivedFields()
         }
     }
     @Published var age: Int = 0
     @Published var deathAge: Int = 80
     @Published var sex: String = "Male"
-    
-    private let userDefaultsKey = "UserData"
+
+    private let store: UserProfileStoring
+    private let ageCalculator: AgeCalculating
+    private let dateProvider: DateProviding
     private var cancellables: Set<AnyCancellable> = []
 
-    init() {
-        self.loadFromUserDefaults()
+    init(
+        store: UserProfileStoring = UserDefaultsUserProfileStore(),
+        ageCalculator: AgeCalculating = AgeCalculator(),
+        dateProvider: DateProviding = SystemDateProvider()
+    ) {
+        self.store = store
+        self.ageCalculator = ageCalculator
+        self.dateProvider = dateProvider
+
+        if let profile = store.loadProfile() {
+            applyProfile(profile)
+        }
+
         configureDateObservers()
-        setAge()
-        calculateDeathAge()
+        updateDerivedFields()
     }
-    
-    private func calculateDeathAge() {
-        let calculatedDeathAge = DateUtility.calendar.dateComponents([.year], from: birthday, to: deathDate).year ?? 0
-        self.deathAge = calculatedDeathAge
+
+    func saveProfile() {
+        store.saveProfile(currentProfile())
     }
-    
-    func setAge() {
-        let calculatedAge = DateUtility.calendar.dateComponents([.year], from: birthday, to: DateUtility.now()).year ?? 0
-        self.age = calculatedAge
+
+    private func currentProfile() -> UserProfile {
+        UserProfile(
+            name: name,
+            birthday: birthday,
+            deathDate: deathDate,
+            sex: sex
+        )
+    }
+
+    private func applyProfile(_ profile: UserProfile) {
+        name = profile.name
+        birthday = profile.birthday
+        deathDate = profile.deathDate
+        sex = profile.sex
+    }
+
+    private func updateDerivedFields() {
+        let now = dateProvider.now()
+        age = ageCalculator.age(birthday: birthday, now: now)
+        deathAge = ageCalculator.deathAge(birthday: birthday, deathDate: deathDate)
     }
 
     private func configureDateObservers() {
         NotificationCenter.default.publisher(for: .NSCalendarDayChanged)
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.setAge()
-                self?.calculateDeathAge()
+                self?.updateDerivedFields()
             }
             .store(in: &cancellables)
     }
-    
-    
-    
-    
-    
-    
-    // MARK: - UserDefaults
-    func saveToUserDefaults() {
-        let encoder = JSONEncoder()
-        let snapshot = UserDataSnapshot(
-            name: self.name,
-            birthday: self.birthday,
-            deathDate: self.deathDate,
-            age: self.age,
-            deathAge: self.deathAge,
-            sex: self.sex
-        )
-        if let encoded = try? encoder.encode(snapshot) {
-            UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
-        }
-    }
-    
-    private func loadFromUserDefaults() {
-        let decoder = JSONDecoder()
-        if let savedData = UserDefaults.standard.data(forKey: userDefaultsKey),
-           let snapshot = try? decoder.decode(UserDataSnapshot.self, from: savedData) {
-            self.name = snapshot.name
-            self.birthday = snapshot.birthday
-            self.deathDate = snapshot.deathDate
-            self.age = snapshot.age
-            self.deathAge = snapshot.deathAge
-            self.sex = snapshot.sex
-        }
-    }
-}
-
-
-struct UserDataSnapshot: Codable {
-    var name: String
-    var birthday: Date
-    var deathDate: Date
-    var age: Int
-    var deathAge: Int
-    var sex: String
 }

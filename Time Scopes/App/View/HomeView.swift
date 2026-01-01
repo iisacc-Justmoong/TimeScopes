@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var userLivedTime: UserLivedTime
     
@@ -18,11 +18,27 @@ struct HomeView: View {
     
     @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
     
-    var christmas = AnnualChristmasProperties()
-    var annualMondays = AnnualMondayProperties()
-    var elapsedDateInThisYear = ElapsedDateInThisYear()
+    private let dateProvider: DateProviding
+    private let nextEventCalculator: NextEventCalculating
+
+    var christmas: AnnualChristmasProperties
+    var annualMondays: AnnualMondayProperties
+    var elapsedDateInThisYear: ElapsedDateInThisYear
     
     @State var isPresented: Bool = false
+
+    init(
+        lifeRemainingWorkingTime: LifeRemainingWorkingTime,
+        dateProvider: DateProviding = SystemDateProvider(),
+        nextEventCalculator: NextEventCalculating = NextEventCalculator()
+    ) {
+        self.lifeRemainingWorkingTime = lifeRemainingWorkingTime
+        self.dateProvider = dateProvider
+        self.nextEventCalculator = nextEventCalculator
+        self.christmas = AnnualChristmasProperties(dateProvider: dateProvider)
+        self.annualMondays = AnnualMondayProperties(dateProvider: dateProvider)
+        self.elapsedDateInThisYear = ElapsedDateInThisYear(dateProvider: dateProvider)
+    }
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -56,29 +72,22 @@ struct HomeView: View {
                 }
                 // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
                 Section(header: Text("Your Next events")) {
-                    let today = DateUtility.today()
-                    let calendar = DateUtility.calendar
-                    let nextBirthday = calendar.nextDate(after: today, matching: calendar.dateComponents([.month, .day], from: userData.birthday), matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
-                    let daysUntilNextBirthday = calendar.dateComponents([.day], from: today, to: nextBirthday).day ?? 0
-                    let daysInYear = DateUtility.daysInYear(for: today)
-                    
-                    let currentAge = userData.age
-                    let nextDecade = ((currentAge / 10) + 1) * 10
-                    let yearsUntilNextDecade = nextDecade - currentAge
+                    let nextBirthdayStats = nextEventCalculator.nextBirthdayStats(from: userData.birthday)
+                    let nextDecadeStats = nextEventCalculator.nextDecadeStats(from: userData.age)
                     EventGaugeView(
-                        title: "To Be Age \(nextDecade) :",
-                        count: yearsUntilNextDecade,
-                        gaugeValue: 10 - yearsUntilNextDecade,
+                        title: "To Be Age \(nextDecadeStats.nextDecade) :",
+                        count: nextDecadeStats.yearsUntilNextDecade,
+                        gaugeValue: 10 - nextDecadeStats.yearsUntilNextDecade,
                         min: 0,
                         max: 10,
                         unit: "years"
                     )
                     EventGaugeView(
                         title: "To Next Birthday :",
-                        count: daysUntilNextBirthday,
-                        gaugeValue: daysInYear - daysUntilNextBirthday,
+                        count: nextBirthdayStats.daysUntilNextBirthday,
+                        gaugeValue: nextBirthdayStats.daysInYear - nextBirthdayStats.daysUntilNextBirthday,
                         min: 0,
-                        max: daysInYear,
+                        max: nextBirthdayStats.daysInYear,
                         unit: "days"
                     )
                     EventGaugeView(title: "Remaining Weekdays in Scope",
@@ -89,7 +98,7 @@ struct HomeView: View {
                                    unit: "days")
                 }
                 Section(header: Text("Annual Events")) {
-                    let daysInYear = DateUtility.daysInYear(for: DateUtility.now())
+                    let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
                     EventGaugeView(title: "This Year",
                                    count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
                                    gaugeValue: elapsedDateInThisYear.daysElapsedThisYear,

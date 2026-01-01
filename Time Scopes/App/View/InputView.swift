@@ -31,7 +31,7 @@ struct InputView: View {
             .toolbar {
                 ToolbarItem {
                     Button("Done") {
-                        userData.saveToUserDefaults()
+                        userData.saveProfile()
                         dismiss()
                     }
                 }
