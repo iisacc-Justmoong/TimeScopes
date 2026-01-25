@@ -12,20 +12,21 @@ protocol LivedTimeCalculating {
 }
 
 struct LivedTimeCalculator: LivedTimeCalculating {
-    private let dateProvider: DateProviding
-
-    init(dateProvider: DateProviding = SystemDateProvider()) {
-        self.dateProvider = dateProvider
-    }
+    init() {}
 
     func livedTime(from birthday: Date, to now: Date) -> LivedTime {
-        let components = dateProvider.calendar.dateComponents([.month, .day, .hour, .minute, .second], from: birthday, to: now)
+        let elapsedSeconds = max(0, Int(now.timeIntervalSince(birthday)))
+        let totalMinutes = elapsedSeconds / 60
+        let totalHours = elapsedSeconds / 3600
+        let totalDays = elapsedSeconds / 86_400
+        let totalMonths = totalDays / 30
+
         return LivedTime(
-            months: components.month ?? 0,
-            days: components.day ?? 0,
-            hours: components.hour ?? 0,
-            minutes: components.minute ?? 0,
-            seconds: components.second ?? 0
+            months: totalMonths,
+            days: totalDays,
+            hours: totalHours,
+            minutes: totalMinutes,
+            seconds: elapsedSeconds
         )
     }
 }

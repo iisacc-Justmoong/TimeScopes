@@ -15,30 +15,30 @@ struct ElapsedDateInThisYear {
     }
 
     var daysElapsedThisWeek: Int {
-        daysElapsedThisWeek()
+        computeDaysElapsedThisWeek()
     }
     var daysElapsedThisMonth: Int {
-        daysElapsedThisMonth()
+        computeDaysElapsedThisMonth()
     }
     var daysElapsedThisYear: Int {
-        daysElapsedThisYear()
+        computeDaysElapsedThisYear()
     }
 
-    func daysElapsedThisWeek() -> Int {
+    private func computeDaysElapsedThisWeek() -> Int {
         let today = dateProvider.today()
         let startOfWeek = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) ?? today
 
         return dateProvider.calendar.dateComponents([.day], from: startOfWeek, to: today).day ?? 0
     }
 
-    func daysElapsedThisMonth() -> Int {
+    private func computeDaysElapsedThisMonth() -> Int {
         let today = dateProvider.today()
         let startOfMonth = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.year, .month], from: today)) ?? today
 
         return dateProvider.calendar.dateComponents([.day], from: startOfMonth, to: today).day ?? 0
     }
 
-    func daysElapsedThisYear() -> Int {
+    private func computeDaysElapsedThisYear() -> Int {
         let today = dateProvider.today()
         let startOfYear = dateProvider.calendar.date(from: dateProvider.calendar.dateComponents([.year], from: today)) ?? today
 

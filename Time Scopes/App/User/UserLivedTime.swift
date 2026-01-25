@@ -1,6 +1,6 @@
 //
-//  LivedTime.swift
-//  Chrono
+//  UserLivedTime.swift
+//  Time Scopes
 //
 //  Created by ymy on 2/11/25.
 //
@@ -9,11 +9,7 @@ import Foundation
 import Combine
 
 final class UserLivedTime: ObservableObject {
-    @Published var livedMonths: Int = 0
-    @Published var livedDays: Int = 0
-    @Published var livedHours: Int = 0
-    @Published var livedMinutes: Int = 0
-    @Published var livedSeconds: Int = 0
+    @Published private(set) var livedTime: LivedTime = .zero
 
     let userData: UserData
     private let livedTimeCalculator: LivedTimeCalculating
@@ -40,12 +36,7 @@ final class UserLivedTime: ObservableObject {
 
     func updateTimeLived() {
         let now = dateProvider.now()
-        let livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: now)
-        livedMonths = livedTime.months
-        livedDays = livedTime.days
-        livedHours = livedTime.hours
-        livedMinutes = livedTime.minutes
-        livedSeconds = livedTime.seconds
+        livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: now)
     }
 
     func startTimer() {

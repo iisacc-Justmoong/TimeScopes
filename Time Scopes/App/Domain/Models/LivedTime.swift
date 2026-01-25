@@ -8,9 +8,11 @@
 import Foundation
 
 struct LivedTime {
-    var months: Int
-    var days: Int
-    var hours: Int
-    var minutes: Int
-    var seconds: Int
+    let months: Int
+    let days: Int
+    let hours: Int
+    let minutes: Int
+    let seconds: Int
+
+    static let zero = LivedTime(months: 0, days: 0, hours: 0, minutes: 0, seconds: 0)
 }

@@ -41,85 +41,176 @@ struct HomeView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .top) {
-            LeftGradientBackgroundView()
-            RightGradientBackgroundView()
-                .edgesIgnoringSafeArea(.all)
-                .ignoresSafeArea()
-            List {
-                Section(header: EmptyView()) {
-                    UserProfileView()
-                        .sheet(isPresented: $isPresented) {
-                            InputView()
-                                .environmentObject(userData)
-                                .interactiveDismissDisabled(true)
+        NavigationStack {
+            ZStack(alignment: .top) {
+                LeftGradientBackgroundView()
+                RightGradientBackgroundView()
+                    .edgesIgnoringSafeArea(.all)
+                    .ignoresSafeArea()
+                List {
+                    Section(header: EmptyView()) {
+                        UserProfileView()
+                            .sheet(isPresented: $isPresented) {
+                                InputView()
+                                    .environmentObject(userData)
+                                    .interactiveDismissDisabled(true)
+                            }
+                            .onTapGesture {
+                                isPresented = true
+                            }
+                        NavigationLink {
+                            TimeScopeHeatmapDetailView(unit: .month)
+                        } label: {
+                            EventPlainView(title: "Months", count: monthCount.leftMonths, unit: "")
                         }
-                        .onTapGesture {
-                            isPresented = true
+                        NavigationLink {
+                            TimeScopeHeatmapDetailView(unit: .week)
+                        } label: {
+                            EventPlainView(title: "Weeks", count: weekCount.leftWeeks, unit: "")
                         }
-                    EventPlainView(title: "Months", count: monthCount.leftMonths, unit: "")
-                    EventPlainView(title: "Weeks", count: weekCount.leftWeeks, unit: "")
-                    EventPlainView(title: "Days", count: dayCount.leftDays, unit: "")
-                }
-                Section(header: Text("You Passed")) {
-                    EventPlainView(title: "Months", count: userLivedTime.livedMonths, unit: "")
-                    
-                    EventPlainView(title: "Weeks", count: userLivedTime.livedDays / 7, unit: "")
-                    EventPlainView(title: "Days", count: userLivedTime.livedDays, unit: "")
-                    EventPlainView(title: "Hours", count: userLivedTime.livedHours, unit: "")
-                    EventPlainView(title: "Minutes", count: userLivedTime.livedMinutes, unit: "")
-                    EventPlainView(title: "Seconds", count: userLivedTime.livedSeconds, unit: "")
-                }
-                // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
+                        NavigationLink {
+                            TimeScopeHeatmapDetailView(unit: .day)
+                        } label: {
+                            EventPlainView(title: "Days", count: dayCount.leftDays, unit: "")
+                        }
+                    }
+                    Section(header: Text("You Passed")) {
+                        EventPlainView(title: "Months", count: userLivedTime.livedTime.months, unit: "")
+                        EventPlainView(title: "Weeks", count: userLivedTime.livedTime.days / 7, unit: "")
+                        EventPlainView(title: "Days", count: userLivedTime.livedTime.days, unit: "")
+                        EventPlainView(title: "Hours", count: userLivedTime.livedTime.hours, unit: "")
+                        EventPlainView(title: "Minutes", count: userLivedTime.livedTime.minutes, unit: "")
+                        EventPlainView(title: "Seconds", count: userLivedTime.livedTime.seconds, unit: "")
+                    }
+                    // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
                 Section(header: Text("Your Next events")) {
                     let nextBirthdayStats = nextEventCalculator.nextBirthdayStats(from: userData.birthday)
                     let nextDecadeStats = nextEventCalculator.nextDecadeStats(from: userData.age)
-                    EventGaugeView(
-                        title: "To Be Age \(nextDecadeStats.nextDecade) :",
-                        count: nextDecadeStats.yearsUntilNextDecade,
-                        gaugeValue: 10 - nextDecadeStats.yearsUntilNextDecade,
-                        min: 0,
-                        max: 10,
-                        unit: "years"
-                    )
-                    EventGaugeView(
-                        title: "To Next Birthday :",
-                        count: nextBirthdayStats.daysUntilNextBirthday,
-                        gaugeValue: nextBirthdayStats.daysInYear - nextBirthdayStats.daysUntilNextBirthday,
-                        min: 0,
-                        max: nextBirthdayStats.daysInYear,
-                        unit: "days"
-                    )
-                    EventGaugeView(title: "Remaining Weekdays in Scope",
-                                   count: lifeRemainingWorkingTime.remainingWorkingDays,
-                                   gaugeValue: userData.age,
-                                   min: 0,
-                                   max: userData.deathAge,
-                                   unit: "days")
-                }
-                Section(header: Text("Annual Events")) {
-                    let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
-                    EventGaugeView(title: "This Year",
-                                   count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
-                                   gaugeValue: elapsedDateInThisYear.daysElapsedThisYear,
-                                   min: 0,
-                                   max: daysInYear,
-                                   unit: "days"
-                    )
-                    EventPlainView(title: christmas.name,
-                                   count: christmas.count,
-                                   unit: "days"
-                    )
-                    EventPlainView(title: annualMondays.name,
-                                   count: annualMondays.count,
-                                   unit: "times"
-                    )
+                    let now = dateProvider.now()
+                    let nextDecadeDate = dateProvider.calendar.date(byAdding: .year, value: nextDecadeStats.nextDecade, to: userData.birthday) ?? now
+                    let secondsToNextDecade = max(0, Int(nextDecadeDate.timeIntervalSince(now)))
+                    let minutesToNextDecade = secondsToNextDecade / 60
+                    let hoursToNextDecade = secondsToNextDecade / 3_600
+                    let daysToNextDecade = secondsToNextDecade / 86_400
+                    let weeksToNextDecade = daysToNextDecade / 7
+                    let monthsToNextDecade = daysToNextDecade / 30
+                    NavigationLink {
+                        EventDetailView(
+                            title: "To Be Age \(nextDecadeStats.nextDecade)",
+                            count: nextDecadeStats.yearsUntilNextDecade,
+                            unit: "years",
+                            gauge: EventDetailView.GaugeData(value: 10 - nextDecadeStats.yearsUntilNextDecade, min: 0, max: 10),
+                            breakdown: [
+                                EventDetailView.BreakdownItem(label: "Months", value: monthsToNextDecade, unit: "months"),
+                                EventDetailView.BreakdownItem(label: "Weeks", value: weeksToNextDecade, unit: "weeks"),
+                                EventDetailView.BreakdownItem(label: "Days", value: daysToNextDecade, unit: "days"),
+                                EventDetailView.BreakdownItem(label: "Hours", value: hoursToNextDecade, unit: "hours"),
+                                EventDetailView.BreakdownItem(label: "Minutes", value: minutesToNextDecade, unit: "minutes"),
+                                EventDetailView.BreakdownItem(label: "Seconds", value: secondsToNextDecade, unit: "seconds")
+                            ]
+                        )
+                    } label: {
+                        EventGaugeView(
+                            title: "To Be Age \(nextDecadeStats.nextDecade) :",
+                            count: nextDecadeStats.yearsUntilNextDecade,
+                                gaugeValue: 10 - nextDecadeStats.yearsUntilNextDecade,
+                                min: 0,
+                                max: 10,
+                                unit: "years"
+                            )
+                        }
+                    NavigationLink {
+                        let nextBirthdayDate = dateProvider.calendar.nextDate(
+                            after: now,
+                            matching: dateProvider.calendar.dateComponents([.month, .day], from: userData.birthday),
+                            matchingPolicy: .nextTimePreservingSmallerComponents
+                        ) ?? now
+                        let secondsToNextBirthday = max(0, Int(nextBirthdayDate.timeIntervalSince(now)))
+                        let minutesToNextBirthday = secondsToNextBirthday / 60
+                        let hoursToNextBirthday = secondsToNextBirthday / 3_600
+                        let daysToNextBirthday = secondsToNextBirthday / 86_400
+                        EventDetailView(
+                            title: "To Next Birthday",
+                            count: nextBirthdayStats.daysUntilNextBirthday,
+                            unit: "days",
+                            gauge: EventDetailView.GaugeData(
+                                value: nextBirthdayStats.daysInYear - nextBirthdayStats.daysUntilNextBirthday,
+                                min: 0,
+                                max: nextBirthdayStats.daysInYear
+                            ),
+                            breakdown: [
+                                EventDetailView.BreakdownItem(label: "Hours", value: hoursToNextBirthday, unit: "hours"),
+                                EventDetailView.BreakdownItem(label: "Minutes", value: minutesToNextBirthday, unit: "minutes"),
+                                EventDetailView.BreakdownItem(label: "Seconds", value: secondsToNextBirthday, unit: "seconds")
+                            ]
+                        )
+                    } label: {
+                        EventGaugeView(
+                            title: "To Next Birthday :",
+                            count: nextBirthdayStats.daysUntilNextBirthday,
+                                gaugeValue: nextBirthdayStats.daysInYear - nextBirthdayStats.daysUntilNextBirthday,
+                                min: 0,
+                                max: nextBirthdayStats.daysInYear,
+                                unit: "days"
+                            )
+                        }
+                        NavigationLink {
+                            EventDetailView(
+                                title: "Remaining Weekdays in Scope",
+                                count: lifeRemainingWorkingTime.remainingWorkingDays,
+                                unit: "days",
+                                gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge)
+                            )
+                        } label: {
+                            EventGaugeView(
+                                title: "Remaining Weekdays in Scope",
+                                count: lifeRemainingWorkingTime.remainingWorkingDays,
+                                gaugeValue: userData.age,
+                                min: 0,
+                                max: userData.deathAge,
+                                unit: "days"
+                            )
+                        }
+                    }
+                    Section(header: Text("Annual Events")) {
+                        let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
+                        NavigationLink {
+                            EventDetailView(
+                                title: "This Year",
+                                count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
+                                unit: "days",
+                                gauge: EventDetailView.GaugeData(
+                                    value: elapsedDateInThisYear.daysElapsedThisYear,
+                                    min: 0,
+                                    max: daysInYear
+                                )
+                            )
+                        } label: {
+                            EventGaugeView(
+                                title: "This Year",
+                                count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
+                                gaugeValue: elapsedDateInThisYear.daysElapsedThisYear,
+                                min: 0,
+                                max: daysInYear,
+                                unit: "days"
+                            )
+                        }
+                        NavigationLink {
+                            EventDetailView(title: christmas.name, count: christmas.count, unit: "days")
+                        } label: {
+                            EventPlainView(title: christmas.name, count: christmas.count, unit: "days")
+                        }
+                        NavigationLink {
+                            EventDetailView(title: annualMondays.name, count: annualMondays.count, unit: "times")
+                        } label: {
+                            EventPlainView(title: annualMondays.name, count: annualMondays.count, unit: "times")
+                        }
+                    }
                 }
             }
+            .background(Color.clear)
+            .scrollContentBackground(.hidden)
         }
-        .background(Color.clear)
-        .scrollContentBackground(.hidden)
-
     }
 }
 
