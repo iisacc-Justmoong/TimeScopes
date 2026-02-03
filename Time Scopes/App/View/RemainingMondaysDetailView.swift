@@ -22,8 +22,8 @@ struct RemainingMondaysDetailView: View {
             let startOfYear = calendar.date(from: DateComponents(year: currentYear, month: 1, day: 1)) ?? now
             let endOfYear = calendar.date(from: DateComponents(year: currentYear, month: 12, day: 31)) ?? now
 
-            let totalMondays = mondaysBetween(startOfYear, endOfYear, calendar: calendar)
-            let mondaysPassed = mondaysBetween(startOfYear, now, calendar: calendar)
+            let totalMondays = mondayCount(from: startOfYear, to: endOfYear, calendar: calendar)
+            let mondaysPassed = mondayCount(from: startOfYear, to: now, calendar: calendar)
             let remainingMondays = max(0, totalMondays - mondaysPassed)
 
             let lastMonday = lastMondayInYear(endOfYear, calendar: calendar)
@@ -56,27 +56,31 @@ struct RemainingMondaysDetailView: View {
         }
     }
 
-    private func mondaysBetween(_ startDate: Date, _ endDate: Date, calendar: Calendar) -> Int {
-        var count = 0
-        var date = calendar.startOfDay(for: startDate)
-        let end = endDate
-
-        while date <= end {
-            if calendar.component(.weekday, from: date) == 2 {
-                count += 1
-            }
-            date = calendar.date(byAdding: .day, value: 1, to: date) ?? date
+    private func mondayCount(from startDate: Date, to endDate: Date, calendar: Calendar) -> Int {
+        let startDay = calendar.startOfDay(for: startDate)
+        let endDay = calendar.startOfDay(for: endDate)
+        if endDay < startDay {
+            return 0
         }
 
-        return count
+        let startWeekday = calendar.component(.weekday, from: startDay)
+        let daysToMonday = (2 - startWeekday + 7) % 7
+        guard let firstMonday = calendar.date(byAdding: .day, value: daysToMonday, to: startDay) else {
+            return 0
+        }
+        if firstMonday > endDay {
+            return 0
+        }
+
+        let daysBetween = calendar.dateComponents([.day], from: firstMonday, to: endDay).day ?? 0
+        return daysBetween / 7 + 1
     }
 
     private func lastMondayInYear(_ endOfYear: Date, calendar: Calendar) -> Date {
-        var date = calendar.startOfDay(for: endOfYear)
-        while calendar.component(.weekday, from: date) != 2 {
-            date = calendar.date(byAdding: .day, value: -1, to: date) ?? date
-        }
-        return date
+        let endDay = calendar.startOfDay(for: endOfYear)
+        let weekday = calendar.component(.weekday, from: endDay)
+        let daysSinceMonday = (weekday - 2 + 7) % 7
+        return calendar.date(byAdding: .day, value: -daysSinceMonday, to: endDay) ?? endDay
     }
 }
 

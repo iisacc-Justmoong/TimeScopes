@@ -45,57 +45,57 @@ struct EventDetailView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            HStack(alignment: .top, spacing: 16) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(title)
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                    Text("\(count) \(unit)")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundStyle(Color.accentColor)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                HStack(alignment: .top, spacing: 16) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(title)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        Text("\(count) \(unit)")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color.accentColor)
+                    }
+                    Spacer()
+                    circularGaugeView
                 }
-                Spacer()
-                circularGaugeView
-            }
 
-            if let gauge {
-                Gauge(value: Double(gauge.value), in: Double(gauge.min)...Double(gauge.max)) {
-                    Text("\(gauge.value)")
+                if let gauge {
+                    Gauge(value: Double(gauge.value), in: Double(gauge.min)...Double(gauge.max)) {
+                        Text("\(gauge.value)")
+                    }
+                    .gaugeStyle(.accessoryLinearCapacity)
+                    .tint(Color.accentColor)
+                    .labelsHidden()
                 }
-                .gaugeStyle(.accessoryLinearCapacity)
-                .tint(Color.accentColor)
-                .labelsHidden()
-            }
 
-            if let extraContent {
-                extraContent
-            }
+                if let extraContent {
+                    extraContent
+                }
 
-            if !breakdown.isEmpty {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Breakdown")
-                        .font(.headline)
-                    ForEach(breakdown) { item in
-                        HStack {
-                            Text(item.label)
-                                .font(.callout)
-                            Spacer()
-                            Text("\(item.value) \(item.unit)")
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundStyle(Color.accentColor)
+                if !breakdown.isEmpty {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Breakdown")
+                            .font(.headline)
+                        ForEach(breakdown) { item in
+                            HStack {
+                                Text(item.label)
+                                    .font(.callout)
+                                Spacer()
+                                Text("\(item.value) \(item.unit)")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundStyle(Color.accentColor)
+                            }
+                            .padding(.vertical, 4)
+                            Divider()
                         }
-                        .padding(.vertical, 4)
-                        Divider()
                     }
                 }
             }
-
-            Spacer()
+            .padding()
         }
-        .padding()
         .glassScreen()
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
