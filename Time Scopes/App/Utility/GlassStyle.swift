@@ -86,7 +86,6 @@ extension View {
     func glassScreen() -> some View {
         self
             .background(GlassScreenBackground())
-            .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
-            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(.hidden, for: .navigationBar)
     }
 }

@@ -97,7 +97,6 @@ struct EventDetailView: View {
             .padding()
         }
         .glassScreen()
-        .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
     }
 

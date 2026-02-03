@@ -73,7 +73,7 @@ struct HomeView: View {
                         }
                         .glassRow()
                     }
-                    Section(header: Text("You Passed")) {
+                    Section(header: EmptyView()) {
                         EventPlainView(title: "Months", count: userLivedTime.livedTime.months, unit: "")
                             .glassRow()
                         EventPlainView(title: "Weeks", count: userLivedTime.livedTime.days / 7, unit: "")
@@ -88,7 +88,7 @@ struct HomeView: View {
                             .glassRow()
                     }
                     // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
-                Section(header: Text("Your Next events")) {
+                Section(header: EmptyView()) {
                     let nextBirthdayStats = nextEventCalculator.nextBirthdayStats(from: userData.birthday)
                     let nextDecadeStats = nextEventCalculator.nextDecadeStats(from: userData.age)
                     let now = dateProvider.now()
@@ -180,7 +180,7 @@ struct HomeView: View {
                         }
                         .glassRow()
                     }
-                    Section(header: Text("Annual Events")) {
+                    Section(header: EmptyView()) {
                         let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
                         NavigationLink {
                             ThisYearDetailView(dateProvider: dateProvider)
@@ -209,6 +209,9 @@ struct HomeView: View {
                         .glassRow()
                     }
             }
+            .scrollContentBackground(.hidden)
+            .listRowSeparator(.hidden)
+            .background(GlassScreenBackground())
         }
         .glassScreen()
     }

@@ -26,10 +26,9 @@ struct InputView: View {
                 }
                 .listRowBackground(Rectangle().fill(.ultraThinMaterial))
             }
-            .navigationTitle("Insert Data")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         userData.saveProfile()
                         dismiss()

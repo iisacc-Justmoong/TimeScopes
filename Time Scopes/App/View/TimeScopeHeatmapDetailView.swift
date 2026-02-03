@@ -56,7 +56,6 @@ struct TimeScopeHeatmapDetailView: View {
         let totalMonths = monthsBetween(startDate, endDate)
         let elapsedMonths = monthsBetween(startDate, clampedNow)
         let totalWeeks = (totalDays + 6) / 7
-        let availableWidth = max(0, UIScreen.main.bounds.width - 32)
 
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -71,11 +70,11 @@ struct TimeScopeHeatmapDetailView: View {
 
                 switch unit {
                 case .month:
-                    monthGrid(totalMonths: totalMonths, elapsedMonths: elapsedMonths, availableWidth: availableWidth)
+                    monthGrid(totalMonths: totalMonths, elapsedMonths: elapsedMonths)
                 case .week:
-                    weekGrid(totalWeeks: totalWeeks, elapsedDays: elapsedDays, availableWidth: availableWidth)
+                    weekGrid(totalWeeks: totalWeeks, elapsedDays: elapsedDays)
                 case .day:
-                    dayGrid(totalDays: totalDays, elapsedDays: elapsedDays, availableWidth: availableWidth)
+                    dayGrid(totalDays: totalDays, elapsedDays: elapsedDays)
                 }
 
                 Spacer(minLength: 12)
@@ -83,7 +82,6 @@ struct TimeScopeHeatmapDetailView: View {
             .padding()
         }
         .glassScreen()
-        .navigationTitle(unit.title)
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -109,42 +107,35 @@ struct TimeScopeHeatmapDetailView: View {
         }
     }
 
-    private func monthGrid(totalMonths: Int, elapsedMonths: Int, availableWidth: CGFloat) -> some View {
-        let columnsCount = max(6, Int((availableWidth + Layout.cellSpacing) / (Layout.cellSize + Layout.cellSpacing)))
-        let columns = Array(repeating: GridItem(.fixed(Layout.cellSize), spacing: Layout.cellSpacing), count: columnsCount)
+    private func monthGrid(totalMonths: Int, elapsedMonths: Int) -> some View {
+        let columns = [GridItem(.adaptive(minimum: Layout.cellSize, maximum: Layout.cellSize), spacing: Layout.cellSpacing)]
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 4) {
             ForEach(0..<totalMonths, id: \.self) { index in
                 GrassCell(isFilled: index < elapsedMonths)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func weekGrid(totalWeeks: Int, elapsedDays: Int, availableWidth: CGFloat) -> some View {
-        let columnsCount = max(8, Int((availableWidth + Layout.cellSpacing) / (Layout.cellSize + Layout.cellSpacing)))
-        let columns = Array(repeating: GridItem(.fixed(Layout.cellSize), spacing: Layout.cellSpacing), count: columnsCount)
+    private func weekGrid(totalWeeks: Int, elapsedDays: Int) -> some View {
+        let columns = [GridItem(.adaptive(minimum: Layout.cellSize, maximum: Layout.cellSize), spacing: Layout.cellSpacing)]
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 4) {
             ForEach(0..<totalWeeks, id: \.self) { index in
                 let isFilled = elapsedDays > index * 7
                 GrassCell(isFilled: isFilled)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private func dayGrid(totalDays: Int, elapsedDays: Int, availableWidth: CGFloat) -> some View {
-        let columnsCount = max(8, Int((availableWidth + Layout.cellSpacing) / (Layout.cellSize + Layout.cellSpacing)))
-        let columns = Array(repeating: GridItem(.fixed(Layout.cellSize), spacing: Layout.cellSpacing), count: columnsCount)
-        let totalWeeks = (totalDays + 6) / 7
-        let totalCells = totalWeeks * 7
-
+    private func dayGrid(totalDays: Int, elapsedDays: Int) -> some View {
+        let columns = [GridItem(.adaptive(minimum: Layout.cellSize, maximum: Layout.cellSize), spacing: Layout.cellSpacing)]
         return LazyVGrid(columns: columns, alignment: .leading, spacing: 4) {
-            ForEach(0..<totalCells, id: \.self) { index in
-                if index < totalDays {
-                    GrassCell(isFilled: index < elapsedDays)
-                } else {
-                    GrassCell(isFilled: false, isHidden: true)
-                }
+            ForEach(0..<totalDays, id: \.self) { index in
+                GrassCell(isFilled: index < elapsedDays)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private func daysBetween(_ start: Date, _ end: Date) -> Int {

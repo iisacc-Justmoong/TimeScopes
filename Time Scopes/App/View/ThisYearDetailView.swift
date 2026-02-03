@@ -68,7 +68,6 @@ struct ThisYearDetailView: View {
                 .padding()
             }
             .glassScreen()
-            .navigationTitle("This Year")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
