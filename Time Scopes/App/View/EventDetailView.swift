@@ -37,14 +37,18 @@ struct EventDetailView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(title)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                Text("\(count) \(unit)")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundStyle(Color.accentColor)
+            HStack(alignment: .top, spacing: 16) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(title)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                    Text("\(count) \(unit)")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.accentColor)
+                }
+                Spacer()
+                circularGaugeView
             }
 
             if let gauge {
@@ -81,6 +85,23 @@ struct EventDetailView: View {
         .padding()
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var circularGaugeView: some View {
+        let gaugeValue = gauge?.value ?? count
+        let gaugeMin = gauge?.min ?? 0
+        let gaugeMax = gauge?.max ?? max(1, count)
+        let range = max(1, gaugeMax - gaugeMin)
+        let percent = Double(max(0, gaugeValue - gaugeMin)) / Double(range) * 100
+
+        return Gauge(value: Double(gaugeValue), in: Double(gaugeMin)...Double(gaugeMax)) {
+            Text("\(percent, specifier: "%.0f")%")
+                .font(.headline)
+        }
+        .gaugeStyle(.accessoryCircularCapacity)
+        .foregroundStyle(Color.accentColor)
+        .tint(Color.accentColor)
+        .frame(width: 64, height: 64, alignment: .topTrailing)
     }
 }
 

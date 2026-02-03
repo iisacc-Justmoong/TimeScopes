@@ -42,12 +42,7 @@ struct HomeView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .top) {
-                LeftGradientBackgroundView()
-                RightGradientBackgroundView()
-                    .edgesIgnoringSafeArea(.all)
-                    .ignoresSafeArea()
-                List {
+            List {
                     Section(header: EmptyView()) {
                         UserProfileView()
                             .sheet(isPresented: $isPresented) {
@@ -196,20 +191,49 @@ struct HomeView: View {
                             )
                         }
                         NavigationLink {
-                            EventDetailView(title: christmas.name, count: christmas.count, unit: "days")
+                            let now = dateProvider.now()
+                            let calendar = dateProvider.calendar
+                            let currentYear = calendar.component(.year, from: now)
+                            let christmasThisYear = calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) ?? now
+                            let lastChristmas = now >= christmasThisYear
+                                ? christmasThisYear
+                                : (calendar.date(from: DateComponents(year: currentYear - 1, month: 12, day: 25)) ?? now)
+                            let nextChristmas = now >= christmasThisYear
+                                ? (calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) ?? now)
+                                : christmasThisYear
+                            let daysSinceLastChristmas = calendar.dateComponents([.day], from: lastChristmas, to: now).day ?? 0
+                            let daysBetweenChristmases = max(1, calendar.dateComponents([.day], from: lastChristmas, to: nextChristmas).day ?? 1)
+                            EventDetailView(
+                                title: christmas.name,
+                                count: christmas.count,
+                                unit: "days",
+                                gauge: EventDetailView.GaugeData(
+                                    value: daysSinceLastChristmas,
+                                    min: 0,
+                                    max: daysBetweenChristmases
+                                )
+                            )
                         } label: {
                             EventPlainView(title: christmas.name, count: christmas.count, unit: "days")
                         }
                         NavigationLink {
-                            EventDetailView(title: annualMondays.name, count: annualMondays.count, unit: "times")
+                            let totalMondays = annualMondays.totalMondaysInYear()
+                            let remainingMondays = annualMondays.remainingMondaysInYear()
+                            EventDetailView(
+                                title: annualMondays.name,
+                                count: annualMondays.count,
+                                unit: "times",
+                                gauge: EventDetailView.GaugeData(
+                                    value: max(0, totalMondays - remainingMondays),
+                                    min: 0,
+                                    max: max(1, totalMondays)
+                                )
+                            )
                         } label: {
                             EventPlainView(title: annualMondays.name, count: annualMondays.count, unit: "times")
                         }
                     }
-                }
             }
-            .background(Color.clear)
-            .scrollContentBackground(.hidden)
         }
     }
 }
