@@ -53,29 +53,39 @@ struct HomeView: View {
                             .onTapGesture {
                                 isPresented = true
                             }
+                            .glassRow()
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .month)
                         } label: {
                             EventPlainView(title: "Months", count: monthCount.leftMonths, unit: "")
                         }
+                        .glassRow()
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .week)
                         } label: {
                             EventPlainView(title: "Weeks", count: weekCount.leftWeeks, unit: "")
                         }
+                        .glassRow()
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .day)
                         } label: {
                             EventPlainView(title: "Days", count: dayCount.leftDays, unit: "")
                         }
+                        .glassRow()
                     }
                     Section(header: Text("You Passed")) {
                         EventPlainView(title: "Months", count: userLivedTime.livedTime.months, unit: "")
+                            .glassRow()
                         EventPlainView(title: "Weeks", count: userLivedTime.livedTime.days / 7, unit: "")
+                            .glassRow()
                         EventPlainView(title: "Days", count: userLivedTime.livedTime.days, unit: "")
+                            .glassRow()
                         EventPlainView(title: "Hours", count: userLivedTime.livedTime.hours, unit: "")
+                            .glassRow()
                         EventPlainView(title: "Minutes", count: userLivedTime.livedTime.minutes, unit: "")
+                            .glassRow()
                         EventPlainView(title: "Seconds", count: userLivedTime.livedTime.seconds, unit: "")
+                            .glassRow()
                     }
                     // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
                 Section(header: Text("Your Next events")) {
@@ -114,6 +124,7 @@ struct HomeView: View {
                                 unit: "years"
                             )
                         }
+                    .glassRow()
                     NavigationLink {
                         let nextBirthdayDate = dateProvider.calendar.nextDate(
                             after: now,
@@ -149,6 +160,7 @@ struct HomeView: View {
                                 unit: "days"
                             )
                         }
+                    .glassRow()
                         NavigationLink {
                             EventDetailView(
                                 title: "Remaining Weekdays in Scope",
@@ -166,20 +178,12 @@ struct HomeView: View {
                                 unit: "days"
                             )
                         }
+                        .glassRow()
                     }
                     Section(header: Text("Annual Events")) {
                         let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
                         NavigationLink {
-                            EventDetailView(
-                                title: "This Year",
-                                count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
-                                unit: "days",
-                                gauge: EventDetailView.GaugeData(
-                                    value: elapsedDateInThisYear.daysElapsedThisYear,
-                                    min: 0,
-                                    max: daysInYear
-                                )
-                            )
+                            ThisYearDetailView(dateProvider: dateProvider)
                         } label: {
                             EventGaugeView(
                                 title: "This Year",
@@ -190,51 +194,23 @@ struct HomeView: View {
                                 unit: "days"
                             )
                         }
+                        .glassRow()
                         NavigationLink {
-                            let now = dateProvider.now()
-                            let calendar = dateProvider.calendar
-                            let currentYear = calendar.component(.year, from: now)
-                            let christmasThisYear = calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) ?? now
-                            let lastChristmas = now >= christmasThisYear
-                                ? christmasThisYear
-                                : (calendar.date(from: DateComponents(year: currentYear - 1, month: 12, day: 25)) ?? now)
-                            let nextChristmas = now >= christmasThisYear
-                                ? (calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) ?? now)
-                                : christmasThisYear
-                            let daysSinceLastChristmas = calendar.dateComponents([.day], from: lastChristmas, to: now).day ?? 0
-                            let daysBetweenChristmases = max(1, calendar.dateComponents([.day], from: lastChristmas, to: nextChristmas).day ?? 1)
-                            EventDetailView(
-                                title: christmas.name,
-                                count: christmas.count,
-                                unit: "days",
-                                gauge: EventDetailView.GaugeData(
-                                    value: daysSinceLastChristmas,
-                                    min: 0,
-                                    max: daysBetweenChristmases
-                                )
-                            )
+                            NextChristmasDetailView(dateProvider: dateProvider)
                         } label: {
                             EventPlainView(title: christmas.name, count: christmas.count, unit: "days")
                         }
+                        .glassRow()
                         NavigationLink {
-                            let totalMondays = annualMondays.totalMondaysInYear()
-                            let remainingMondays = annualMondays.remainingMondaysInYear()
-                            EventDetailView(
-                                title: annualMondays.name,
-                                count: annualMondays.count,
-                                unit: "times",
-                                gauge: EventDetailView.GaugeData(
-                                    value: max(0, totalMondays - remainingMondays),
-                                    min: 0,
-                                    max: max(1, totalMondays)
-                                )
-                            )
+                            RemainingMondaysDetailView(dateProvider: dateProvider)
                         } label: {
                             EventPlainView(title: annualMondays.name, count: annualMondays.count, unit: "times")
                         }
+                        .glassRow()
                     }
             }
         }
+        .glassScreen()
     }
 }
 

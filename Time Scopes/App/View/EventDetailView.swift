@@ -26,13 +26,22 @@ struct EventDetailView: View {
     let unit: String
     let gauge: GaugeData?
     let breakdown: [BreakdownItem]
+    let extraContent: AnyView?
 
-    init(title: String, count: Int, unit: String, gauge: GaugeData? = nil, breakdown: [BreakdownItem] = []) {
+    init(
+        title: String,
+        count: Int,
+        unit: String,
+        gauge: GaugeData? = nil,
+        breakdown: [BreakdownItem] = [],
+        extraContent: AnyView? = nil
+    ) {
         self.title = title
         self.count = count
         self.unit = unit
         self.gauge = gauge
         self.breakdown = breakdown
+        self.extraContent = extraContent
     }
 
     var body: some View {
@@ -60,6 +69,10 @@ struct EventDetailView: View {
                 .labelsHidden()
             }
 
+            if let extraContent {
+                extraContent
+            }
+
             if !breakdown.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Breakdown")
@@ -83,6 +96,7 @@ struct EventDetailView: View {
             Spacer()
         }
         .padding()
+        .glassScreen()
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
     }

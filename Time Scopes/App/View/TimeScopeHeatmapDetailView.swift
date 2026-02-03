@@ -82,6 +82,7 @@ struct TimeScopeHeatmapDetailView: View {
             }
             .padding()
         }
+        .glassScreen()
         .navigationTitle(unit.title)
         .navigationBarTitleDisplayMode(.inline)
     }

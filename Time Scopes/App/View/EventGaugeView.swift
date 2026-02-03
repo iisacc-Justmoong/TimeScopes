@@ -36,7 +36,5 @@ struct EventGaugeView: View {
             .labelsHidden()
             .font(.headline)
         }
-        .padding(.vertical, 8)
     }
 }
-
