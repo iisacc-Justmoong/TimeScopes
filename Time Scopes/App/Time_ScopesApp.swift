@@ -26,12 +26,25 @@ struct TimeScopeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            HomeView(lifeRemainingWorkingTime: LifeRemainingWorkingTime(userLivedTime: userLivedTime))
-                .environmentObject(userData)
-                .environmentObject(userLivedTime)
-                .environmentObject(monthCount)
-                .environmentObject(weekCount)
-                .environmentObject(dayCount)
+            TabView {
+                HomeView(lifeRemainingWorkingTime: LifeRemainingWorkingTime(userLivedTime: userLivedTime))
+                    .tabItem {
+                        Label("Home", systemImage: "house")
+                    }
+                CalendarView()
+                    .tabItem {
+                        Label("Calendar", systemImage: "calendar")
+                    }
+                PulseView()
+                    .tabItem {
+                        Label("Pulse", systemImage: "waveform")
+                    }
+            }
+            .environmentObject(userData)
+            .environmentObject(userLivedTime)
+            .environmentObject(monthCount)
+            .environmentObject(weekCount)
+            .environmentObject(dayCount)
         }
     }
 }
