@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 @main
 struct TimeScopeApp: App {
@@ -14,6 +15,8 @@ struct TimeScopeApp: App {
     @StateObject var monthCount: MonthCount
     @StateObject var weekCount: WeekCount
     @StateObject var dayCount: DayCount
+    @StateObject private var screenTimeAuth = ScreenTimeAuthorization()
+    @StateObject private var screenTimeMonitor = ScreenTimeMonitor()
 
     init() {
         let sharedUserData = UserData()
@@ -49,6 +52,18 @@ struct TimeScopeApp: App {
             .environmentObject(monthCount)
             .environmentObject(weekCount)
             .environmentObject(dayCount)
+            .environmentObject(screenTimeAuth)
+            .environmentObject(screenTimeMonitor)
+            .task {
+                screenTimeAuth.refresh()
+                await screenTimeMonitor.startMonitoringIfPossible()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                screenTimeAuth.refresh()
+                Task {
+                    await screenTimeMonitor.startMonitoringIfPossible()
+                }
+            }
         }
     }
 }

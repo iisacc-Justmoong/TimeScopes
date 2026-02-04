@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0A1C2D3E4F5A6B7C8D9E0F2 /* PulseReportExtension/DeviceActivityReportExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */; };
 		D2B7731DD2A5459491063CBB /* PulseReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5B25CD9825B84342B80C461A /* PulseReportExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		5B25CD9825B84342B80C461A /* PulseReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PulseReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseReportExtension/DeviceActivityReportExtension.swift; sourceTree = SOURCE_ROOT; };
 		F9216D852E0AAD3D0011A560 /* Time Scopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Scopes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -70,6 +72,7 @@
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
 				373B8C78A71240C4B6FF65C6 /* PulseReportExtension */,
 				F9216D862E0AAD3D0011A560 /* Products */,
+				F93565762F3347000059E08C /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,6 +83,14 @@
 				5B25CD9825B84342B80C461A /* PulseReportExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F93565762F3347000059E08C /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -180,6 +191,7 @@
 		9C0D4EE8A24D4EDEAF48002F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
+				B0A1C2D3E4F5A6B7C8D9E0F2 /* PulseReportExtension/DeviceActivityReportExtension.swift in Sources */,
 			);
 		};
 		F9216D812E0AAD3D0011A560 /* Sources */ = {

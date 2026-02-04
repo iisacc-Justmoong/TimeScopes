@@ -7,9 +7,12 @@
 
 import DeviceActivity
 import SwiftUI
+import UIKit
 
 struct PulseView: View {
-    @StateObject private var screenTimeAuth = ScreenTimeAuthorization()
+    @Environment(\.openURL) private var openURL
+    @EnvironmentObject private var screenTimeAuth: ScreenTimeAuthorization
+    @EnvironmentObject private var screenTimeMonitor: ScreenTimeMonitor
     @State private var shouldLoadReports = false
 
     var body: some View {
@@ -17,6 +20,9 @@ struct PulseView: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 20) {
                     headerSection
+                    if !screenTimeAuth.isAuthorized || !screenTimeMonitor.isMonitoring || screenTimeMonitor.lastError != nil {
+                        accessCard
+                    }
                     TimelineView(.periodic(from: Date(), by: 300)) { timeline in
                         VStack(alignment: .leading, spacing: 20) {
                             ReportCard(title: "Weekly Summary") {
@@ -57,10 +63,24 @@ struct PulseView: View {
         }
         .onAppear {
             screenTimeAuth.refresh()
+            Task {
+                await screenTimeMonitor.startMonitoringIfPossible()
+            }
             if !shouldLoadReports {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     shouldLoadReports = true
                 }
+            }
+        }
+        .onChange(of: screenTimeAuth.status) { _ in
+            Task {
+                await screenTimeMonitor.startMonitoringIfPossible()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            screenTimeAuth.refresh()
+            Task {
+                await screenTimeMonitor.startMonitoringIfPossible()
             }
         }
     }
@@ -73,6 +93,42 @@ struct PulseView: View {
             Text("Screen Time insights from your device.")
                 .foregroundStyle(.secondary)
                 .font(.callout)
+        }
+    }
+
+    private var accessCard: some View {
+        ReportCard(title: "Screen Time Access") {
+            Text("Allow Screen Time access to show usage data in Pulse.")
+                .foregroundStyle(.secondary)
+                .font(.callout)
+            Text("Status: \(screenTimeAuth.statusLabel())")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(screenTimeMonitor.isMonitoring ? "Monitoring: Active" : "Monitoring: Inactive")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            if let error = screenTimeMonitor.lastError {
+                Text("Monitoring error: \(error)")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+
+            if screenTimeAuth.status == .notDetermined {
+                Button("Allow Screen Time Access") {
+                    screenTimeAuth.requestAuthorization()
+                }
+                .disabled(screenTimeAuth.isRequesting)
+            } else if screenTimeAuth.status == .denied {
+                Button("Open Settings") {
+                    openSettings()
+                }
+            } else if screenTimeAuth.isAuthorized {
+                Button("Retry Monitoring") {
+                    Task {
+                        await screenTimeMonitor.startMonitoringIfPossible()
+                    }
+                }
+            }
         }
     }
 
@@ -124,6 +180,11 @@ struct PulseView: View {
         let end = calendar.date(byAdding: .day, value: 1, to: start) ?? date
         return DateInterval(start: start, end: end)
     }
+
+    private func openSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        openURL(url)
+    }
 }
 
 private struct ReportCard<Content: View>: View {
@@ -172,12 +233,11 @@ private struct PulseReportHost<Placeholder: View, Content: View>: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
+            placeholder()
+                .allowsHitTesting(false)
             if showReport {
                 content()
             }
-            placeholder()
-                .opacity(showReport ? 0.18 : 1)
-                .allowsHitTesting(false)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(minHeight: minHeight)
@@ -272,4 +332,6 @@ private extension DeviceActivityReport.Context {
 
 #Preview {
     PulseView()
+        .environmentObject(ScreenTimeAuthorization())
+        .environmentObject(ScreenTimeMonitor())
 }

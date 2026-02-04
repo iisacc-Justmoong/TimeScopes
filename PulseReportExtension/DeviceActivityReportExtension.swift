@@ -93,6 +93,12 @@ private struct PulseSummaryView: View {
                 .font(.subheadline)
                 .fontWeight(.semibold)
 
+            if configuration.totalDuration == 0 && configuration.totalPickups == 0 && configuration.topApps.isEmpty {
+                Text("No activity data yet. Usage appears after monitoring begins.")
+                    .foregroundStyle(.secondary)
+                    .font(.footnote)
+            }
+
             if configuration.topApps.isEmpty {
                 Text("No activity recorded yet.")
                     .foregroundStyle(.secondary)
@@ -133,6 +139,19 @@ private struct PulseTodayView: View {
             Text("Top Apps")
                 .font(.subheadline)
                 .fontWeight(.semibold)
+
+            if configuration.totalDuration == 0,
+               configuration.totalPickups == 0,
+               configuration.totalNotifications == 0,
+               configuration.longestActivityDuration == 0,
+               configuration.firstPickup == nil,
+               configuration.topApps.isEmpty,
+               configuration.topCategories.isEmpty,
+               configuration.topWebsites.isEmpty {
+                Text("No activity data yet. Usage appears after monitoring begins.")
+                    .foregroundStyle(.secondary)
+                    .font(.footnote)
+            }
 
             if configuration.topApps.isEmpty {
                 Text("No activity recorded yet.")

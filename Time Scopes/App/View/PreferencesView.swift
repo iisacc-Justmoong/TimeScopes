@@ -11,12 +11,12 @@ import SwiftUI
 
 struct PreferencesView: View {
     @Environment(\.openURL) private var openURL
+    @EnvironmentObject private var screenTimeAuth: ScreenTimeAuthorization
 
     @State private var calendarStatus = EKEventStore.authorizationStatus(for: .event)
     @State private var reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
     @State private var isRequestingCalendar = false
     @State private var isRequestingReminders = false
-    @StateObject private var screenTimeAuth = ScreenTimeAuthorization()
 
     private let store = EKEventStore()
 
@@ -208,4 +208,5 @@ private struct PreferenceStatusRow: View {
 
 #Preview {
     PreferencesView()
+        .environmentObject(ScreenTimeAuthorization())
 }
