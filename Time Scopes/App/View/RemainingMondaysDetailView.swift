@@ -45,14 +45,13 @@ struct RemainingMondaysDetailView: View {
                     EventDetailView.BreakdownItem(label: "Hours", value: remainingHours, unit: "hours"),
                     EventDetailView.BreakdownItem(label: "Minutes", value: remainingMinutes, unit: "minutes"),
                     EventDetailView.BreakdownItem(label: "Seconds", value: remainingSeconds, unit: "seconds")
-                ],
-                extraContent: AnyView(
-                    ProgressHeatmapView(
-                        totalCells: totalMondays,
-                        filledCells: mondaysPassed
-                    )
+                ]
+            ) {
+                ProgressHeatmapView(
+                    totalCells: totalMondays,
+                    filledCells: mondaysPassed
                 )
-            )
+            }
         }
     }
 

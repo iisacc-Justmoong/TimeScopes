@@ -173,10 +173,10 @@ struct HomeView: View {
                                 count: totalWeekdays,
                                 unit: "days",
                                 gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge),
-                                extraContent: AnyView(
+                                extraContent: {
                                     WeekdayScopeDetailContent(totalWeekdays: totalWeekdays)
                                         .environmentObject(userData)
-                                )
+                                }
                             )
                         } label: {
                             EventGaugeView(
@@ -231,71 +231,72 @@ struct HomeView: View {
 private struct WeekdayScopeDetailContent: View {
     @EnvironmentObject var userData: UserData
     let totalWeekdays: Int
+    @State private var now = Date()
+
+    private let timer = Timer.publish(every: 1.0, tolerance: 0.05, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        TimelineView(.periodic(from: Date(), by: 1)) { timeline in
-            let weeksEquivalent = totalWeekdays / 5
-            let monthsEquivalent = totalWeekdays / 21
-            let workHours = max(0, min(userData.workHoursPerDay, 24))
-            let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
-            let freeWorkHoursPerDay = max(0, 24 - workHours)
-            let freeWorkSleepHoursPerDay = max(0, 24 - workHours - sleepHours)
+        let weeksEquivalent = totalWeekdays / 5
+        let monthsEquivalent = totalWeekdays / 21
+        let workHours = max(0, min(userData.workHoursPerDay, 24))
+        let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
+        let freeWorkHoursPerDay = max(0, 24 - workHours)
+        let freeWorkSleepHoursPerDay = max(0, 24 - workHours - sleepHours)
 
-            let freeWorkSeconds = remainingFreeSeconds(
-                from: timeline.date,
-                to: userData.deathDate,
-                freeHoursPerDay: freeWorkHoursPerDay
-            )
-            let freeWorkMinutes = freeWorkSeconds / 60
-            let freeWorkHours = freeWorkSeconds / 3_600
+        let freeWorkSeconds = Int(remainingFreeSeconds(
+            from: now,
+            to: userData.deathDate,
+            freeHoursPerDay: freeWorkHoursPerDay
+        ).rounded(.down))
+        let freeWorkMinutes = freeWorkSeconds / 60
+        let freeWorkHours = freeWorkSeconds / 3_600
 
-            let freeWorkSleepSeconds = remainingFreeSeconds(
-                from: timeline.date,
-                to: userData.deathDate,
-                freeHoursPerDay: freeWorkSleepHoursPerDay
-            )
-            let freeWorkSleepMinutes = freeWorkSleepSeconds / 60
-            let freeWorkSleepHours = freeWorkSleepSeconds / 3_600
+        let freeWorkSleepSeconds = Int(remainingFreeSeconds(
+            from: now,
+            to: userData.deathDate,
+            freeHoursPerDay: freeWorkSleepHoursPerDay
+        ).rounded(.down))
+        let freeWorkSleepMinutes = freeWorkSleepSeconds / 60
+        let freeWorkSleepHours = freeWorkSleepSeconds / 3_600
 
-            VStack(alignment: .leading, spacing: 16) {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Daily Schedule")
-                        .font(.headline)
-                    Stepper(value: $userData.workHoursPerDay, in: 0...24) {
-                        Text("Work: \(userData.workHoursPerDay) hours/day")
-                    }
-                    Stepper(value: $userData.sleepHoursPerDay, in: 0...24) {
-                        Text("Sleep: \(userData.sleepHoursPerDay) hours/day")
-                    }
-                    if userData.workHoursPerDay + userData.sleepHoursPerDay > 24 {
-                        Text("Work + sleep exceeds 24 hours. Free time is clamped to 0.")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
+        return VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Daily Schedule")
+                    .font(.headline)
+                Stepper(value: $userData.workHoursPerDay, in: 0...24) {
+                    Text("Work: \(userData.workHoursPerDay) hours/day")
                 }
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Conversions")
-                        .font(.headline)
-                    WeekdayDetailRow(title: "Weeks (weekday)", value: weeksEquivalent, unit: "weeks")
-                    WeekdayDetailRow(title: "Months (weekday)", value: monthsEquivalent, unit: "months")
+                Stepper(value: $userData.sleepHoursPerDay, in: 0...24) {
+                    Text("Sleep: \(userData.sleepHoursPerDay) hours/day")
                 }
-
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Remaining Free Time (Work \(workHours)h)")
-                        .font(.headline)
-                    WeekdayDetailRow(title: "Hours", value: freeWorkHours, unit: "hours")
-                    WeekdayDetailRow(title: "Minutes", value: freeWorkMinutes, unit: "minutes")
-                    WeekdayDetailRow(title: "Seconds", value: freeWorkSeconds, unit: "seconds")
+                if userData.workHoursPerDay + userData.sleepHoursPerDay > 24 {
+                    Text("Work + sleep exceeds 24 hours. Free time is clamped to 0.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
+            }
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Remaining Free Time (Work \(workHours)h + Sleep \(sleepHours)h)")
-                        .font(.headline)
-                    WeekdayDetailRow(title: "Hours", value: freeWorkSleepHours, unit: "hours")
-                    WeekdayDetailRow(title: "Minutes", value: freeWorkSleepMinutes, unit: "minutes")
-                    WeekdayDetailRow(title: "Seconds", value: freeWorkSleepSeconds, unit: "seconds")
-                }
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Conversions")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Weeks (weekday)", value: weeksEquivalent, unit: "weeks")
+                WeekdayDetailRow(title: "Months (weekday)", value: monthsEquivalent, unit: "months")
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Remaining Free Time (Work \(workHours)h)")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Hours", value: freeWorkHours, unit: "hours")
+                WeekdayDetailRow(title: "Minutes", value: freeWorkMinutes, unit: "minutes")
+                WeekdayDetailRow(title: "Seconds", value: freeWorkSeconds, unit: "seconds")
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Remaining Free Time (Work \(workHours)h + Sleep \(sleepHours)h)")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Hours", value: freeWorkSleepHours, unit: "hours")
+                WeekdayDetailRow(title: "Minutes", value: freeWorkSleepMinutes, unit: "minutes")
+                WeekdayDetailRow(title: "Seconds", value: freeWorkSleepSeconds, unit: "seconds")
             }
         }
         .onChange(of: userData.workHoursPerDay) { _ in
@@ -304,11 +305,18 @@ private struct WeekdayScopeDetailContent: View {
         .onChange(of: userData.sleepHoursPerDay) { _ in
             userData.saveProfile()
         }
+        .onAppear {
+            now = snapToSecond(Date())
+        }
+        .onReceive(timer) { date in
+            now = snapToSecond(date)
+        }
     }
 
-    private func remainingFreeSeconds(from now: Date, to endDate: Date, freeHoursPerDay: Int) -> Int {
+    private func remainingFreeSeconds(from now: Date, to endDate: Date, freeHoursPerDay: Int) -> TimeInterval {
         guard freeHoursPerDay > 0 else { return 0 }
         let calendar = Calendar.autoupdatingCurrent
+        let dayInterval = calendar.dateInterval(of: .day, for: now)
         let startDay = calendar.startOfDay(for: now)
         let endDay = calendar.startOfDay(for: endDate)
         guard endDay >= startDay else { return 0 }
@@ -317,18 +325,23 @@ private struct WeekdayScopeDetailContent: View {
         let todayIsWeekday = isWeekday(startDay, calendar: calendar)
         let fullFutureWeekdays = max(0, totalWeekdays - (todayIsWeekday ? 1 : 0))
 
-        let dayEnd = calendar.date(byAdding: .day, value: 1, to: startDay) ?? startDay
+        let dayEnd = dayInterval?.end ?? calendar.date(byAdding: .day, value: 1, to: startDay) ?? startDay
         let endBoundary = calendar.date(byAdding: .day, value: 1, to: endDay) ?? endDay
         let effectiveDayEnd = min(dayEnd, endBoundary)
-        let remainingSecondsToday = max(0, Int(effectiveDayEnd.timeIntervalSince(now)))
-        let remainingFractionToday = min(1, Double(remainingSecondsToday) / 86_400.0)
+        let remainingSecondsToday = max(0, effectiveDayEnd.timeIntervalSince(now))
+        let dayDuration = max(1, dayInterval?.duration ?? 86_400)
+        let remainingFractionToday = min(1, remainingSecondsToday / dayDuration)
 
         let todayFreeSeconds = todayIsWeekday
-            ? Int(Double(freeHoursPerDay * 3_600) * remainingFractionToday)
+            ? Double(freeHoursPerDay * 3_600) * remainingFractionToday
             : 0
 
         let fullDaysSeconds = fullFutureWeekdays * freeHoursPerDay * 3_600
-        return max(0, todayFreeSeconds + fullDaysSeconds)
+        return max(0, todayFreeSeconds + Double(fullDaysSeconds))
+    }
+
+    private func snapToSecond(_ date: Date) -> Date {
+        Date(timeIntervalSince1970: floor(date.timeIntervalSince1970))
     }
 
     private func weekdaysBetween(startDay: Date, endDay: Date, calendar: Calendar) -> Int {

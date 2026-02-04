@@ -10,11 +10,12 @@ import SwiftUI
 
 struct PulseView: View {
     @StateObject private var screenTimeAuth = ScreenTimeAuthorization()
+    @State private var shouldLoadReports = false
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+                LazyVStack(alignment: .leading, spacing: 20) {
                     headerSection
                     TimelineView(.periodic(from: Date(), by: 300)) { timeline in
                         VStack(alignment: .leading, spacing: 20) {
@@ -22,10 +23,10 @@ struct PulseView: View {
                                 Text(weekRangeText(for: timeline.date))
                                     .foregroundStyle(.secondary)
                                     .font(.caption)
-                                if screenTimeAuth.isAuthorized {
+                                PulseReportHost(minHeight: 160, showReport: shouldLoadReports && screenTimeAuth.isAuthorized) {
+                                    SummaryPlaceholderView()
+                                } content: {
                                     DeviceActivityReport(.weeklySummary, filter: weeklySummaryFilter(for: timeline.date))
-                                } else {
-                                    ReportPlaceholder(message: "Enable Screen Time access in Preferences to view weekly summary.")
                                 }
                             }
 
@@ -33,18 +34,18 @@ struct PulseView: View {
                                 Text(dayRangeText(for: timeline.date))
                                     .foregroundStyle(.secondary)
                                     .font(.caption)
-                                if screenTimeAuth.isAuthorized {
+                                PulseReportHost(minHeight: 160, showReport: shouldLoadReports && screenTimeAuth.isAuthorized) {
+                                    SummaryPlaceholderView()
+                                } content: {
                                     DeviceActivityReport(.dailySummary, filter: dailySummaryFilter(for: timeline.date))
-                                } else {
-                                    ReportPlaceholder(message: "Enable Screen Time access in Preferences to view daily summary.")
                                 }
                             }
 
                             ReportCard(title: "Today's App Usage Report") {
-                                if screenTimeAuth.isAuthorized {
+                                PulseReportHost(minHeight: 260, showReport: shouldLoadReports && screenTimeAuth.isAuthorized) {
+                                    TodayPlaceholderView()
+                                } content: {
                                     DeviceActivityReport(.todayReport, filter: todayReportFilter(for: timeline.date))
-                                } else {
-                                    ReportPlaceholder(message: "Enable Screen Time access in Preferences to view today's report.")
                                 }
                             }
                         }
@@ -56,6 +57,11 @@ struct PulseView: View {
         }
         .onAppear {
             screenTimeAuth.refresh()
+            if !shouldLoadReports {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    shouldLoadReports = true
+                }
+            }
         }
     }
 
@@ -72,7 +78,7 @@ struct PulseView: View {
 
     private func weeklySummaryFilter(for date: Date) -> DeviceActivityFilter {
         DeviceActivityFilter(
-            segment: .daily(during: weekInterval(for: date)),
+            segment: .weekly(during: weekInterval(for: date)),
             users: .all,
             devices: .all
         )
@@ -143,6 +149,118 @@ private struct ReportPlaceholder: View {
                 .foregroundStyle(.secondary)
                 .font(.callout)
         }
+    }
+}
+
+private struct PulseReportHost<Placeholder: View, Content: View>: View {
+    let minHeight: CGFloat
+    let showReport: Bool
+    let placeholder: () -> Placeholder
+    let content: () -> Content
+
+    init(
+        minHeight: CGFloat,
+        showReport: Bool,
+        @ViewBuilder placeholder: @escaping () -> Placeholder,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.minHeight = minHeight
+        self.showReport = showReport
+        self.placeholder = placeholder
+        self.content = content
+    }
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if showReport {
+                content()
+            }
+            placeholder()
+                .opacity(showReport ? 0.18 : 1)
+                .allowsHitTesting(false)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(minHeight: minHeight)
+    }
+}
+
+private struct SummaryPlaceholderView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            PlaceholderMetricRow(label: "Total Time")
+            PlaceholderMetricRow(label: "Average Time")
+            PlaceholderMetricRow(label: "Pickups")
+
+            Divider().opacity(0.35)
+
+            Text("Top Apps After Pickup")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(.secondary)
+
+            ForEach(1...3, id: \.self) { rank in
+                PlaceholderRankedRow(rank: rank)
+            }
+        }
+        .font(.callout)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct TodayPlaceholderView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            PlaceholderMetricRow(label: "Total Time")
+            PlaceholderMetricRow(label: "Pickups")
+            PlaceholderMetricRow(label: "Notifications")
+            PlaceholderMetricRow(label: "Longest Session")
+            PlaceholderMetricRow(label: "First Pickup")
+
+            Divider().opacity(0.35)
+
+            Text("Top Apps")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(.secondary)
+
+            ForEach(1...5, id: \.self) { rank in
+                PlaceholderRankedRow(rank: rank)
+            }
+        }
+        .font(.callout)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct PlaceholderMetricRow: View {
+    let label: String
+
+    var body: some View {
+        HStack {
+            Text(label)
+            Spacer()
+            Text("—")
+                .foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.secondary)
+    }
+}
+
+private struct PlaceholderRankedRow: View {
+    let rank: Int
+
+    var body: some View {
+        HStack {
+            Text("\(rank)")
+                .foregroundStyle(.secondary)
+                .frame(width: 18, alignment: .leading)
+            Text("—")
+                .foregroundStyle(.secondary)
+            Spacer()
+            Text("—")
+                .foregroundStyle(.secondary)
+        }
+        .foregroundStyle(.secondary)
     }
 }
 

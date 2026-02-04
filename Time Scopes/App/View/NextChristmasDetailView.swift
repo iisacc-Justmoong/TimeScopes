@@ -58,14 +58,13 @@ struct NextChristmasDetailView: View {
                     EventDetailView.BreakdownItem(label: "Hours", value: remainingHours, unit: "hours"),
                     EventDetailView.BreakdownItem(label: "Minutes", value: remainingMinutes, unit: "minutes"),
                     EventDetailView.BreakdownItem(label: "Seconds", value: remainingSeconds, unit: "seconds")
-                ],
-                extraContent: AnyView(
-                    ProgressHeatmapView(
-                        totalCells: totalDaysBetween,
-                        filledCells: elapsedDays
-                    )
+                ]
+            ) {
+                ProgressHeatmapView(
+                    totalCells: totalDaysBetween,
+                    filledCells: elapsedDays
                 )
-            )
+            }
         }
     }
 }

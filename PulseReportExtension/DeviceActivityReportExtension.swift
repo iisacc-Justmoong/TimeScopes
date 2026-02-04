@@ -108,6 +108,8 @@ private struct PulseSummaryView: View {
             }
         }
         .font(.callout)
+        .foregroundStyle(.primary)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -177,6 +179,8 @@ private struct PulseTodayView: View {
             }
         }
         .font(.callout)
+        .foregroundStyle(.primary)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EventDetailView: View {
+struct EventDetailView<ExtraContent: View>: View {
     struct GaugeData {
         let value: Int
         let min: Int
@@ -26,7 +26,24 @@ struct EventDetailView: View {
     let unit: String
     let gauge: GaugeData?
     let breakdown: [BreakdownItem]
-    let extraContent: AnyView?
+    let extraContent: () -> ExtraContent
+    let showsExtraContent: Bool
+
+    init(
+        title: String,
+        count: Int,
+        unit: String,
+        gauge: GaugeData? = nil,
+        breakdown: [BreakdownItem] = []
+    ) where ExtraContent == EmptyView {
+        self.title = title
+        self.count = count
+        self.unit = unit
+        self.gauge = gauge
+        self.breakdown = breakdown
+        self.extraContent = { EmptyView() }
+        self.showsExtraContent = false
+    }
 
     init(
         title: String,
@@ -34,7 +51,7 @@ struct EventDetailView: View {
         unit: String,
         gauge: GaugeData? = nil,
         breakdown: [BreakdownItem] = [],
-        extraContent: AnyView? = nil
+        @ViewBuilder extraContent: @escaping () -> ExtraContent
     ) {
         self.title = title
         self.count = count
@@ -42,6 +59,7 @@ struct EventDetailView: View {
         self.gauge = gauge
         self.breakdown = breakdown
         self.extraContent = extraContent
+        self.showsExtraContent = true
     }
 
     var body: some View {
@@ -70,8 +88,8 @@ struct EventDetailView: View {
                     .labelsHidden()
                 }
 
-                if let extraContent {
-                    extraContent
+                if showsExtraContent {
+                    extraContent()
                 }
 
                 if !breakdown.isEmpty {
