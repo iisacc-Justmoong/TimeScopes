@@ -206,7 +206,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = PulseReportExtension-Info.plist;
+				INFOPLIST_FILE = "PulseReportExtension-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -230,7 +230,7 @@
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
 				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = PulseReportExtension-Info.plist;
+				INFOPLIST_FILE = "PulseReportExtension-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

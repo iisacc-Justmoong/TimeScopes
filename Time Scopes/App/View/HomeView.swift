@@ -17,6 +17,7 @@ struct HomeView: View {
     @EnvironmentObject var dayCount: DayCount
     
     @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
+    @StateObject private var weekdayTicker = SecondTicker()
     
     private let dateProvider: DateProviding
     private let nextEventCalculator: NextEventCalculating
@@ -174,7 +175,10 @@ struct HomeView: View {
                                 unit: "days",
                                 gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge),
                                 extraContent: {
-                                    WeekdayScopeDetailContent(totalWeekdays: totalWeekdays)
+                                    WeekdayScopeDetailContent(
+                                        totalWeekdays: totalWeekdays,
+                                        ticker: weekdayTicker
+                                    )
                                         .environmentObject(userData)
                                 }
                             )
@@ -231,33 +235,21 @@ struct HomeView: View {
 private struct WeekdayScopeDetailContent: View {
     @EnvironmentObject var userData: UserData
     let totalWeekdays: Int
-    @State private var now = Date()
-
-    private let timer = Timer.publish(every: 1.0, tolerance: 0.05, on: .main, in: .common).autoconnect()
+    @ObservedObject var ticker: SecondTicker
+    @State private var remainingWorkSeconds: Int = 0
+    @State private var remainingWorkSleepSeconds: Int = 0
+    @State private var lastTick: Date = Date()
 
     var body: some View {
         let weeksEquivalent = totalWeekdays / 5
         let monthsEquivalent = totalWeekdays / 21
         let workHours = max(0, min(userData.workHoursPerDay, 24))
         let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
-        let freeWorkHoursPerDay = max(0, 24 - workHours)
-        let freeWorkSleepHoursPerDay = max(0, 24 - workHours - sleepHours)
+        let freeWorkMinutes = remainingWorkSeconds / 60
+        let freeWorkHours = remainingWorkSeconds / 3_600
 
-        let freeWorkSeconds = Int(remainingFreeSeconds(
-            from: now,
-            to: userData.deathDate,
-            freeHoursPerDay: freeWorkHoursPerDay
-        ).rounded(.down))
-        let freeWorkMinutes = freeWorkSeconds / 60
-        let freeWorkHours = freeWorkSeconds / 3_600
-
-        let freeWorkSleepSeconds = Int(remainingFreeSeconds(
-            from: now,
-            to: userData.deathDate,
-            freeHoursPerDay: freeWorkSleepHoursPerDay
-        ).rounded(.down))
-        let freeWorkSleepMinutes = freeWorkSleepSeconds / 60
-        let freeWorkSleepHours = freeWorkSleepSeconds / 3_600
+        let freeWorkSleepMinutes = remainingWorkSleepSeconds / 60
+        let freeWorkSleepHours = remainingWorkSleepSeconds / 3_600
 
         return VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 12) {
@@ -288,7 +280,7 @@ private struct WeekdayScopeDetailContent: View {
                     .font(.headline)
                 WeekdayDetailRow(title: "Hours", value: freeWorkHours, unit: "hours")
                 WeekdayDetailRow(title: "Minutes", value: freeWorkMinutes, unit: "minutes")
-                WeekdayDetailRow(title: "Seconds", value: freeWorkSeconds, unit: "seconds")
+                WeekdayDetailRow(title: "Seconds", value: remainingWorkSeconds, unit: "seconds")
             }
 
             VStack(alignment: .leading, spacing: 8) {
@@ -296,21 +288,49 @@ private struct WeekdayScopeDetailContent: View {
                     .font(.headline)
                 WeekdayDetailRow(title: "Hours", value: freeWorkSleepHours, unit: "hours")
                 WeekdayDetailRow(title: "Minutes", value: freeWorkSleepMinutes, unit: "minutes")
-                WeekdayDetailRow(title: "Seconds", value: freeWorkSleepSeconds, unit: "seconds")
+                WeekdayDetailRow(title: "Seconds", value: remainingWorkSleepSeconds, unit: "seconds")
             }
         }
         .onChange(of: userData.workHoursPerDay) { _ in
             userData.saveProfile()
+            resetCountdown(at: ticker.now)
         }
         .onChange(of: userData.sleepHoursPerDay) { _ in
             userData.saveProfile()
+            resetCountdown(at: ticker.now)
+        }
+        .onChange(of: userData.deathDate) { _ in
+            resetCountdown(at: ticker.now)
         }
         .onAppear {
-            now = snapToSecond(Date())
+            resetCountdown(at: ticker.now)
         }
-        .onReceive(timer) { date in
-            now = snapToSecond(date)
+        .onReceive(ticker.$now) { updated in
+            let delta = max(0, Int(updated.timeIntervalSince(lastTick).rounded(.down)))
+            guard delta > 0 else { return }
+            remainingWorkSeconds = max(0, remainingWorkSeconds - delta)
+            remainingWorkSleepSeconds = max(0, remainingWorkSleepSeconds - delta)
+            lastTick = updated
         }
+    }
+
+    private func resetCountdown(at date: Date) {
+        let workHours = max(0, min(userData.workHoursPerDay, 24))
+        let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
+        let freeWorkHoursPerDay = max(0, 24 - workHours)
+        let freeWorkSleepHoursPerDay = max(0, 24 - workHours - sleepHours)
+
+        remainingWorkSeconds = Int(ceil(remainingFreeSeconds(
+            from: date,
+            to: userData.deathDate,
+            freeHoursPerDay: freeWorkHoursPerDay
+        )))
+        remainingWorkSleepSeconds = Int(ceil(remainingFreeSeconds(
+            from: date,
+            to: userData.deathDate,
+            freeHoursPerDay: freeWorkSleepHoursPerDay
+        )))
+        lastTick = date
     }
 
     private func remainingFreeSeconds(from now: Date, to endDate: Date, freeHoursPerDay: Int) -> TimeInterval {
@@ -340,9 +360,6 @@ private struct WeekdayScopeDetailContent: View {
         return max(0, todayFreeSeconds + Double(fullDaysSeconds))
     }
 
-    private func snapToSecond(_ date: Date) -> Date {
-        Date(timeIntervalSince1970: floor(date.timeIntervalSince1970))
-    }
 
     private func weekdaysBetween(startDay: Date, endDay: Date, calendar: Calendar) -> Int {
         let daysBetween = calendar.dateComponents([.day], from: startDay, to: endDay).day ?? 0
