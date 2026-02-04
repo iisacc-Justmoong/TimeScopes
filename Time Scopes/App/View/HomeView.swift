@@ -162,11 +162,16 @@ struct HomeView: View {
                         }
                     .glassRow()
                         NavigationLink {
+                            let totalWeekdays = lifeRemainingWorkingTime.remainingWorkingDays
                             EventDetailView(
                                 title: "Remaining Weekdays in Scope",
-                                count: lifeRemainingWorkingTime.remainingWorkingDays,
+                                count: totalWeekdays,
                                 unit: "days",
-                                gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge)
+                                gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge),
+                                extraContent: AnyView(
+                                    WeekdayScopeDetailContent(totalWeekdays: totalWeekdays)
+                                        .environmentObject(userData)
+                                )
                             )
                         } label: {
                             EventGaugeView(
@@ -214,6 +219,93 @@ struct HomeView: View {
             .background(GlassScreenBackground())
         }
         .glassScreen()
+    }
+}
+
+private struct WeekdayScopeDetailContent: View {
+    @EnvironmentObject var userData: UserData
+    let totalWeekdays: Int
+
+    var body: some View {
+        let weeksEquivalent = totalWeekdays / 5
+        let monthsEquivalent = totalWeekdays / 21
+        let workHours = max(0, min(userData.workHoursPerDay, 24))
+        let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
+        let freeWorkHoursPerDay = max(0, 24 - workHours)
+        let freeWorkSleepHoursPerDay = max(0, 24 - workHours - sleepHours)
+
+        let freeWorkSeconds = totalWeekdays * freeWorkHoursPerDay * 3_600
+        let freeWorkMinutes = freeWorkSeconds / 60
+        let freeWorkHours = freeWorkSeconds / 3_600
+
+        let freeWorkSleepSeconds = totalWeekdays * freeWorkSleepHoursPerDay * 3_600
+        let freeWorkSleepMinutes = freeWorkSleepSeconds / 60
+        let freeWorkSleepHours = freeWorkSleepSeconds / 3_600
+
+        return VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Daily Schedule")
+                    .font(.headline)
+                Stepper(value: $userData.workHoursPerDay, in: 0...24) {
+                    Text("Work: \(userData.workHoursPerDay) hours/day")
+                }
+                Stepper(value: $userData.sleepHoursPerDay, in: 0...24) {
+                    Text("Sleep: \(userData.sleepHoursPerDay) hours/day")
+                }
+                if userData.workHoursPerDay + userData.sleepHoursPerDay > 24 {
+                    Text("Work + sleep exceeds 24 hours. Free time is clamped to 0.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Conversions")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Weeks (weekday)", value: weeksEquivalent, unit: "weeks")
+                WeekdayDetailRow(title: "Months (weekday)", value: monthsEquivalent, unit: "months")
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Free Time (Work \(workHours)h)")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Hours", value: freeWorkHours, unit: "hours")
+                WeekdayDetailRow(title: "Minutes", value: freeWorkMinutes, unit: "minutes")
+                WeekdayDetailRow(title: "Seconds", value: freeWorkSeconds, unit: "seconds")
+            }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Free Time (Work \(workHours)h + Sleep \(sleepHours)h)")
+                    .font(.headline)
+                WeekdayDetailRow(title: "Hours", value: freeWorkSleepHours, unit: "hours")
+                WeekdayDetailRow(title: "Minutes", value: freeWorkSleepMinutes, unit: "minutes")
+                WeekdayDetailRow(title: "Seconds", value: freeWorkSleepSeconds, unit: "seconds")
+            }
+        }
+        .onChange(of: userData.workHoursPerDay) { _ in
+            userData.saveProfile()
+        }
+        .onChange(of: userData.sleepHoursPerDay) { _ in
+            userData.saveProfile()
+        }
+    }
+}
+
+private struct WeekdayDetailRow: View {
+    let title: String
+    let value: Int
+    let unit: String
+
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.callout)
+            Spacer()
+            Text("\(value) \(unit)")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundStyle(Color.accentColor)
+        }
     }
 }
 

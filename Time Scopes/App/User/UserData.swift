@@ -23,6 +23,8 @@ final class UserData: ObservableObject {
     @Published var age: Int = 0
     @Published var deathAge: Int = 80
     @Published var sex: String = "Male"
+    @Published var workHoursPerDay: Int = 8
+    @Published var sleepHoursPerDay: Int = 8
 
     private let store: UserProfileStoring
     private let ageCalculator: AgeCalculating
@@ -55,7 +57,9 @@ final class UserData: ObservableObject {
             name: name,
             birthday: birthday,
             deathDate: deathDate,
-            sex: sex
+            sex: sex,
+            workHoursPerDay: workHoursPerDay,
+            sleepHoursPerDay: sleepHoursPerDay
         )
     }
 
@@ -64,6 +68,8 @@ final class UserData: ObservableObject {
         birthday = profile.birthday
         deathDate = profile.deathDate
         sex = profile.sex
+        workHoursPerDay = profile.workHoursPerDay
+        sleepHoursPerDay = profile.sleepHoursPerDay
     }
 
     private func updateDerivedFields() {

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject var userData: UserData
+    @StateObject private var eventProvider = CalendarEventProvider()
+    @StateObject private var reminderProvider = ReminderProvider()
 
     @State private var displayedMonth: Date
     @State private var selectedDate: Date
@@ -36,7 +38,8 @@ struct CalendarView: View {
         let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: displayedMonth)) ?? displayedMonth
         let metadata = monthMetadata(for: monthStart, calendar: calendar)
         let weekdaySymbols = weekdaySymbols(for: calendar)
-        let events = monthEvents(monthStart: monthStart, calendar: calendar)
+        let events = eventProvider.events
+        let reminders = reminderProvider.reminders
 
         NavigationStack {
             ScrollView {
@@ -52,7 +55,7 @@ struct CalendarView: View {
                     dayInsights(for: selectedDate, calendar: calendar)
                         .glassCard()
 
-                    monthHighlights(events: events)
+                    monthHighlights(events: events, reminders: reminders)
                         .glassCard()
                 }
                 .padding()
@@ -63,9 +66,16 @@ struct CalendarView: View {
             if !calendar.isDate(selectedDate, equalTo: newValue, toGranularity: .month) {
                 selectedDate = newValue
             }
+            let newMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: newValue)) ?? newValue
+            refreshAgenda(for: newMonthStart, calendar: calendar)
         }
         .onChange(of: selectedDate) { newValue in
             jumpDate = newValue
+        }
+        .task {
+            await eventProvider.requestAccessIfNeeded()
+            await reminderProvider.requestAccessIfNeeded()
+            refreshAgenda(for: monthStart, calendar: calendar)
         }
         .sheet(isPresented: $isJumpPresented) {
             JumpDatePicker(
@@ -177,6 +187,9 @@ struct CalendarView: View {
         let ageOnDate = ageCalculator.age(birthday: userData.birthday, now: date)
         let ageLabel = ageOnDate < 0 ? "Before birth" : "\(ageOnDate) yrs"
         let badges = dayBadges(for: date, calendar: calendar)
+        let dayEvents = eventProvider.events(on: date)
+        let dayReminders = reminderProvider.reminders(on: date)
+        let agendaItems = agendaItems(events: dayEvents, reminders: dayReminders)
 
         return VStack(alignment: .leading, spacing: 12) {
             Text(fullDateTitle(date))
@@ -202,33 +215,79 @@ struct CalendarView: View {
                 InsightRow(title: "From today", value: formatSigned(daysFromToday) + " days")
                 InsightRow(title: "Age", value: ageLabel)
             }
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Agenda")
+                    .font(.headline)
+                if agendaItems.isEmpty {
+                    Text("No events or reminders.")
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                } else {
+                    ForEach(agendaItems) { item in
+                        AgendaItemRow(item: item)
+                    }
+                }
+
+                if !eventProvider.hasAccess {
+                    Text("Calendar access not granted.")
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                } else if !eventProvider.hasICloudCalendars {
+                    Text("No iCloud calendars found. Move events into an iCloud calendar in Apple Calendar.")
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                }
+
+                if !reminderProvider.hasAccess {
+                    Text("Reminders access not granted.")
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                } else if !reminderProvider.hasICloudReminders {
+                    Text("No iCloud reminder lists found. Use an iCloud list in Reminders.")
+                        .foregroundStyle(.secondary)
+                        .font(.caption)
+                }
+            }
+            .padding(.top, 4)
         }
     }
 
-    private func monthHighlights(events: [CalendarEvent]) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Month Highlights")
+    private func monthHighlights(events: [CalendarEventItem], reminders: [ReminderItem]) -> some View {
+        let agendaItems = agendaItems(events: events, reminders: reminders)
+
+        return VStack(alignment: .leading, spacing: 12) {
+            Text("Agenda This Month")
                 .font(.headline)
 
-            if events.isEmpty {
-                Text("No highlights this month.")
+            if agendaItems.isEmpty {
+                Text("No events or reminders this month.")
                     .foregroundStyle(.secondary)
                     .font(.callout)
             } else {
-                ForEach(events) { event in
-                    HStack(spacing: 12) {
-                        Image(systemName: event.symbol)
-                            .foregroundStyle(event.color)
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(event.title)
-                                .font(.callout)
-                            Text(event.date, format: .dateTime.year().month().day())
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                    }
+                ForEach(agendaItems) { item in
+                    AgendaMonthRow(item: item)
                 }
+            }
+
+            if !eventProvider.hasAccess {
+                Text("Calendar access not granted.")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            } else if !eventProvider.hasICloudCalendars {
+                Text("No iCloud calendars found. Move events into an iCloud calendar in Apple Calendar.")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
+
+            if !reminderProvider.hasAccess {
+                Text("Reminders access not granted.")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            } else if !reminderProvider.hasICloudReminders {
+                Text("No iCloud reminder lists found. Use an iCloud list in Reminders.")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
             }
         }
     }
@@ -263,19 +322,25 @@ struct CalendarView: View {
         let year = calendar.component(.year, from: date)
 
         if calendar.isDate(date, inSameDayAs: dateProvider.now()) {
-            markers.append(.today)
+            markers.append(CalendarMarker(color: .accentColor))
         }
 
         if let birthdayInYear = birthdayDate(in: year, calendar: calendar),
            calendar.isDate(date, inSameDayAs: birthdayInYear) {
-            markers.append(.birthday)
+            markers.append(CalendarMarker(color: .pink))
         }
 
         if calendar.isDate(date, inSameDayAs: userData.deathDate) {
-            markers.append(.end)
+            markers.append(CalendarMarker(color: .orange))
         }
 
-        return markers
+        let remainingSlotsAfterFixed = max(0, 3 - markers.count)
+        let eventColors = eventProvider.markerColors(for: date, limit: remainingSlotsAfterFixed)
+        markers.append(contentsOf: eventColors.map { CalendarMarker(color: $0) })
+        let remainingSlotsAfterEvents = max(0, 3 - markers.count)
+        let reminderColors = reminderProvider.markerColors(for: date, limit: remainingSlotsAfterEvents)
+        markers.append(contentsOf: reminderColors.map { CalendarMarker(color: $0) })
+        return Array(markers.prefix(3))
     }
 
     private func dayBadges(for date: Date, calendar: Calendar) -> [String] {
@@ -310,38 +375,10 @@ struct CalendarView: View {
         return nil
     }
 
-    private func monthEvents(monthStart: Date, calendar: Calendar) -> [CalendarEvent] {
-        var events: [CalendarEvent] = []
-        let year = calendar.component(.year, from: monthStart)
-
-        if calendar.isDate(dateProvider.now(), equalTo: monthStart, toGranularity: .month) {
-            events.append(CalendarEvent(title: "Today", date: dateProvider.now(), symbol: "circle.fill", color: .accentColor))
-        }
-
-        if let birthday = birthdayDate(in: year, calendar: calendar),
-           calendar.isDate(birthday, equalTo: monthStart, toGranularity: .month) {
-            events.append(CalendarEvent(title: "Birthday", date: birthday, symbol: "gift.fill", color: .pink))
-        }
-
-        if calendar.isDate(userData.deathDate, equalTo: monthStart, toGranularity: .month) {
-            events.append(CalendarEvent(title: "End Date", date: userData.deathDate, symbol: "flag.fill", color: .orange))
-        }
-
-        return events.sorted { $0.date < $1.date }
-    }
-
     private struct MonthMetadata {
         let monthStart: Date
         let daysInMonth: Int
         let leadingEmptyDays: Int
-    }
-
-    private struct CalendarEvent: Identifiable {
-        let id = UUID()
-        let title: String
-        let date: Date
-        let symbol: String
-        let color: Color
     }
 
 }
@@ -362,7 +399,7 @@ private struct CalendarDayCell: View {
                     .foregroundStyle(isSelected ? Color.accentColor : .primary)
                 if !markers.isEmpty {
                     HStack(spacing: 3) {
-                        ForEach(markers, id: \.self) { marker in
+                        ForEach(markers) { marker in
                             Circle()
                                 .fill(marker.color)
                                 .frame(width: 4, height: 4)
@@ -455,20 +492,121 @@ private enum SheetHeightKey: PreferenceKey {
     }
 }
 
-private enum CalendarMarker: CaseIterable {
-    case today
-    case birthday
-    case end
+private struct CalendarMarker: Identifiable {
+    let id = UUID()
+    let color: Color
+}
 
-    var color: Color {
-        switch self {
-        case .today:
-            return .accentColor
-        case .birthday:
-            return .pink
-        case .end:
-            return .orange
+private struct CalendarEventRow: View {
+    let event: CalendarEventItem
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Circle()
+                .fill(event.color)
+                .frame(width: 8, height: 8)
+            Text(event.title)
+                .font(.callout)
+            Spacer()
+            Text(timeLabel(for: event))
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
+    }
+
+    private func timeLabel(for event: CalendarEventItem) -> String {
+        if event.isAllDay {
+            return "All day"
+        }
+        let formatter = CalendarView.timeFormatter
+        return "\(formatter.string(from: event.startDate)) - \(formatter.string(from: event.endDate))"
+    }
+}
+
+private struct AgendaItem: Identifiable {
+    enum Kind {
+        case event
+        case reminder
+    }
+
+    let id: String
+    let kind: Kind
+    let title: String
+    let startDate: Date
+    let endDate: Date
+    let isAllDay: Bool
+    let color: Color
+}
+
+private struct AgendaItemRow: View {
+    let item: AgendaItem
+
+    var body: some View {
+        HStack(spacing: 8) {
+            if item.kind == .reminder {
+                Image(systemName: "checkmark.circle")
+                    .foregroundStyle(item.color)
+            } else {
+                Circle()
+                    .fill(item.color)
+                    .frame(width: 8, height: 8)
+            }
+            Text(item.title)
+                .font(.callout)
+            Spacer()
+            Text(timeLabel(for: item))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func timeLabel(for item: AgendaItem) -> String {
+        if item.isAllDay {
+            return "All day"
+        }
+        let formatter = CalendarView.timeFormatter
+        if item.kind == .reminder {
+            return formatter.string(from: item.startDate)
+        }
+        return "\(formatter.string(from: item.startDate)) - \(formatter.string(from: item.endDate))"
+    }
+}
+
+private struct AgendaMonthRow: View {
+    let item: AgendaItem
+
+    var body: some View {
+        HStack(spacing: 12) {
+            if item.kind == .reminder {
+                Image(systemName: "checkmark.circle")
+                    .foregroundStyle(item.color)
+            } else {
+                Circle()
+                    .fill(item.color)
+                    .frame(width: 8, height: 8)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.title)
+                    .font(.callout)
+                Text(item.startDate, format: .dateTime.year().month().day())
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                if !item.isAllDay {
+                    Text(timeRange(for: item))
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Spacer()
+        }
+    }
+
+    private func timeRange(for item: AgendaItem) -> String {
+        let formatter = CalendarView.timeFormatter
+        if item.kind == .reminder {
+            return formatter.string(from: item.startDate)
+        }
+        return "\(formatter.string(from: item.startDate)) - \(formatter.string(from: item.endDate))"
     }
 }
 
@@ -484,6 +622,64 @@ private extension CalendarView {
         formatter.dateStyle = .full
         return formatter
     }()
+
+    static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .none
+        return formatter
+    }()
+}
+
+private extension CalendarView {
+    func refreshAgenda(for monthStart: Date, calendar: Calendar) {
+        let interval = monthInterval(for: monthStart, calendar: calendar)
+        eventProvider.refreshEvents(in: interval)
+        reminderProvider.refreshReminders(in: interval)
+    }
+
+    func monthInterval(for monthStart: Date, calendar: Calendar) -> DateInterval {
+        let start = calendar.startOfDay(for: monthStart)
+        let end = calendar.date(byAdding: .month, value: 1, to: start) ?? start
+        return DateInterval(start: start, end: end)
+    }
+
+    func agendaItems(events: [CalendarEventItem], reminders: [ReminderItem]) -> [AgendaItem] {
+        let eventItems = events.map {
+            AgendaItem(
+                id: "event-\($0.id)",
+                kind: .event,
+                title: $0.title,
+                startDate: $0.startDate,
+                endDate: $0.endDate,
+                isAllDay: $0.isAllDay,
+                color: $0.color
+            )
+        }
+        let reminderItems = reminders.map {
+            AgendaItem(
+                id: "reminder-\($0.id)",
+                kind: .reminder,
+                title: $0.title,
+                startDate: $0.dueDate,
+                endDate: $0.dueDate,
+                isAllDay: $0.isAllDay,
+                color: $0.color
+            )
+        }
+        return (eventItems + reminderItems).sorted { lhs, rhs in
+            if lhs.startDate != rhs.startDate {
+                return lhs.startDate < rhs.startDate
+            }
+            if lhs.isAllDay != rhs.isAllDay {
+                return lhs.isAllDay
+            }
+            if lhs.kind != rhs.kind {
+                return lhs.kind == .event
+            }
+            return lhs.title < rhs.title
+        }
+    }
 }
 
 #Preview {

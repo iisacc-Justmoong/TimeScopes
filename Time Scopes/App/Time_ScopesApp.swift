@@ -39,6 +39,10 @@ struct TimeScopeApp: App {
                     .tabItem {
                         Label("Pulse", systemImage: "waveform")
                     }
+                PreferencesView()
+                    .tabItem {
+                        Label("Preferences", systemImage: "gearshape")
+                    }
             }
             .environmentObject(userData)
             .environmentObject(userLivedTime)

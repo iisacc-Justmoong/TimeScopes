@@ -12,4 +12,6 @@ struct UserProfile: Codable {
     var birthday: Date
     var deathDate: Date
     var sex: String
+    var workHoursPerDay: Int
+    var sleepHoursPerDay: Int
 }

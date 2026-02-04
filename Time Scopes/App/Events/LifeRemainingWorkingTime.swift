@@ -13,37 +13,40 @@ final class LifeRemainingWorkingTime: ObservableObject {
     @Published var remainingWorkingHours: Int = 0
 
     let userLivedTime: UserLivedTime
-    private let workingTimeCalculator: WorkingTimeCalculating
     private let dateProvider: DateProviding
     private var cancellables: Set<AnyCancellable> = []
 
     init(
         userLivedTime: UserLivedTime,
-        workingTimeCalculator: WorkingTimeCalculating = WorkingTimeCalculator(),
         dateProvider: DateProviding = SystemDateProvider()
     ) {
         self.userLivedTime = userLivedTime
-        self.workingTimeCalculator = workingTimeCalculator
         self.dateProvider = dateProvider
         updateRemainingWorkingTime()
         bindUpdates()
     }
 
     func updateRemainingWorkingTime() {
-        let today = dateProvider.today()
-        let workingTime = workingTimeCalculator.remainingWorkingTime(
-            from: today,
-            currentAge: userLivedTime.userData.age,
-            deathAge: userLivedTime.userData.deathAge
-        )
+        let startDate = dateProvider.calendar.startOfDay(for: userLivedTime.userData.birthday)
+        let endDate = dateProvider.calendar.startOfDay(for: userLivedTime.userData.deathDate)
+        guard endDate >= startDate else {
+            remainingWorkingDays = 0
+            remainingWorkingHours = 0
+            return
+        }
 
-        remainingWorkingDays = workingTime.remainingWorkingDays
-        remainingWorkingHours = workingTime.remainingWorkingHours
+        let weekdays = countWeekdays(from: startDate, to: endDate)
+        let workHoursPerDay = max(0, min(userLivedTime.userData.workHoursPerDay, 24))
+        remainingWorkingDays = weekdays
+        remainingWorkingHours = weekdays * workHoursPerDay
     }
 
     private func bindUpdates() {
-        userLivedTime.userData.$age
-            .merge(with: userLivedTime.userData.$deathAge)
+        let birthdayChanges = userLivedTime.userData.$birthday.map { _ in () }
+        let deathChanges = userLivedTime.userData.$deathDate.map { _ in () }
+        let workHoursChanges = userLivedTime.userData.$workHoursPerDay.map { _ in () }
+
+        Publishers.Merge3(birthdayChanges, deathChanges, workHoursChanges)
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.updateRemainingWorkingTime()
@@ -56,5 +59,23 @@ final class LifeRemainingWorkingTime: ObservableObject {
                 self?.updateRemainingWorkingTime()
             }
             .store(in: &cancellables)
+    }
+
+    private func countWeekdays(from startDate: Date, to endDate: Date) -> Int {
+        var count = 0
+        var date = startDate
+
+        while date <= endDate {
+            let weekday = dateProvider.calendar.component(.weekday, from: date)
+            if weekday != 1 && weekday != 7 {
+                count += 1
+            }
+            guard let next = dateProvider.calendar.date(byAdding: .day, value: 1, to: date) else {
+                break
+            }
+            date = next
+        }
+
+        return count
     }
 }

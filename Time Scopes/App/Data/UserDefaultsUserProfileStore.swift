@@ -27,7 +27,9 @@ struct UserDefaultsUserProfileStore: UserProfileStoring {
             name: snapshot.name,
             birthday: snapshot.birthday,
             deathDate: snapshot.deathDate,
-            sex: snapshot.sex
+            sex: snapshot.sex,
+            workHoursPerDay: snapshot.workHoursPerDay ?? 8,
+            sleepHoursPerDay: snapshot.sleepHoursPerDay ?? 8
         )
     }
 
@@ -39,7 +41,9 @@ struct UserDefaultsUserProfileStore: UserProfileStoring {
             deathDate: profile.deathDate,
             age: nil,
             deathAge: nil,
-            sex: profile.sex
+            sex: profile.sex,
+            workHoursPerDay: profile.workHoursPerDay,
+            sleepHoursPerDay: profile.sleepHoursPerDay
         )
         if let encoded = try? encoder.encode(snapshot) {
             userDefaults.set(encoded, forKey: userDefaultsKey)
@@ -54,4 +58,6 @@ private struct UserProfileSnapshot: Codable {
     var age: Int?
     var deathAge: Int?
     var sex: String
+    var workHoursPerDay: Int?
+    var sleepHoursPerDay: Int?
 }
