@@ -243,6 +243,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Time Scopes/Time Scopes.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
@@ -251,6 +252,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Scopes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Scopes needs access to your iCloud calendars to show events.";
+				INFOPLIST_KEY_NSFamilyControlsUsageDescription = "Time Scopes uses Screen Time to show daily and weekly usage reports.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Scopes needs access to your iCloud reminders to show tasks.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -280,6 +282,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Time Scopes/Time Scopes.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
@@ -288,6 +291,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Scopes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Scopes needs access to your iCloud calendars to show events.";
+				INFOPLIST_KEY_NSFamilyControlsUsageDescription = "Time Scopes uses Screen Time to show daily and weekly usage reports.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Scopes needs access to your iCloud reminders to show tasks.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
