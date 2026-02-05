@@ -35,6 +35,10 @@ struct TimeScopeApp: App {
                     .tabItem {
                         Label("Calendar", systemImage: "calendar")
                     }
+                PulseView()
+                    .tabItem {
+                        Label("Pulse", systemImage: "waveform")
+                    }
                 PreferencesView()
                     .tabItem {
                         Label("Preferences", systemImage: "gearshape")

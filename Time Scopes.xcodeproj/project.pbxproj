@@ -6,11 +6,6 @@
 	objectVersion = 90;
 	objects = {
 
-/* Begin PBXBuildFile section */
-/* End PBXBuildFile section */
-
-
-
 /* Begin PBXFileReference section */
 		F9216D852E0AAD3D0011A560 /* Time Scopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Scopes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -60,8 +55,6 @@
 				F9216D832E0AAD3D0011A560 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
@@ -120,7 +113,6 @@
 			);
 		};
 /* End PBXSourcesBuildPhase section */
-
 
 /* Begin XCBuildConfiguration section */
 		F9216D8E2E0AAD3E0011A560 /* Debug configuration for PBXProject "Time Scopes" */ = {

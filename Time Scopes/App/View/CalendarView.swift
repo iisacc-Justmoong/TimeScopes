@@ -11,6 +11,7 @@ struct CalendarView: View {
     @EnvironmentObject var userData: UserData
     @StateObject private var eventProvider = CalendarEventProvider()
     @StateObject private var reminderProvider = ReminderProvider()
+    @StateObject private var journalStore = PulseJournalStore()
 
     @State private var displayedMonth: Date
     @State private var selectedDate: Date
@@ -50,13 +51,13 @@ struct CalendarView: View {
                         weekdayHeader(symbols: weekdaySymbols)
                         monthGrid(metadata: metadata, calendar: calendar)
                     }
-                    .glassCard()
+                    .glassCard(showBorder: false)
 
                     dayInsights(for: selectedDate, calendar: calendar)
-                        .glassCard()
+                        .glassCard(showBorder: false)
 
                     monthHighlights(events: events, reminders: reminders)
-                        .glassCard()
+                        .glassCard(showBorder: false)
                 }
                 .padding()
             }
@@ -189,7 +190,8 @@ struct CalendarView: View {
         let badges = dayBadges(for: date, calendar: calendar)
         let dayEvents = eventProvider.events(on: date)
         let dayReminders = reminderProvider.reminders(on: date)
-        let agendaItems = agendaItems(events: dayEvents, reminders: dayReminders)
+        let dayJournals = journalStore.entries(on: date, calendar: calendar)
+        let agendaItems = agendaItems(events: dayEvents, reminders: dayReminders, journals: dayJournals)
 
         return VStack(alignment: .leading, spacing: 12) {
             Text(fullDateTitle(date))
@@ -254,7 +256,11 @@ struct CalendarView: View {
     }
 
     private func monthHighlights(events: [CalendarEventItem], reminders: [ReminderItem]) -> some View {
-        let agendaItems = agendaItems(events: events, reminders: reminders)
+        let calendar = dateProvider.calendar
+        let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: displayedMonth)) ?? displayedMonth
+        let interval = monthInterval(for: monthStart, calendar: calendar)
+        let monthJournals = journalStore.entries.filter { interval.contains($0.date) }
+        let agendaItems = agendaItems(events: events, reminders: reminders, journals: monthJournals)
 
         return VStack(alignment: .leading, spacing: 12) {
             Text("Agenda This Month")
@@ -340,6 +346,11 @@ struct CalendarView: View {
         let remainingSlotsAfterEvents = max(0, 3 - markers.count)
         let reminderColors = reminderProvider.markerColors(for: date, limit: remainingSlotsAfterEvents)
         markers.append(contentsOf: reminderColors.map { CalendarMarker(color: $0) })
+        let remainingSlotsAfterReminders = max(0, 3 - markers.count)
+        if remainingSlotsAfterReminders > 0,
+           !journalStore.entries(on: date, calendar: calendar).isEmpty {
+            markers.append(CalendarMarker(color: .indigo))
+        }
         return Array(markers.prefix(3))
     }
 
@@ -527,6 +538,7 @@ private struct AgendaItem: Identifiable {
     enum Kind {
         case event
         case reminder
+        case journal
     }
 
     let id: String
@@ -545,6 +557,9 @@ private struct AgendaItemRow: View {
         HStack(spacing: 8) {
             if item.kind == .reminder {
                 Image(systemName: "checkmark.circle")
+                    .foregroundStyle(item.color)
+            } else if item.kind == .journal {
+                Image(systemName: "note.text")
                     .foregroundStyle(item.color)
             } else {
                 Circle()
@@ -565,7 +580,7 @@ private struct AgendaItemRow: View {
             return "All day"
         }
         let formatter = CalendarView.timeFormatter
-        if item.kind == .reminder {
+        if item.kind == .reminder || item.kind == .journal {
             return formatter.string(from: item.startDate)
         }
         return "\(formatter.string(from: item.startDate)) - \(formatter.string(from: item.endDate))"
@@ -579,6 +594,9 @@ private struct AgendaMonthRow: View {
         HStack(spacing: 12) {
             if item.kind == .reminder {
                 Image(systemName: "checkmark.circle")
+                    .foregroundStyle(item.color)
+            } else if item.kind == .journal {
+                Image(systemName: "note.text")
                     .foregroundStyle(item.color)
             } else {
                 Circle()
@@ -603,7 +621,7 @@ private struct AgendaMonthRow: View {
 
     private func timeRange(for item: AgendaItem) -> String {
         let formatter = CalendarView.timeFormatter
-        if item.kind == .reminder {
+        if item.kind == .reminder || item.kind == .journal {
             return formatter.string(from: item.startDate)
         }
         return "\(formatter.string(from: item.startDate)) - \(formatter.string(from: item.endDate))"
@@ -644,7 +662,11 @@ private extension CalendarView {
         return DateInterval(start: start, end: end)
     }
 
-    func agendaItems(events: [CalendarEventItem], reminders: [ReminderItem]) -> [AgendaItem] {
+    func agendaItems(
+        events: [CalendarEventItem],
+        reminders: [ReminderItem],
+        journals: [PulseJournalEntry]
+    ) -> [AgendaItem] {
         let eventItems = events.map {
             AgendaItem(
                 id: "event-\($0.id)",
@@ -667,7 +689,18 @@ private extension CalendarView {
                 color: $0.color
             )
         }
-        return (eventItems + reminderItems).sorted { lhs, rhs in
+        let journalItems = journals.map {
+            AgendaItem(
+                id: "journal-\($0.id.uuidString)",
+                kind: .journal,
+                title: $0.note,
+                startDate: $0.date,
+                endDate: $0.date,
+                isAllDay: false,
+                color: .indigo
+            )
+        }
+        return (eventItems + reminderItems + journalItems).sorted { lhs, rhs in
             if lhs.startDate != rhs.startDate {
                 return lhs.startDate < rhs.startDate
             }
@@ -675,9 +708,20 @@ private extension CalendarView {
                 return lhs.isAllDay
             }
             if lhs.kind != rhs.kind {
-                return lhs.kind == .event
+                return kindRank(lhs.kind) < kindRank(rhs.kind)
             }
             return lhs.title < rhs.title
+        }
+    }
+
+    func kindRank(_ kind: AgendaItem.Kind) -> Int {
+        switch kind {
+        case .event:
+            return 0
+        case .reminder:
+            return 1
+        case .journal:
+            return 2
         }
     }
 }

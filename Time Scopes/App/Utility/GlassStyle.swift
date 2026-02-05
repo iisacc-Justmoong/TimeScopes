@@ -59,22 +59,25 @@ struct GlassScreenBackground: View {
 }
 
 struct GlassCardBackground: View {
+    let showBorder: Bool
+
     var body: some View {
         RoundedRectangle(cornerRadius: GlassStyle.cornerRadius, style: .continuous)
             .fill(.ultraThinMaterial)
             .overlay(
                 RoundedRectangle(cornerRadius: GlassStyle.cornerRadius, style: .continuous)
                     .stroke(GlassStyle.strokeGradient, lineWidth: 1)
+                    .opacity(showBorder ? 1 : 0)
             )
             .shadow(color: GlassStyle.shadowColor, radius: 14, x: 0, y: 8)
     }
 }
 
 extension View {
-    func glassCard(padding: EdgeInsets = GlassStyle.cardPadding) -> some View {
+    func glassCard(padding: EdgeInsets = GlassStyle.cardPadding, showBorder: Bool = true) -> some View {
         self
             .padding(padding)
-            .background(GlassCardBackground())
+            .background(GlassCardBackground(showBorder: showBorder))
             .contentShape(RoundedRectangle(cornerRadius: GlassStyle.cornerRadius, style: .continuous))
     }
 
