@@ -252,22 +252,6 @@ private struct WeekdayScopeDetailContent: View {
         let freeWorkSleepHours = remainingWorkSleepSeconds / 3_600
 
         return VStack(alignment: .leading, spacing: 16) {
-            VStack(alignment: .leading, spacing: 12) {
-                Text("Daily Schedule")
-                    .font(.headline)
-                Stepper(value: $userData.workHoursPerDay, in: 0...24) {
-                    Text("Work: \(userData.workHoursPerDay) hours/day")
-                }
-                Stepper(value: $userData.sleepHoursPerDay, in: 0...24) {
-                    Text("Sleep: \(userData.sleepHoursPerDay) hours/day")
-                }
-                if userData.workHoursPerDay + userData.sleepHoursPerDay > 24 {
-                    Text("Work + sleep exceeds 24 hours. Free time is clamped to 0.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-
             VStack(alignment: .leading, spacing: 8) {
                 Text("Conversions")
                     .font(.headline)
@@ -292,11 +276,9 @@ private struct WeekdayScopeDetailContent: View {
             }
         }
         .onChange(of: userData.workHoursPerDay) { _ in
-            userData.saveProfile()
             resetCountdown(at: ticker.now)
         }
         .onChange(of: userData.sleepHoursPerDay) { _ in
-            userData.saveProfile()
             resetCountdown(at: ticker.now)
         }
         .onChange(of: userData.deathDate) { _ in

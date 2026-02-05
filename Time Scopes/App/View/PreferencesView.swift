@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PreferencesView: View {
     @Environment(\.openURL) private var openURL
+    @EnvironmentObject private var userData: UserData
 
     @State private var calendarStatus = EKEventStore.authorizationStatus(for: .event)
     @State private var reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
@@ -52,10 +53,30 @@ struct PreferencesView: View {
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
+
+                Section("Daily Schedule") {
+                    Stepper(value: $userData.workHoursPerDay, in: 0...24) {
+                        Text("Work: \(userData.workHoursPerDay) hours/day")
+                    }
+                    Stepper(value: $userData.sleepHoursPerDay, in: 0...24) {
+                        Text("Sleep: \(userData.sleepHoursPerDay) hours/day")
+                    }
+                    if userData.workHoursPerDay + userData.sleepHoursPerDay > 24 {
+                        Text("Work + sleep exceeds 24 hours. Free time is clamped to 0.")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
             .navigationTitle("Preferences")
         }
         .onAppear(perform: refreshStatuses)
+        .onChange(of: userData.workHoursPerDay) { _ in
+            userData.saveProfile()
+        }
+        .onChange(of: userData.sleepHoursPerDay) { _ in
+            userData.saveProfile()
+        }
     }
 
     @ViewBuilder
@@ -175,4 +196,5 @@ private struct PreferenceStatusRow: View {
 
 #Preview {
     PreferencesView()
+        .environmentObject(UserData())
 }

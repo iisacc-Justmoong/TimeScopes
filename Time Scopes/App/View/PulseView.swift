@@ -19,7 +19,7 @@ struct PulseView: View {
     @State private var editingEntry: PulseJournalEntry?
     @State private var entryToDelete: PulseJournalEntry?
     @State private var isConfirmingDelete = false
-    @State private var selectedPrompt = ""
+    @State private var currentPrompt = ""
 
     private let calendar = Calendar.autoupdatingCurrent
     private static let journalPrompts: [String] = [
@@ -92,6 +92,9 @@ struct PulseView: View {
             }
             .glassScreen()
         }
+        .onAppear {
+            refreshPrompt()
+        }
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
@@ -109,7 +112,7 @@ struct PulseView: View {
             PulseJournalComposer(
                 title: editingEntry == nil ? "New Entry" : "Edit Entry",
                 saveLabel: editingEntry == nil ? "Save" : "Update",
-                prompt: selectedPrompt.isEmpty ? dailyPrompt : selectedPrompt,
+                prompt: currentPrompt,
                 draft: $journalDraft
             ) { note in
                 if let editingEntry {
@@ -126,7 +129,6 @@ struct PulseView: View {
             if !isPresented {
                 journalDraft = ""
                 editingEntry = nil
-                selectedPrompt = ""
             }
         }
         .confirmationDialog(
@@ -192,6 +194,7 @@ struct PulseView: View {
                 title: "Pattern",
                 detail: weeklyPatternText
             )
+            weeklyDetailSection
         }
         .glassCard(showBorder: false)
     }
@@ -228,7 +231,7 @@ struct PulseView: View {
                 Text("Prompt")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Text(dailyPrompt)
+                Text(currentPrompt)
                     .font(.callout)
             }
             Button("Write Entry") {
@@ -252,6 +255,7 @@ struct PulseView: View {
                 }
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(showBorder: false)
     }
 
@@ -308,34 +312,7 @@ struct PulseView: View {
     }
 
     private var weeklyRhythm: [PulseDayIntensity] {
-        let today = Date()
-        let weekStart = weekInterval(for: today).start
-        var dayLoads: [Double] = []
-        var days: [PulseDayIntensity] = []
-
-        for offset in 0..<7 {
-            guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart) else { continue }
-            let interval = dayInterval(for: day)
-            let events = eventProvider.events(on: day).filter { !$0.isAllDay }
-            let reminders = reminderProvider.reminders(on: day)
-            let eventMinutes = events.reduce(0.0) { total, event in
-                total + clampedDuration(for: event, in: interval) / 60
-            }
-            let reminderMinutes = Double(reminders.count) * 15
-            let load = eventMinutes + reminderMinutes
-            dayLoads.append(load)
-        }
-
-        let maxLoad = dayLoads.max() ?? 0
-        for offset in 0..<7 {
-            guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart) else { continue }
-            let label = PulseFormatters.weekdayFormatter.string(from: day)
-            let load = offset < dayLoads.count ? dayLoads[offset] : 0
-            let intensity = maxLoad > 0 ? load / maxLoad : 0
-            days.append(PulseDayIntensity(day: label, intensity: intensity))
-        }
-
-        return days
+        weeklyLoads.map { PulseDayIntensity(day: $0.day, intensity: $0.intensity) }
     }
 
     private var prescriptions: [PulsePrescription] {
@@ -344,6 +321,14 @@ struct PulseView: View {
         let dayInterval = dayInterval(for: today)
         let events = eventProvider.events(on: today).filter { !$0.isAllDay }
         let reminders = reminderProvider.reminders(on: today)
+
+        if let balance = weeklyLoadBalanceSuggestion() {
+            items.append(balance)
+        }
+
+        if let focusWindow = focusTimeWindowSuggestion() {
+            items.append(focusWindow)
+        }
 
         if let longest = events.max(by: { clampedDuration(for: $0, in: dayInterval) < clampedDuration(for: $1, in: dayInterval) }) {
             let duration = clampedDuration(for: longest, in: dayInterval)
@@ -370,10 +355,6 @@ struct PulseView: View {
             )
         }
 
-        if let peak = weeklyPeakShiftSuggestion() {
-            items.append(peak)
-        }
-
         if items.isEmpty {
             items.append(
                 PulsePrescription(
@@ -390,14 +371,6 @@ struct PulseView: View {
 
     private var recentEntries: [PulseJournalEntry] {
         journalStore.recentEntries(limit: 3)
-    }
-
-    private var dailyPrompt: String {
-        let prompts = PulseView.journalPrompts
-        guard !prompts.isEmpty else { return "" }
-        let dayIndex = calendar.ordinality(of: .day, in: .year, for: Date()) ?? 1
-        let index = max(0, (dayIndex - 1) % prompts.count)
-        return prompts[index]
     }
 
     private var dataStatusMessage: String? {
@@ -430,20 +403,106 @@ struct PulseView: View {
         return "\(maxDay.day) is your peak-load day. Consider moving one deep task to \(minDay.day)."
     }
 
-    private func weeklyPeakShiftSuggestion() -> PulsePrescription? {
-        let intensities = weeklyRhythm
-        guard let maxDay = intensities.max(by: { $0.intensity < $1.intensity }),
-              let minDay = intensities.min(by: { $0.intensity < $1.intensity }) else {
+    private var weeklyDetailSection: some View {
+        let summary = weeklySummary
+        return VStack(alignment: .leading, spacing: 12) {
+            Text("Details")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 12),
+                    GridItem(.flexible(), spacing: 12)
+                ],
+                spacing: 12
+            ) {
+                PulseSummaryCell(title: "Peak Day", value: summary.peakDayText)
+                PulseSummaryCell(title: "Low Day", value: summary.lowDayText)
+                PulseSummaryCell(title: "Week Events", value: summary.eventCountText)
+                PulseSummaryCell(title: "Week Reminders", value: summary.reminderCountText)
+                PulseSummaryCell(title: "Event Time", value: summary.eventTimeText)
+                PulseSummaryCell(title: "Total Load", value: summary.totalLoadText)
+                PulseSummaryCell(title: "Avg Load/Day", value: summary.averageLoadText)
+                PulseSummaryCell(title: "Avg Reminders/Day", value: summary.averageRemindersText)
+                PulseSummaryCell(title: "Distribution", value: summary.distributionText)
+            }
+            if !weeklyTopEvents.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Longest Sessions")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    ForEach(weeklyTopEvents) { event in
+                        PulseWeeklyEventRow(event: event)
+                    }
+                }
+            }
+        }
+    }
+
+    private func weeklyLoadBalanceSuggestion() -> PulsePrescription? {
+        let loads = weeklyLoads
+        guard let maxDay = loads.max(by: { $0.loadMinutes < $1.loadMinutes }),
+              let minDay = loads.min(by: { $0.loadMinutes < $1.loadMinutes }) else {
             return nil
         }
-        guard maxDay.intensity - minDay.intensity >= 0.35 else {
+        let delta = maxDay.loadMinutes - minDay.loadMinutes
+        guard delta >= 120 else {
             return nil
         }
+        let deltaText = PulseFormatters.formatDuration(delta * 60)
+        return PulsePrescription(
+            focus: "Load",
+            title: "Shift one block from \(maxDay.day) to \(minDay.day)",
+            detail: "Peak day is heavier by \(deltaText).",
+            impact: "Gap \(deltaText)"
+        )
+    }
+
+    private func focusTimeWindowSuggestion() -> PulsePrescription? {
+        let today = Date()
+        let events = eventProvider.events(on: today).filter { !$0.isAllDay }
+        let reminders = reminderProvider.reminders(on: today)
+
+        let segments = [
+            FocusSegment(label: "Morning 6-12", startHour: 6, endHour: 12),
+            FocusSegment(label: "Afternoon 12-17", startHour: 12, endHour: 17),
+            FocusSegment(label: "Evening 17-21", startHour: 17, endHour: 21)
+        ]
+
+        var loads: [(segment: FocusSegment, busyMinutes: Double, freeMinutes: Double)] = []
+
+        for segment in segments {
+            guard let interval = segmentInterval(for: today, startHour: segment.startHour, endHour: segment.endHour) else {
+                continue
+            }
+            let eventMinutes = events.reduce(0.0) { total, event in
+                total + clampedDuration(for: event, in: interval) / 60
+            }
+            let reminderMinutes = reminders.reduce(0.0) { total, reminder in
+                guard !reminder.isAllDay else { return total }
+                return interval.contains(reminder.dueDate) ? total + 15 : total
+            }
+            let segmentMinutes = Double((segment.endHour - segment.startHour) * 60)
+            let busyMinutes = eventMinutes + reminderMinutes
+            let freeMinutes = max(0, segmentMinutes - busyMinutes)
+            loads.append((segment: segment, busyMinutes: busyMinutes, freeMinutes: freeMinutes))
+        }
+
+        guard let least = loads.min(by: { $0.busyMinutes < $1.busyMinutes }),
+              let most = loads.max(by: { $0.busyMinutes < $1.busyMinutes }) else {
+            return nil
+        }
+
+        guard least.freeMinutes >= 60 else {
+            return nil
+        }
+
+        let freeText = PulseFormatters.formatDuration(least.freeMinutes * 60)
         return PulsePrescription(
             focus: "Focus",
-            title: "Move one deep block from \(maxDay.day) to \(minDay.day)",
-            detail: "Rebalancing reduces peak-day overload.",
-            impact: "Load -18%"
+            title: "Protect a deep-work block in \(least.segment.label)",
+            detail: "Keep shallow tasks in \(most.segment.label) to separate focus time.",
+            impact: "\(freeText) free"
         )
     }
 
@@ -468,24 +527,149 @@ struct PulseView: View {
         return DateInterval(start: start, end: end)
     }
 
+    private var weeklyLoads: [PulseDayLoad] {
+        let today = Date()
+        let weekStart = weekInterval(for: today).start
+        var seeds: [PulseDayLoadSeed] = []
+
+        for offset in 0..<7 {
+            guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart) else { continue }
+            let interval = dayInterval(for: day)
+            let events = eventProvider.events(on: day).filter { !$0.isAllDay }
+            let reminders = reminderProvider.reminders(on: day)
+            let eventMinutes = events.reduce(0.0) { total, event in
+                total + clampedDuration(for: event, in: interval) / 60
+            }
+            let reminderCount = reminders.count
+            let reminderMinutes = Double(reminderCount) * 15
+            let load = eventMinutes + reminderMinutes
+            let label = PulseFormatters.weekdayFormatter.string(from: day)
+            seeds.append(
+                PulseDayLoadSeed(
+                    day: label,
+                    eventMinutes: eventMinutes,
+                    reminderMinutes: reminderMinutes,
+                    eventCount: events.count,
+                    reminderCount: reminderCount,
+                    loadMinutes: load
+                )
+            )
+        }
+
+        let maxLoad = seeds.map(\.loadMinutes).max() ?? 0
+        return seeds.map { seed in
+            PulseDayLoad(
+                day: seed.day,
+                loadMinutes: seed.loadMinutes,
+                intensity: maxLoad > 0 ? seed.loadMinutes / maxLoad : 0,
+                eventMinutes: seed.eventMinutes,
+                reminderMinutes: seed.reminderMinutes,
+                eventCount: seed.eventCount,
+                reminderCount: seed.reminderCount
+            )
+        }
+    }
+
+    private func segmentInterval(for date: Date, startHour: Int, endHour: Int) -> DateInterval? {
+        let startDay = calendar.startOfDay(for: date)
+        guard let start = calendar.date(byAdding: .hour, value: startHour, to: startDay),
+              let end = calendar.date(byAdding: .hour, value: endHour, to: startDay) else {
+            return nil
+        }
+        return DateInterval(start: start, end: end)
+    }
+
     private func clampedDuration(for event: CalendarEventItem, in interval: DateInterval) -> TimeInterval {
         let start = max(event.startDate, interval.start)
         let end = min(event.endDate, interval.end)
         return max(0, end.timeIntervalSince(start))
     }
 
+    private var weeklySummary: PulseWeeklySummary {
+        let loads = weeklyLoads
+        let totalEventCount = loads.reduce(0) { $0 + $1.eventCount }
+        let totalReminderCount = loads.reduce(0) { $0 + $1.reminderCount }
+        let totalEventMinutes = loads.reduce(0.0) { $0 + $1.eventMinutes }
+        let totalLoadMinutes = loads.reduce(0.0) { $0 + $1.loadMinutes }
+        let averageLoad = loads.isEmpty ? 0 : totalLoadMinutes / Double(loads.count)
+        let averageReminders = loads.isEmpty ? 0 : Double(totalReminderCount) / Double(loads.count)
+        let hasLoad = totalLoadMinutes > 0
+
+        let peak = loads.max(by: { $0.loadMinutes < $1.loadMinutes })
+        let low = loads.min(by: { $0.loadMinutes < $1.loadMinutes })
+
+        let peakDayText: String
+        let lowDayText: String
+        if hasLoad, let peak, let low {
+            peakDayText = "\(peak.day) \(PulseFormatters.formatDuration(peak.loadMinutes * 60))"
+            lowDayText = "\(low.day) \(PulseFormatters.formatDuration(low.loadMinutes * 60))"
+        } else {
+            peakDayText = "No data"
+            lowDayText = "No data"
+        }
+        let distribution = distributionLabel(for: loads, hasLoad: hasLoad)
+
+        return PulseWeeklySummary(
+            peakDayText: peakDayText,
+            lowDayText: lowDayText,
+            eventCountText: "\(totalEventCount) events",
+            reminderCountText: "\(totalReminderCount) items",
+            eventTimeText: PulseFormatters.formatDuration(totalEventMinutes * 60),
+            totalLoadText: PulseFormatters.formatDuration(totalLoadMinutes * 60),
+            averageLoadText: PulseFormatters.formatDuration(averageLoad * 60),
+            averageRemindersText: String(format: "%.1f", averageReminders),
+            distributionText: distribution
+        )
+    }
+
+    private func distributionLabel(for loads: [PulseDayLoad], hasLoad: Bool) -> String {
+        guard hasLoad else { return "No data" }
+        let values = loads.map(\.loadMinutes)
+        let mean = values.reduce(0.0, +) / Double(values.count)
+        guard mean > 0 else { return "No data" }
+        let variance = values.reduce(0.0) { total, value in
+            let diff = value - mean
+            return total + diff * diff
+        } / Double(values.count)
+        let std = sqrt(variance)
+        let cv = std / mean
+        if cv < 0.25 {
+            return "Even"
+        } else if cv < 0.5 {
+            return "Slightly Skewed"
+        } else if cv < 0.75 {
+            return "Skewed"
+        }
+        return "Highly Skewed"
+    }
+
+    private var weeklyTopEvents: [PulseWeeklyEvent] {
+        let interval = weekInterval(for: Date())
+        let events = eventProvider.events.filter { !$0.isAllDay }
+        let summaries = events.compactMap { event -> PulseWeeklyEvent? in
+            let duration = clampedDuration(for: event, in: interval)
+            guard duration > 0 else { return nil }
+            let day = PulseFormatters.weekdayFormatter.string(from: event.startDate)
+            return PulseWeeklyEvent(day: day, title: event.title, duration: duration)
+        }
+        return Array(summaries.sorted { $0.duration > $1.duration }.prefix(3))
+    }
+
     private func beginNewEntry() {
         editingEntry = nil
         journalDraft = ""
-        selectedPrompt = dailyPrompt
+        refreshPrompt()
         isPresentingJournal = true
     }
 
     private func beginEdit(_ entry: PulseJournalEntry) {
         editingEntry = entry
         journalDraft = entry.note
-        selectedPrompt = dailyPrompt
         isPresentingJournal = true
+    }
+
+    private func refreshPrompt() {
+        currentPrompt = PulseView.journalPrompts.randomElement() ?? ""
     }
 
     private func promptDelete(_ entry: PulseJournalEntry) {
@@ -507,6 +691,51 @@ private struct PulseDayIntensity: Identifiable {
     let id = UUID()
     let day: String
     let intensity: Double
+}
+
+private struct PulseDayLoad: Identifiable {
+    let id = UUID()
+    let day: String
+    let loadMinutes: Double
+    let intensity: Double
+    let eventMinutes: Double
+    let reminderMinutes: Double
+    let eventCount: Int
+    let reminderCount: Int
+}
+
+private struct PulseDayLoadSeed {
+    let day: String
+    let eventMinutes: Double
+    let reminderMinutes: Double
+    let eventCount: Int
+    let reminderCount: Int
+    let loadMinutes: Double
+}
+
+private struct FocusSegment {
+    let label: String
+    let startHour: Int
+    let endHour: Int
+}
+
+private struct PulseWeeklySummary {
+    let peakDayText: String
+    let lowDayText: String
+    let eventCountText: String
+    let reminderCountText: String
+    let eventTimeText: String
+    let totalLoadText: String
+    let averageLoadText: String
+    let averageRemindersText: String
+    let distributionText: String
+}
+
+private struct PulseWeeklyEvent: Identifiable {
+    let id = UUID()
+    let day: String
+    let title: String
+    let duration: TimeInterval
 }
 
 private struct PulsePrescription: Identifiable {
@@ -553,6 +782,53 @@ private struct PulseMetricCard: View {
         .padding(10)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(.thinMaterial)
+        )
+    }
+}
+
+private struct PulseSummaryCell: View {
+    let title: String
+    let value: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(8)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .fill(.thinMaterial)
+        )
+    }
+}
+
+private struct PulseWeeklyEventRow: View {
+    let event: PulseWeeklyEvent
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(event.day)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .frame(width: 34, alignment: .leading)
+            Text(event.title)
+                .font(.callout)
+                .lineLimit(1)
+            Spacer(minLength: 8)
+            Text(PulseFormatters.formatDuration(event.duration))
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+        .padding(8)
+        .background(
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .fill(.thinMaterial)
         )
     }
