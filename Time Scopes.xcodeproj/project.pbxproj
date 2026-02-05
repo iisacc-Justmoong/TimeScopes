@@ -7,44 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B0A1C2D3E4F5A6B7C8D9E0F2 /* PulseReportExtension/DeviceActivityReportExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */; };
-		D2B7731DD2A5459491063CBB /* PulseReportExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5B25CD9825B84342B80C461A /* PulseReportExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		ACC655B843814C989F015186 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F9216D7D2E0AAD3D0011A560 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 70E6EDB98F4E482D8147D317;
-			remoteInfo = PulseReportExtension;
-		};
-/* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		5638E9E6C3644CCE9FE630AE /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			dstPath = "";
-			dstSubfolder = PlugIns;
-			files = (
-				D2B7731DD2A5459491063CBB /* PulseReportExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5B25CD9825B84342B80C461A /* PulseReportExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PulseReportExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseReportExtension/DeviceActivityReportExtension.swift; sourceTree = SOURCE_ROOT; };
 		F9216D852E0AAD3D0011A560 /* Time Scopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Scopes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		373B8C78A71240C4B6FF65C6 /* PulseReportExtension */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PulseReportExtension;
-			sourceTree = "<group>";
-		};
 		F9216D872E0AAD3D0011A560 /* Time Scopes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "Time Scopes";
@@ -53,11 +24,6 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		4F0DE527167E4D1D824A6628 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			files = (
-			);
-		};
 		F9216D822E0AAD3D0011A560 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
@@ -70,9 +36,7 @@
 			isa = PBXGroup;
 			children = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
-				373B8C78A71240C4B6FF65C6 /* PulseReportExtension */,
 				F9216D862E0AAD3D0011A560 /* Products */,
-				F93565762F3347000059E08C /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,40 +44,13 @@
 			isa = PBXGroup;
 			children = (
 				F9216D852E0AAD3D0011A560 /* Time Scopes.app */,
-				5B25CD9825B84342B80C461A /* PulseReportExtension.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F93565762F3347000059E08C /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				B0A1C2D3E4F5A6B7C8D9E0F1 /* PulseReportExtension/DeviceActivityReportExtension.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		70E6EDB98F4E482D8147D317 /* PulseReportExtension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 907B2D61F811478AA2997ECE /* Build configuration list for PBXNativeTarget "PulseReportExtension" */;
-			buildPhases = (
-				9C0D4EE8A24D4EDEAF48002F /* Sources */,
-				4F0DE527167E4D1D824A6628 /* Frameworks */,
-				BE9D5616CD97494CAD8DB79B /* Resources */,
-			);
-			buildRules = (
-			);
-			fileSystemSynchronizedGroups = (
-				373B8C78A71240C4B6FF65C6 /* PulseReportExtension */,
-			);
-			name = PulseReportExtension;
-			productName = PulseReportExtension;
-			productReference = 5B25CD9825B84342B80C461A /* PulseReportExtension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		F9216D842E0AAD3D0011A560 /* Time Scopes */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9216D902E0AAD3E0011A560 /* Build configuration list for PBXNativeTarget "Time Scopes" */;
@@ -121,12 +58,10 @@
 				F9216D812E0AAD3D0011A560 /* Sources */,
 				F9216D822E0AAD3D0011A560 /* Frameworks */,
 				F9216D832E0AAD3D0011A560 /* Resources */,
-				5638E9E6C3644CCE9FE630AE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				1B60C445A6394E17AB10DC33 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
@@ -146,9 +81,6 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					70E6EDB98F4E482D8147D317 = {
-						CreatedOnToolsVersion = 16.4;
-					};
 					F9216D842E0AAD3D0011A560 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -169,17 +101,11 @@
 			projectRoot = "";
 			targets = (
 				F9216D842E0AAD3D0011A560 /* Time Scopes */,
-				70E6EDB98F4E482D8147D317 /* PulseReportExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BE9D5616CD97494CAD8DB79B /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-			);
-		};
 		F9216D832E0AAD3D0011A560 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
@@ -188,12 +114,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9C0D4EE8A24D4EDEAF48002F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			files = (
-				B0A1C2D3E4F5A6B7C8D9E0F2 /* PulseReportExtension/DeviceActivityReportExtension.swift in Sources */,
-			);
-		};
 		F9216D812E0AAD3D0011A560 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
@@ -201,63 +121,8 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		1B60C445A6394E17AB10DC33 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 70E6EDB98F4E482D8147D317 /* PulseReportExtension */;
-			targetProxy = ACC655B843814C989F015186 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		462A1C15B5E74FF8B222FDEB /* Debug configuration for PBXNativeTarget "PulseReportExtension" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/PulseReportExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 5U49ST9XZH;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "PulseReportExtension-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iisacc.timescopes.Time-Scopes.PulseReportExtension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Debug;
-		};
-		EFBF7C885F7745A39CA7382E /* Release configuration for PBXNativeTarget "PulseReportExtension" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/PulseReportExtension.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = 5U49ST9XZH;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "PulseReportExtension-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iisacc.timescopes.Time-Scopes.PulseReportExtension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
 		F9216D8E2E0AAD3E0011A560 /* Debug configuration for PBXProject "Time Scopes" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -395,7 +260,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Scopes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Scopes needs access to your iCloud calendars to show events.";
-				INFOPLIST_KEY_NSFamilyControlsUsageDescription = "Time Scopes uses Screen Time to show daily and weekly usage reports.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Scopes needs access to your iCloud reminders to show tasks.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -434,7 +298,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Time Scopes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Time Scopes needs access to your iCloud calendars to show events.";
-				INFOPLIST_KEY_NSFamilyControlsUsageDescription = "Time Scopes uses Screen Time to show daily and weekly usage reports.";
 				INFOPLIST_KEY_NSRemindersUsageDescription = "Time Scopes needs access to your iCloud reminders to show tasks.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -462,14 +325,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		907B2D61F811478AA2997ECE /* Build configuration list for PBXNativeTarget "PulseReportExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				462A1C15B5E74FF8B222FDEB /* Debug configuration for PBXNativeTarget "PulseReportExtension" */,
-				EFBF7C885F7745A39CA7382E /* Release configuration for PBXNativeTarget "PulseReportExtension" */,
-			);
-			defaultConfigurationName = Release;
-		};
 		F9216D802E0AAD3D0011A560 /* Build configuration list for PBXProject "Time Scopes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

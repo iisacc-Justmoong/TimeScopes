@@ -6,12 +6,10 @@
 //
 
 import EventKit
-import FamilyControls
 import SwiftUI
 
 struct PreferencesView: View {
     @Environment(\.openURL) private var openURL
-    @EnvironmentObject private var screenTimeAuth: ScreenTimeAuthorization
 
     @State private var calendarStatus = EKEventStore.authorizationStatus(for: .event)
     @State private var reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
@@ -47,14 +45,6 @@ struct PreferencesView: View {
                         isRequesting: isRequestingReminders,
                         allowAction: requestRemindersAccess
                     )
-                }
-
-                Section("Screen Time") {
-                    PreferenceStatusRow(
-                        title: "Access",
-                        value: screenTimeAuth.statusLabel()
-                    )
-                    screenTimeActions
                 }
 
                 Section("Notes") {
@@ -122,7 +112,6 @@ struct PreferencesView: View {
     private func refreshStatuses() {
         calendarStatus = EKEventStore.authorizationStatus(for: .event)
         reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
-        screenTimeAuth.refresh()
     }
 
     private func openSettings() {
@@ -168,28 +157,6 @@ struct PreferencesView: View {
         }
     }
 
-    @ViewBuilder
-    private var screenTimeActions: some View {
-        switch screenTimeAuth.status {
-        case .notDetermined:
-            Button("Allow Screen Time Access") {
-                screenTimeAuth.requestAuthorization()
-            }
-            .disabled(screenTimeAuth.isRequesting)
-        case .denied:
-            Button("Open Settings") {
-                openSettings()
-            }
-        case .approved:
-            Text("Access granted.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-        @unknown default:
-            Text("Unknown status.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
-        }
-    }
 }
 
 private struct PreferenceStatusRow: View {
@@ -208,5 +175,4 @@ private struct PreferenceStatusRow: View {
 
 #Preview {
     PreferencesView()
-        .environmentObject(ScreenTimeAuthorization())
 }
