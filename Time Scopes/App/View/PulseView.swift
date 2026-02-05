@@ -19,8 +19,61 @@ struct PulseView: View {
     @State private var editingEntry: PulseJournalEntry?
     @State private var entryToDelete: PulseJournalEntry?
     @State private var isConfirmingDelete = false
+    @State private var selectedPrompt = ""
 
     private let calendar = Calendar.autoupdatingCurrent
+    private static let journalPrompts: [String] = [
+        "What single change would make tomorrow feel lighter?",
+        "What did you protect well today?",
+        "Which task drained you the most, and why?",
+        "What small win deserves recognition?",
+        "Where did you say yes too quickly?",
+        "What did you postpone that now feels heavier?",
+        "What was the clearest moment of focus today?",
+        "Which meeting or task could be half as long next time?",
+        "What did you learn about your energy today?",
+        "What was the most avoidable friction you faced?",
+        "What should you stop doing for one week?",
+        "What did you do that aligned with your priorities?",
+        "Where did you underestimate time cost?",
+        "What is one decision you can make in advance?",
+        "What did you do that created calm for others?",
+        "Which task can be simplified to one sentence?",
+        "What is the smallest next step for your hardest task?",
+        "What did you finish that was quietly important?",
+        "Where did you feel rushed, and what caused it?",
+        "What boundary did you maintain today?",
+        "What would you repeat from today?",
+        "What would you remove from today if you could?",
+        "Which obligation felt least essential?",
+        "What did you avoid that you should face tomorrow?",
+        "What was the best use of a 30-minute block?",
+        "What did you do to recover your energy?",
+        "What was the most valuable conversation today?",
+        "What did you do that created momentum?",
+        "What could be automated or templated?",
+        "What is one thing you can decline tomorrow?",
+        "Where did you overcommit?",
+        "What did you do that felt unnecessary?",
+        "What would make your next week smoother?",
+        "What did you say no to, and was it right?",
+        "What was your most focused hour?",
+        "What will you do first tomorrow, and why?",
+        "What did you leave incomplete, and what is the next step?",
+        "What would you tell your future self about today?",
+        "What did you do that reduced risk?",
+        "Where did you create slack or buffers?",
+        "What was your highest leverage action today?",
+        "What did you do that was truly optional?",
+        "What did you do that created clarity?",
+        "What obligation can be renegotiated?",
+        "What did you do that was kind to your future self?",
+        "What did you do that was hard but necessary?",
+        "What did you do that improved your system?",
+        "What did you do that improved your communication?",
+        "What did you do that improved your environment?",
+        "What is one thing you will do differently tomorrow?"
+    ]
 
     var body: some View {
         NavigationStack {
@@ -56,6 +109,7 @@ struct PulseView: View {
             PulseJournalComposer(
                 title: editingEntry == nil ? "New Entry" : "Edit Entry",
                 saveLabel: editingEntry == nil ? "Save" : "Update",
+                prompt: selectedPrompt.isEmpty ? dailyPrompt : selectedPrompt,
                 draft: $journalDraft
             ) { note in
                 if let editingEntry {
@@ -72,6 +126,7 @@ struct PulseView: View {
             if !isPresented {
                 journalDraft = ""
                 editingEntry = nil
+                selectedPrompt = ""
             }
         }
         .confirmationDialog(
@@ -173,7 +228,7 @@ struct PulseView: View {
                 Text("Prompt")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Text("What single change would make tomorrow feel lighter?")
+                Text(dailyPrompt)
                     .font(.callout)
             }
             Button("Write Entry") {
@@ -337,6 +392,14 @@ struct PulseView: View {
         journalStore.recentEntries(limit: 3)
     }
 
+    private var dailyPrompt: String {
+        let prompts = PulseView.journalPrompts
+        guard !prompts.isEmpty else { return "" }
+        let dayIndex = calendar.ordinality(of: .day, in: .year, for: Date()) ?? 1
+        let index = max(0, (dayIndex - 1) % prompts.count)
+        return prompts[index]
+    }
+
     private var dataStatusMessage: String? {
         var messages: [String] = []
         if !eventProvider.hasAccess {
@@ -414,12 +477,14 @@ struct PulseView: View {
     private func beginNewEntry() {
         editingEntry = nil
         journalDraft = ""
+        selectedPrompt = dailyPrompt
         isPresentingJournal = true
     }
 
     private func beginEdit(_ entry: PulseJournalEntry) {
         editingEntry = entry
         journalDraft = entry.note
+        selectedPrompt = dailyPrompt
         isPresentingJournal = true
     }
 
@@ -624,14 +689,22 @@ private struct PulseJournalComposer: View {
     @Environment(\.dismiss) private var dismiss
     let title: String
     let saveLabel: String
+    let prompt: String
     @Binding var draft: String
     let onSave: (String) -> Void
 
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Prompt")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text(prompt)
+                        .font(.callout)
+                }
                 Text("Write one clear sentence about your day.")
-                    .font(.callout)
+                    .font(.caption)
                     .foregroundStyle(.secondary)
                 TextEditor(text: $draft)
                     .frame(minHeight: 160)
