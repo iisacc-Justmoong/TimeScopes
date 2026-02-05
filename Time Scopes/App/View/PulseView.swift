@@ -595,16 +595,21 @@ private struct PulseJournalRow: View {
             Text(entry.note)
                 .font(.callout)
             Spacer(minLength: 0)
-            Menu {
-                Button("Edit") {
-                    onEdit()
+            VStack {
+                Spacer(minLength: 0)
+                Menu {
+                    Button("Edit") {
+                        onEdit()
+                    }
+                    Button("Delete", role: .destructive) {
+                        onDelete()
+                    }
+                } label: {
+                    Image(systemName: "ellipsis")
+                        .foregroundStyle(.secondary)
+                        .frame(width: 24, height: 24, alignment: .center)
                 }
-                Button("Delete", role: .destructive) {
-                    onDelete()
-                }
-            } label: {
-                Image(systemName: "ellipsis")
-                    .foregroundStyle(.secondary)
+                Spacer(minLength: 0)
             }
         }
         .padding(10)
