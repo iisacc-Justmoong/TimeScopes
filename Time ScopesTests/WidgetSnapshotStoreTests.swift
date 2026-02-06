@@ -98,11 +98,25 @@ final class WidgetSnapshotStoreTests: XCTestCase {
         XCTAssertEqual(reloadCount, 0)
     }
 
-    func testLoadSnapshotFallsBackToEmptyWhenCorrupted() throws {
+    func testLoadSnapshotFallsBackToBackupWhenPrimaryIsCorrupted() throws {
+        let container = makeContainer()
+        let store = WidgetSnapshotStore(container: container, reloadTimelines: {})
+        store.saveSnapshot(makeSnapshot(name: "BeforeCorruption"), requestTimelineReload: false)
+
+        let fileURL = try XCTUnwrap(container.snapshotURL)
+        try Data("not-json".utf8).write(to: fileURL, options: [.atomic])
+
+        let loaded = store.loadSnapshot()
+        XCTAssertEqual(loaded.profile.name, "BeforeCorruption")
+    }
+
+    func testLoadSnapshotReturnsEmptyWhenPrimaryAndBackupAreCorrupted() throws {
         let container = makeContainer()
         let fileURL = try XCTUnwrap(container.snapshotURL)
+        let backupURL = try XCTUnwrap(container.snapshotBackupURL)
         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try Data("not-json".utf8).write(to: fileURL, options: [.atomic])
+        try Data("also-not-json".utf8).write(to: backupURL, options: [.atomic])
 
         let store = WidgetSnapshotStore(container: container, reloadTimelines: {})
         XCTAssertEqual(store.loadSnapshot(), .empty)

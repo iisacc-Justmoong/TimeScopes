@@ -3,6 +3,7 @@ import Foundation
 enum WidgetSharedConstants {
     static let appGroupID = "group.com.iisacc.timescopes"
     static let snapshotFileName = "widget_snapshot.json"
+    static let snapshotBackupFileName = "widget_snapshot.backup.json"
     static let pulseJournalEntriesStoreKey = "PulseJournalEntries"
     static let profileWidgetKind = "TimeScopesProfileWidget"
     static let elapsedWidgetKind = "TimeScopesElapsedWidget"

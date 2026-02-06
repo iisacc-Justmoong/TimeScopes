@@ -19,6 +19,10 @@ struct WidgetSharedContainer {
     var snapshotURL: URL? {
         containerURL?.appendingPathComponent(WidgetSharedConstants.snapshotFileName)
     }
+
+    var snapshotBackupURL: URL? {
+        containerURL?.appendingPathComponent(WidgetSharedConstants.snapshotBackupFileName)
+    }
 }
 
 final class WidgetSnapshotStore {
@@ -69,6 +73,7 @@ final class WidgetSnapshotStore {
 
     private func loadSnapshotFromDisk() -> WidgetSnapshot {
         guard let url = container.snapshotURL else { return .empty }
+        let backupURL = container.snapshotBackupURL
 
         var snapshot: WidgetSnapshot?
         let coordinator = NSFileCoordinator(filePresenter: nil)
@@ -81,12 +86,23 @@ final class WidgetSnapshotStore {
         if let snapshot {
             return snapshot
         }
-        return decodeSnapshot(at: url) ?? .empty
+        if let snapshot = decodeSnapshot(at: url) {
+            return snapshot
+        }
+        if let backupURL, let backupSnapshot = decodeSnapshot(at: backupURL) {
+            _ = encodeSnapshot(backupSnapshot, at: url)
+            return backupSnapshot
+        }
+        return .empty
     }
 
     private func saveSnapshotToDisk(_ snapshot: WidgetSnapshot) -> Bool {
         guard let url = container.snapshotURL else { return false }
+        let backupURL = container.snapshotBackupURL
         guard ensureParentDirectory(for: url) else { return false }
+        if let backupURL, !ensureParentDirectory(for: backupURL) {
+            return false
+        }
 
         var didWrite = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
@@ -95,28 +111,40 @@ final class WidgetSnapshotStore {
             didWrite = encodeSnapshot(snapshot, at: writeURL)
         }
         if didWrite {
-            return true
+            return writeBackupSnapshot(snapshot, backupURL: backupURL)
         }
-        return encodeSnapshot(snapshot, at: url)
+        guard encodeSnapshot(snapshot, at: url) else { return false }
+        return writeBackupSnapshot(snapshot, backupURL: backupURL)
     }
 
     private func mutateSnapshotOnDisk(_ transform: (WidgetSnapshot) -> WidgetSnapshot) -> Bool {
         guard let url = container.snapshotURL else { return false }
+        let backupURL = container.snapshotBackupURL
         guard ensureParentDirectory(for: url) else { return false }
+        if let backupURL, !ensureParentDirectory(for: backupURL) {
+            return false
+        }
 
         var didWrite = false
         let coordinator = NSFileCoordinator(filePresenter: nil)
         var coordinationError: NSError?
         coordinator.coordinate(writingItemAt: url, options: [.forMerging], error: &coordinationError) { writeURL in
-            let current = decodeSnapshot(at: writeURL) ?? .empty
+            let current = decodeSnapshot(at: writeURL)
+                ?? decodeSnapshot(at: url)
+                ?? (backupURL.flatMap { decodeSnapshot(at: $0) })
+                ?? .empty
             let updated = transform(current)
-            didWrite = encodeSnapshot(updated, at: writeURL)
+            didWrite = encodeSnapshot(updated, at: writeURL) && writeBackupSnapshot(updated, backupURL: backupURL)
         }
         if didWrite {
             return true
         }
-        let current = decodeSnapshot(at: url) ?? .empty
-        return encodeSnapshot(transform(current), at: url)
+        let current = decodeSnapshot(at: url)
+            ?? (backupURL.flatMap { decodeSnapshot(at: $0) })
+            ?? .empty
+        let updated = transform(current)
+        guard encodeSnapshot(updated, at: url) else { return false }
+        return writeBackupSnapshot(updated, backupURL: backupURL)
     }
 
     private func decodeSnapshot(at url: URL) -> WidgetSnapshot? {
@@ -145,6 +173,11 @@ final class WidgetSnapshotStore {
         } catch {
             return false
         }
+    }
+
+    private func writeBackupSnapshot(_ snapshot: WidgetSnapshot, backupURL: URL?) -> Bool {
+        guard let backupURL else { return true }
+        return encodeSnapshot(snapshot, at: backupURL)
     }
 
     private func reloadWidgetTimelines() {
