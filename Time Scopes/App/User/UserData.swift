@@ -41,12 +41,13 @@ final class UserData: ObservableObject {
     init(
         store: UserProfileStoring = UserDefaultsUserProfileStore(),
         ageCalculator: AgeCalculating = AgeCalculator(),
-        dateProvider: DateProviding = SystemDateProvider()
+        dateProvider: DateProviding = SystemDateProvider(),
+        widgetStore: WidgetSnapshotStore = WidgetSnapshotStore()
     ) {
         self.store = store
         self.ageCalculator = ageCalculator
         self.dateProvider = dateProvider
-        self.widgetStore = WidgetSnapshotStore()
+        self.widgetStore = widgetStore
 
         if let profile = store.loadProfile() {
             applyProfile(profile)

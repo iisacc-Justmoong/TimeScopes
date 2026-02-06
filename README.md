@@ -21,6 +21,20 @@ open "Time Scopes.xcodeproj"
 xcodebuild -scheme "Time Scopes" build
 ```
 
+**Tests (TDD)**
+```bash
+xcodebuild -scheme "Time Scopes" test -destination "platform=iOS Simulator,name=iPhone 17"
+```
+
+```bash
+scripts/ci/run_tests_with_coverage.sh
+```
+
+- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.
+- Coverage threshold can be overridden per run:
+  - `MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`
+- CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).
+
 **Permissions**
 - Calendar access (EventKit).
 - Reminders access (EventKit).

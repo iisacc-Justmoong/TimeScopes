@@ -18,21 +18,36 @@ struct PulseJournalEntry: Identifiable, Codable {
 final class PulseJournalStore: ObservableObject {
     @Published private(set) var entries: [PulseJournalEntry] = []
 
-    private let storeKey = "PulseJournalEntries"
+    private let storeKey: String
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
     private let defaults: UserDefaults
-    private let legacyDefaults = UserDefaults.standard
+    private let legacyDefaults: UserDefaults
+    private let notificationCenter: NotificationCenter
+    private let observeLifecycle: Bool
+    private let foregroundNotificationName: Notification.Name
     private var observers: [NSObjectProtocol] = []
 
-    init() {
+    init(
+        defaults: UserDefaults? = UserDefaults(suiteName: WidgetSharedConstants.appGroupID),
+        legacyDefaults: UserDefaults = .standard,
+        storeKey: String = "PulseJournalEntries",
+        notificationCenter: NotificationCenter = .default,
+        observeLifecycle: Bool = true,
+        foregroundNotificationName: Notification.Name = UIApplication.willEnterForegroundNotification
+    ) {
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         self.encoder = encoder
         self.decoder = decoder
-        self.defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) ?? .standard
+        self.defaults = defaults ?? .standard
+        self.legacyDefaults = legacyDefaults
+        self.storeKey = storeKey
+        self.notificationCenter = notificationCenter
+        self.observeLifecycle = observeLifecycle
+        self.foregroundNotificationName = foregroundNotificationName
         migrateIfNeeded()
         load()
         configureObservers()
@@ -47,7 +62,7 @@ final class PulseJournalStore: ObservableObject {
     }
 
     private func configureObservers() {
-        let center = NotificationCenter.default
+        let center = notificationCenter
         observers.append(
             center.addObserver(
                 forName: .pulseJournalDidChange,
@@ -70,17 +85,19 @@ final class PulseJournalStore: ObservableObject {
                 }
             }
         )
-        observers.append(
-            center.addObserver(
-                forName: UIApplication.willEnterForegroundNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                Task { @MainActor in
-                    self?.load()
+        if observeLifecycle {
+            observers.append(
+                center.addObserver(
+                    forName: foregroundNotificationName,
+                    object: nil,
+                    queue: .main
+                ) { [weak self] _ in
+                    Task { @MainActor in
+                        self?.load()
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     func addEntry(note: String, date: Date = Date()) {
@@ -133,7 +150,7 @@ final class PulseJournalStore: ObservableObject {
         do {
             let data = try encoder.encode(entries)
             defaults.set(data, forKey: storeKey)
-            NotificationCenter.default.post(name: .pulseJournalDidChange, object: nil)
+            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
         } catch {
             return
         }
@@ -146,4 +163,5 @@ final class PulseJournalStore: ObservableObject {
         }
         defaults.set(legacyData, forKey: storeKey)
     }
+
 }

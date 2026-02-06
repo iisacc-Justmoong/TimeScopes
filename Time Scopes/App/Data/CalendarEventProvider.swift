@@ -43,7 +43,12 @@ final class CalendarEventProvider: ObservableObject {
         return authorizationStatus == .authorized
     }
 
+    func refreshAuthorizationStatus() {
+        authorizationStatus = EKEventStore.authorizationStatus(for: .event)
+    }
+
     func requestAccessIfNeeded() async {
+        refreshAuthorizationStatus()
         guard authorizationStatus == .notDetermined else { return }
         let granted: Bool
         if #available(iOS 17.0, *) {
@@ -63,6 +68,7 @@ final class CalendarEventProvider: ObservableObject {
     }
 
     func refreshEvents(in interval: DateInterval) {
+        refreshAuthorizationStatus()
         guard hasAccess else {
             events = []
             eventsByDay = [:]
@@ -173,7 +179,12 @@ final class ReminderProvider: ObservableObject {
         return authorizationStatus == .authorized
     }
 
+    func refreshAuthorizationStatus() {
+        authorizationStatus = EKEventStore.authorizationStatus(for: .reminder)
+    }
+
     func requestAccessIfNeeded() async {
+        refreshAuthorizationStatus()
         guard authorizationStatus == .notDetermined else { return }
         let granted: Bool
         if #available(iOS 17.0, *) {
@@ -196,6 +207,7 @@ final class ReminderProvider: ObservableObject {
         let token = UUID()
         refreshToken = token
 
+        refreshAuthorizationStatus()
         guard hasAccess else {
             reminders = []
             remindersByDay = [:]

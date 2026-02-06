@@ -11,6 +11,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A1B2C3D4E5F60718293A0009 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9216D7D2E0AAD3D0011A560 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9216D842E0AAD3D0011A560;
+			remoteInfo = "Time Scopes";
+		};
 		D0BBB1DEEFF5D8C3327605EB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F9216D7D2E0AAD3D0011A560 /* Project object */;
@@ -34,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TimeScopesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1B2C3D4E5F60718293A0001 /* Time ScopesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time ScopesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9216D852E0AAD3D0011A560 /* Time Scopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Scopes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -41,6 +49,11 @@
 		7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = PulseReportExtension;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60718293A0002 /* Time ScopesTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Time ScopesTests";
 			sourceTree = "<group>";
 		};
 		AC788B7B1421F46B81FEB8FC /* Time Scopes/App/Shared */ = {
@@ -61,6 +74,11 @@
 			files = (
 			);
 		};
+		A1B2C3D4E5F60718293A0003 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
 		F9216D822E0AAD3D0011A560 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
@@ -73,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
+				A1B2C3D4E5F60718293A0002 /* Time ScopesTests */,
 				AC788B7B1421F46B81FEB8FC /* Time Scopes/App/Shared */,
 				7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */,
 				F9216D862E0AAD3D0011A560 /* Products */,
@@ -84,6 +103,7 @@
 			children = (
 				F9216D852E0AAD3D0011A560 /* Time Scopes.app */,
 				2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */,
+				A1B2C3D4E5F60718293A0001 /* Time ScopesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,6 +129,27 @@
 			productName = TimeScopesWidgetExtension;
 			productReference = 2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
+		};
+		A1B2C3D4E5F60718293A0006 /* Time ScopesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1B2C3D4E5F60718293A0007 /* Build configuration list for PBXNativeTarget "Time ScopesTests" */;
+			buildPhases = (
+				A1B2C3D4E5F60718293A0005 /* Sources */,
+				A1B2C3D4E5F60718293A0003 /* Frameworks */,
+				A1B2C3D4E5F60718293A0004 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1B2C3D4E5F60718293A0008 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A1B2C3D4E5F60718293A0002 /* Time ScopesTests */,
+			);
+			name = "Time ScopesTests";
+			productName = "Time ScopesTests";
+			productReference = A1B2C3D4E5F60718293A0001 /* Time ScopesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F9216D842E0AAD3D0011A560 /* Time Scopes */ = {
 			isa = PBXNativeTarget;
@@ -145,6 +186,10 @@
 					052CA87A91E5A14414B7A60D = {
 						CreatedOnToolsVersion = 16.4;
 					};
+					A1B2C3D4E5F60718293A0006 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = F9216D842E0AAD3D0011A560;
+					};
 					F9216D842E0AAD3D0011A560 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -166,12 +211,18 @@
 			targets = (
 				F9216D842E0AAD3D0011A560 /* Time Scopes */,
 				052CA87A91E5A14414B7A60D /* TimeScopesWidgetExtension */,
+				A1B2C3D4E5F60718293A0006 /* Time ScopesTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		84A0DCD00DE1158BD1F357FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		A1B2C3D4E5F60718293A0004 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -189,6 +240,11 @@
 			files = (
 			);
 		};
+		A1B2C3D4E5F60718293A0005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 		F9216D812E0AAD3D0011A560 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			files = (
@@ -197,6 +253,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A1B2C3D4E5F60718293A0008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9216D842E0AAD3D0011A560 /* Time Scopes */;
+			targetProxy = A1B2C3D4E5F60718293A0009 /* PBXContainerItemProxy */;
+		};
 		A218841A19F739B4C732F658 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 052CA87A91E5A14414B7A60D /* TimeScopesWidgetExtension */;
@@ -226,6 +287,60 @@
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
+		};
+		A1B2C3D4E5F60718293A000A /* Debug configuration for PBXNativeTarget "Time ScopesTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 5U49ST9XZH;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Scopes.app/Time Scopes";
+			};
+			name = Debug;
+		};
+		A1B2C3D4E5F60718293A000B /* Release configuration for PBXNativeTarget "Time ScopesTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 5U49ST9XZH;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(APP_BUNDLE_IDENTIFIER).Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Scopes.app/Time Scopes";
+			};
+			name = Release;
 		};
 		B1443ACBD7198EEC7353368D /* Release configuration for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
@@ -466,6 +581,14 @@
 			buildConfigurations = (
 				8AA8FC02B6B8817D27E9C36C /* Debug configuration for PBXNativeTarget "TimeScopesWidgetExtension" */,
 				B1443ACBD7198EEC7353368D /* Release configuration for PBXNativeTarget "TimeScopesWidgetExtension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		A1B2C3D4E5F60718293A0007 /* Build configuration list for PBXNativeTarget "Time ScopesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1B2C3D4E5F60718293A000A /* Debug configuration for PBXNativeTarget "Time ScopesTests" */,
+				A1B2C3D4E5F60718293A000B /* Release configuration for PBXNativeTarget "Time ScopesTests" */,
 			);
 			defaultConfigurationName = Release;
 		};

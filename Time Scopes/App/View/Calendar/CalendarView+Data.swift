@@ -91,6 +91,23 @@ extension CalendarView {
         reminderProvider.refreshReminders(in: interval)
     }
 
+    func performPeriodicRefreshIfNeeded(
+        at now: Date,
+        monthStart: Date,
+        calendar: Calendar,
+        force: Bool = false
+    ) {
+        guard force || isPeriodicRefreshDue(at: now) else { return }
+        lastPeriodicRefresh = now
+        journalStore.reload()
+        refreshAgenda(for: monthStart, calendar: calendar)
+    }
+
+    func isPeriodicRefreshDue(at now: Date) -> Bool {
+        guard scenePhase == .active, isViewVisible else { return false }
+        return now.timeIntervalSince(lastPeriodicRefresh) >= 60
+    }
+
     func monthInterval(for monthStart: Date, calendar: Calendar) -> DateInterval {
         let start = calendar.startOfDay(for: monthStart)
         let end = calendar.date(byAdding: .month, value: 1, to: start) ?? start

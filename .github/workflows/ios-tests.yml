@@ -1,0 +1,31 @@
+name: iOS Tests
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      MIN_COVERAGE: "50.0"
+      COVERAGE_TARGET_NAME: "Time Scopes.app"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Run Unit Tests With Coverage Gate
+        run: scripts/ci/run_tests_with_coverage.sh
+
+      - name: Upload xcresult
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-test-results
+          path: build/TestResults/*.xcresult

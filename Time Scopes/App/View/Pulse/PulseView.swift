@@ -15,11 +15,12 @@ enum PulseScrollTarget: String {
 }
 
 struct PulseView: View {
-    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var deepLinkCenter: AppDeepLinkCenter
     @StateObject var eventProvider = CalendarEventProvider()
     @StateObject var reminderProvider = ReminderProvider()
     @StateObject var journalStore = PulseJournalStore()
+    @StateObject var refreshTicker = SecondTicker()
 
     @State var isPresentingJournal = false
     @State var journalDraft = ""
@@ -27,6 +28,8 @@ struct PulseView: View {
     @State var entryToDelete: PulseJournalEntry?
     @State var isConfirmingDelete = false
     @State var currentPrompt = ""
+    @State var isViewVisible = false
+    @State var lastPeriodicRefresh: Date = .distantPast
 
     let calendar = Calendar.autoupdatingCurrent
     let widgetStore = WidgetSnapshotStore()
@@ -57,34 +60,31 @@ struct PulseView: View {
             }
         }
         .onAppear {
-            journalStore.reload()
+            isViewVisible = true
             refreshPrompt()
-            syncPulseWidgetSnapshot()
+            performPeriodicRefreshIfNeeded(at: Date(), force: true)
             presentComposerIfRequestedFromWidget()
         }
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
-            journalStore.reload()
-            refreshData()
-            syncPulseWidgetSnapshot()
+            performPeriodicRefreshIfNeeded(at: Date(), force: true)
             presentComposerIfRequestedFromWidget()
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
-                journalStore.reload()
-                refreshData()
-                syncPulseWidgetSnapshot()
+                performPeriodicRefreshIfNeeded(at: Date(), force: true)
                 presentComposerIfRequestedFromWidget()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
-            journalStore.reload()
-            refreshData()
-            syncPulseWidgetSnapshot()
+            performPeriodicRefreshIfNeeded(at: Date(), force: true)
         }
         .onReceive(NotificationCenter.default.publisher(for: .pulseJournalComposeRequested)) { _ in
             presentComposerIfRequestedFromWidget()
+        }
+        .onReceive(refreshTicker.$now) { now in
+            performPeriodicRefreshIfNeeded(at: now)
         }
         .onReceive(journalStore.$entries) { _ in
             syncPulseWidgetSnapshot()
@@ -124,6 +124,9 @@ struct PulseView: View {
             Button("Cancel", role: .cancel) {
                 entryToDelete = nil
             }
+        }
+        .onDisappear {
+            isViewVisible = false
         }
     }
 }

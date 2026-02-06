@@ -37,6 +37,19 @@ extension PulseView {
         }
     }
 
+    func performPeriodicRefreshIfNeeded(at now: Date, force: Bool = false) {
+        guard force || isPeriodicRefreshDue(at: now) else { return }
+        lastPeriodicRefresh = now
+        journalStore.reload()
+        refreshData()
+        syncPulseWidgetSnapshot()
+    }
+
+    func isPeriodicRefreshDue(at now: Date) -> Bool {
+        guard scenePhase == .active, isViewVisible else { return false }
+        return now.timeIntervalSince(lastPeriodicRefresh) >= 60
+    }
+
     var todayLoadSeries: [Double] {
         let today = Date()
         return hourlyLoadSeries(for: today)

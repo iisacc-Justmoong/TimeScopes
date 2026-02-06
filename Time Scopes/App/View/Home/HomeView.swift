@@ -32,6 +32,7 @@ enum HomeScrollTarget: String {
 }
 
 struct HomeView: View {
+    @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var monthCount: MonthCount
     @EnvironmentObject var weekCount: WeekCount
@@ -63,6 +64,8 @@ struct HomeView: View {
     }
 
     @State var isPresented = false
+    @State var isViewVisible = false
+    @State var lastPeriodicRefresh: Date = .distantPast
 
     init(
         lifeRemainingWorkingTime: LifeRemainingWorkingTime,
@@ -102,14 +105,13 @@ struct HomeView: View {
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
-            refreshDailyAgenda(for: dateProvider.now())
-            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+            performPeriodicRefreshIfNeeded(at: dateProvider.now(), force: true)
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
-            refreshDailyAgenda(for: dateProvider.now())
-            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+            performPeriodicRefreshIfNeeded(at: dateProvider.now(), force: true)
         }
         .onReceive(weekdayTicker.$now) { now in
+            performPeriodicRefreshIfNeeded(at: now)
             syncWidgetSnapshotIfNeeded(at: now)
         }
         .onReceive(eventProvider.$events) { _ in
@@ -120,6 +122,10 @@ struct HomeView: View {
         }
         .onReceive(locationPermission.$location) { _ in
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: scenePhase) { phase in
+            guard phase == .active else { return }
+            performPeriodicRefreshIfNeeded(at: dateProvider.now(), force: true)
         }
         .onChange(of: userData.name) { _ in
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
@@ -137,7 +143,11 @@ struct HomeView: View {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
         .onAppear {
-            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+            isViewVisible = true
+            performPeriodicRefreshIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onDisappear {
+            isViewVisible = false
         }
         .glassScreen()
     }

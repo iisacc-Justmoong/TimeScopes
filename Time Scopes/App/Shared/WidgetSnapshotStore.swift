@@ -3,11 +3,17 @@ import WidgetKit
 
 struct WidgetSharedContainer {
     let appGroupID: String
+    private let fixedContainerURL: URL?
+
+    init(appGroupID: String, fixedContainerURL: URL? = nil) {
+        self.appGroupID = appGroupID
+        self.fixedContainerURL = fixedContainerURL
+    }
 
     static let `default` = WidgetSharedContainer(appGroupID: WidgetSharedConstants.appGroupID)
 
     var containerURL: URL? {
-        FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)
+        fixedContainerURL ?? FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)
     }
 
     var snapshotURL: URL? {
@@ -19,11 +25,18 @@ final class WidgetSnapshotStore {
     private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.widgetSnapshotStore.io")
 
     private let container: WidgetSharedContainer
+    private let reloadTimeline: (String) -> Void
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
 
-    init(container: WidgetSharedContainer = .default) {
+    init(
+        container: WidgetSharedContainer = .default,
+        reloadTimeline: @escaping (String) -> Void = { kind in
+            WidgetCenter.shared.reloadTimelines(ofKind: kind)
+        }
+    ) {
         self.container = container
+        self.reloadTimeline = reloadTimeline
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         self.encoder = encoder
@@ -136,7 +149,7 @@ final class WidgetSnapshotStore {
 
     private func reloadWidgetTimelines() {
         WidgetSharedConstants.allWidgetKinds.forEach { kind in
-            WidgetCenter.shared.reloadTimelines(ofKind: kind)
+            reloadTimeline(kind)
         }
     }
 }

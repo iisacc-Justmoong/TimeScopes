@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct CalendarView: View {
-    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.scenePhase) var scenePhase
     @EnvironmentObject var userData: UserData
     @StateObject var eventProvider = CalendarEventProvider()
     @StateObject var reminderProvider = ReminderProvider()
     @StateObject var journalStore = PulseJournalStore()
+    @StateObject var refreshTicker = SecondTicker()
 
     @State var displayedMonth: Date
     @State var selectedDate: Date
     @State var jumpDate: Date
     @State var isJumpPresented = false
     @State var jumpSheetHeight: CGFloat = 520
+    @State var isViewVisible = false
+    @State var lastPeriodicRefresh: Date = .distantPast
 
     let dateProvider: DateProviding
     let ageCalculator: AgeCalculating
@@ -69,13 +72,40 @@ struct CalendarView: View {
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
-            journalStore.reload()
-            refreshAgenda(for: monthStart, calendar: calendar)
+            performPeriodicRefreshIfNeeded(
+                at: dateProvider.now(),
+                monthStart: monthStart,
+                calendar: calendar,
+                force: true
+            )
         }
         .onChange(of: scenePhase) { phase in
             guard phase == .active else { return }
-            journalStore.reload()
-            refreshAgenda(for: monthStart, calendar: calendar)
+            performPeriodicRefreshIfNeeded(
+                at: dateProvider.now(),
+                monthStart: monthStart,
+                calendar: calendar,
+                force: true
+            )
+        }
+        .onReceive(refreshTicker.$now) { now in
+            performPeriodicRefreshIfNeeded(
+                at: now,
+                monthStart: monthStart,
+                calendar: calendar
+            )
+        }
+        .onAppear {
+            isViewVisible = true
+            performPeriodicRefreshIfNeeded(
+                at: dateProvider.now(),
+                monthStart: monthStart,
+                calendar: calendar,
+                force: true
+            )
+        }
+        .onDisappear {
+            isViewVisible = false
         }
         .sheet(isPresented: $isJumpPresented) {
             JumpDatePicker(
