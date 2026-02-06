@@ -1070,12 +1070,6 @@ struct PulseJournalWidgetView: View {
                 Text(pulse.journalPrompt)
                     .font(.footnote)
                     .lineLimit(3)
-                if let recent = pulse.recentEntries.first {
-                    Text(recent.note)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(2)
-                }
                 Spacer(minLength: 0)
                 Button(intent: AddPulseJournalEntryIntent()) {
                     Label("Add Entry", systemImage: "plus")
