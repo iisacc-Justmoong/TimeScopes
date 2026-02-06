@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */; };
+		53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,14 +28,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5D4BD6B22E1C536C5FF4AFBD /* Embed App Extensions */ = {
+		5D4BD6B22E1C536C5FF4AFBD /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			dstPath = "";
 			dstSubfolder = PlugIns;
 			files = (
-				53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed App Extensions */,
+				53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -158,7 +158,7 @@
 				F9216D812E0AAD3D0011A560 /* Sources */,
 				F9216D822E0AAD3D0011A560 /* Frameworks */,
 				F9216D832E0AAD3D0011A560 /* Resources */,
-				5D4BD6B22E1C536C5FF4AFBD /* Embed App Extensions */,
+				5D4BD6B22E1C536C5FF4AFBD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -181,7 +181,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					052CA87A91E5A14414B7A60D = {
 						CreatedOnToolsVersion = 16.4;

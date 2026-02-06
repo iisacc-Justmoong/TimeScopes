@@ -13,7 +13,7 @@ struct InputView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section {
                     TextField("Name", text: $userData.name)

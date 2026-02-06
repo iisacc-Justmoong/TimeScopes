@@ -19,11 +19,7 @@ final class LocationPermissionManager: NSObject, ObservableObject {
         let manager = CLLocationManager()
         self.manager = manager
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
-        if #available(iOS 14.0, *) {
-            self.authorizationStatus = manager.authorizationStatus
-        } else {
-            self.authorizationStatus = CLLocationManager.authorizationStatus()
-        }
+        self.authorizationStatus = manager.authorizationStatus
         super.init()
         manager.delegate = self
     }
@@ -37,11 +33,7 @@ final class LocationPermissionManager: NSObject, ObservableObject {
     }
 
     func refreshStatus() {
-        if #available(iOS 14.0, *) {
-            authorizationStatus = manager.authorizationStatus
-        } else {
-            authorizationStatus = CLLocationManager.authorizationStatus()
-        }
+        authorizationStatus = manager.authorizationStatus
         requestLocationIfPossible()
     }
 

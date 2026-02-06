@@ -13,5 +13,8 @@ struct TimeScopesWidgetBundle: WidgetBundle {
         TimeScopesPulseWeeklyWidget()
         TimeScopesPulsePrescriptionsWidget()
         TimeScopesPulseJournalWidget()
+        if #available(iOSApplicationExtension 18.0, *) {
+            TimeScopesPulseJournalControlWidget()
+        }
     }
 }

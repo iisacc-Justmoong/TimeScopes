@@ -405,50 +405,27 @@ extension PulseView {
         return max(0, end.timeIntervalSince(start))
     }
 
-    func overlaps(start: Date, end: Date, in interval: DateInterval) -> Bool {
-        end > interval.start && start < interval.end
-    }
-
-    func reminderOverlaps(_ reminder: ReminderItem, in interval: DateInterval) -> Bool {
-        guard !reminder.isAllDay else { return false }
-        if let startDate = reminder.startDate {
-            return overlaps(start: startDate, end: reminder.dueDate, in: interval)
-        }
-        return interval.contains(reminder.dueDate)
-    }
-
     func hourlyLoadSeries(for date: Date) -> [Double] {
-        let calendar = Calendar.autoupdatingCurrent
-        let dayStart = calendar.startOfDay(for: date)
-        let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? date
-        let dayInterval = DateInterval(start: dayStart, end: dayEnd)
-        let events = eventProvider.events.filter {
-            !$0.isAllDay && $0.endDate > dayInterval.start && $0.startDate < dayInterval.end
+        let eventSpans = eventProvider.events.compactMap { event -> PulseHourlyLoadCalculator.Span? in
+            guard !event.isAllDay else { return nil }
+            return PulseHourlyLoadCalculator.Span(start: event.startDate, end: event.endDate)
         }
-        let reminders = reminderProvider.reminders.filter { reminder in
+        var reminderSpans: [PulseHourlyLoadCalculator.Span] = []
+        var reminderMoments: [Date] = []
+        for reminder in reminderProvider.allReminders where !reminder.isAllDay {
             if let startDate = reminder.startDate {
-                return reminder.dueDate > dayInterval.start && startDate < dayInterval.end
+                reminderSpans.append(PulseHourlyLoadCalculator.Span(start: startDate, end: reminder.dueDate))
+            } else {
+                reminderMoments.append(reminder.dueDate)
             }
-            return dayInterval.contains(reminder.dueDate)
         }
-
-        var series: [Double] = []
-        for hour in 0..<24 {
-            guard let start = calendar.date(byAdding: .hour, value: hour, to: dayStart),
-                  let end = calendar.date(byAdding: .hour, value: hour + 1, to: dayStart) else {
-                series.append(0)
-                continue
-            }
-            let interval = DateInterval(start: start, end: end)
-            let eventHits = events.reduce(0) { total, event in
-                total + (overlaps(start: event.startDate, end: event.endDate, in: interval) ? 1 : 0)
-            }
-            let reminderHits = reminders.reduce(0) { total, reminder in
-                total + (reminderOverlaps(reminder, in: interval) ? 1 : 0)
-            }
-            series.append(Double(eventHits + reminderHits))
-        }
-        return series
+        return PulseHourlyLoadCalculator.makeSeries(
+            for: date,
+            calendar: calendar,
+            eventSpans: eventSpans,
+            reminderSpans: reminderSpans,
+            reminderMoments: reminderMoments
+        )
     }
 
     func distributionLabel(for loads: [PulseDayLoad], hasLoad: Bool) -> String {

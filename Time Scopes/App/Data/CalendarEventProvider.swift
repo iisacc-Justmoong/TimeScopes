@@ -139,6 +139,7 @@ struct ReminderItem: Identifiable {
     let startDate: Date?
     let dueDate: Date
     let isAllDay: Bool
+    let isCompleted: Bool
     let color: Color
     let listTitle: String
 }
@@ -147,11 +148,13 @@ struct ReminderItem: Identifiable {
 final class ReminderProvider: ObservableObject {
     @Published private(set) var authorizationStatus: EKAuthorizationStatus
     @Published private(set) var reminders: [ReminderItem] = []
+    @Published private(set) var allReminders: [ReminderItem] = []
     @Published private(set) var hasReminderLists: Bool = true
 
     private let store: EKEventStore
     private let calendar: Calendar
     private var remindersByDay: [Date: [ReminderItem]] = [:]
+    private var allRemindersByDay: [Date: [ReminderItem]] = [:]
     private var refreshToken = UUID()
 
     init(store: EKEventStore = EKEventStore(), calendar: Calendar = .autoupdatingCurrent) {
@@ -175,7 +178,9 @@ final class ReminderProvider: ObservableObject {
         authorizationStatus = EKEventStore.authorizationStatus(for: .reminder)
         if !granted {
             reminders = []
+            allReminders = []
             remindersByDay = [:]
+            allRemindersByDay = [:]
         }
     }
 
@@ -186,7 +191,9 @@ final class ReminderProvider: ObservableObject {
         refreshAuthorizationStatus()
         guard hasAccess else {
             reminders = []
+            allReminders = []
             remindersByDay = [:]
+            allRemindersByDay = [:]
             return
         }
 
@@ -194,7 +201,9 @@ final class ReminderProvider: ObservableObject {
         hasReminderLists = !calendars.isEmpty
         guard hasReminderLists else {
             reminders = []
+            allReminders = []
             remindersByDay = [:]
+            allRemindersByDay = [:]
             return
         }
 
@@ -204,7 +213,7 @@ final class ReminderProvider: ObservableObject {
             guard let self else { return }
             Task { @MainActor in
                 guard token == self.refreshToken else { return }
-                let mapped = (fetched ?? []).filter { !$0.isCompleted }.compactMap { reminder -> ReminderItem? in
+                let mapped = (fetched ?? []).compactMap { reminder -> ReminderItem? in
                     let dueComponents = reminder.dueDateComponents
                     let startComponents = reminder.startDateComponents
                     guard let effectiveComponents = dueComponents ?? startComponents,
@@ -225,11 +234,17 @@ final class ReminderProvider: ObservableObject {
                         startDate: startDate,
                         dueDate: dueDate,
                         isAllDay: isAllDay,
+                        isCompleted: reminder.isCompleted,
                         color: self.listColor(for: reminder.calendar),
                         listTitle: reminder.calendar.title
                     )
                 }
-                let filtered = mapped.filter { reminder in
+                let all = mapped.sorted { $0.dueDate < $1.dueDate }
+                self.allReminders = all
+                self.rebuildAllRemindersByDay()
+
+                let filtered = all.filter { reminder in
+                    guard !reminder.isCompleted else { return false }
                     if let startDate = reminder.startDate {
                         return reminder.dueDate > interval.start && startDate < interval.end
                     }
@@ -252,6 +267,10 @@ final class ReminderProvider: ObservableObject {
         return dayReminders.prefix(limit).map { $0.color }
     }
 
+    func allReminders(on date: Date) -> [ReminderItem] {
+        allRemindersByDay[calendar.startOfDay(for: date)] ?? []
+    }
+
     private func rebuildRemindersByDay() {
         var grouped: [Date: [ReminderItem]] = [:]
 
@@ -264,6 +283,20 @@ final class ReminderProvider: ObservableObject {
             grouped[key]?.sort { $0.dueDate < $1.dueDate }
         }
         remindersByDay = grouped
+    }
+
+    private func rebuildAllRemindersByDay() {
+        var grouped: [Date: [ReminderItem]] = [:]
+
+        for reminder in allReminders {
+            let day = calendar.startOfDay(for: reminder.dueDate)
+            grouped[day, default: []].append(reminder)
+        }
+
+        for key in grouped.keys {
+            grouped[key]?.sort { $0.dueDate < $1.dueDate }
+        }
+        allRemindersByDay = grouped
     }
 
     private func availableReminderLists() -> [EKCalendar] {
