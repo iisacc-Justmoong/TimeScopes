@@ -16,16 +16,16 @@ final class WidgetSnapshotStoreTests: XCTestCase {
 
     func testLoadSnapshotReturnsEmptyWhenFileMissing() {
         let container = makeContainer()
-        let store = WidgetSnapshotStore(container: container, reloadTimeline: { _ in })
+        let store = WidgetSnapshotStore(container: container, reloadTimelines: {})
 
         XCTAssertEqual(store.loadSnapshot(), .empty)
     }
 
-    func testSaveAndLoadRoundTripReloadsAllWidgetKinds() {
+    func testSaveAndLoadRoundTripReloadsTimelinesOnce() {
         let container = makeContainer()
-        var reloadedKinds: [String] = []
-        let store = WidgetSnapshotStore(container: container) { kind in
-            reloadedKinds.append(kind)
+        var reloadCount = 0
+        let store = WidgetSnapshotStore(container: container) {
+            reloadCount += 1
         }
 
         let snapshot = makeSnapshot(name: "RoundTrip")
@@ -33,14 +33,13 @@ final class WidgetSnapshotStoreTests: XCTestCase {
 
         let loaded = store.loadSnapshot()
         XCTAssertEqual(loaded.profile.name, "RoundTrip")
-        XCTAssertEqual(Set(reloadedKinds), Set(WidgetSharedConstants.allWidgetKinds))
-        XCTAssertEqual(reloadedKinds.count, WidgetSharedConstants.allWidgetKinds.count)
+        XCTAssertEqual(reloadCount, 1)
     }
 
     func testUpdateSnapshotMutatesCurrentValueAndReloadsWidgets() {
         let container = makeContainer()
         var reloadCount = 0
-        let store = WidgetSnapshotStore(container: container) { _ in
+        let store = WidgetSnapshotStore(container: container) {
             reloadCount += 1
         }
 
@@ -65,7 +64,38 @@ final class WidgetSnapshotStoreTests: XCTestCase {
 
         let loaded = store.loadSnapshot()
         XCTAssertEqual(loaded.profile.name, "After")
-        XCTAssertEqual(reloadCount, WidgetSharedConstants.allWidgetKinds.count * 2)
+        XCTAssertEqual(reloadCount, 2)
+    }
+
+    func testUpdateSnapshotCanSkipTimelineReload() {
+        let container = makeContainer()
+        var reloadCount = 0
+        let store = WidgetSnapshotStore(container: container) {
+            reloadCount += 1
+        }
+
+        store.saveSnapshot(makeSnapshot(name: "Before"), requestTimelineReload: false)
+        store.updateSnapshot(requestTimelineReload: false) { current in
+            WidgetSnapshot(
+                updatedAt: current.updatedAt,
+                profile: .init(
+                    name: "After",
+                    age: current.profile.age,
+                    monthsLeft: current.profile.monthsLeft,
+                    weeksLeft: current.profile.weeksLeft,
+                    daysLeft: current.profile.daysLeft
+                ),
+                elapsed: current.elapsed,
+                milestones: current.milestones,
+                highlights: current.highlights,
+                daily: current.daily,
+                pulse: current.pulse
+            )
+        }
+
+        let loaded = store.loadSnapshot()
+        XCTAssertEqual(loaded.profile.name, "After")
+        XCTAssertEqual(reloadCount, 0)
     }
 
     func testLoadSnapshotFallsBackToEmptyWhenCorrupted() throws {
@@ -74,7 +104,7 @@ final class WidgetSnapshotStoreTests: XCTestCase {
         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try Data("not-json".utf8).write(to: fileURL, options: [.atomic])
 
-        let store = WidgetSnapshotStore(container: container, reloadTimeline: { _ in })
+        let store = WidgetSnapshotStore(container: container, reloadTimelines: {})
         XCTAssertEqual(store.loadSnapshot(), .empty)
     }
 

@@ -2,7 +2,7 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-private let timelineRefresh: TimeInterval = 15 * 60
+private let timelineRefresh: TimeInterval = 5 * 60
 
 private func makeTimeline<Entry: TimelineEntry>(_ entry: Entry) -> Timeline<Entry> {
     Timeline(entries: [entry], policy: .after(Date().addingTimeInterval(timelineRefresh)))

@@ -39,7 +39,7 @@ final class UntilBirthTests: XCTestCase {
         temporaryDirectories.append(directory)
         let widgetStore = WidgetSnapshotStore(
             container: WidgetSharedContainer(appGroupID: "UntilBirthTests", fixedContainerURL: directory),
-            reloadTimeline: { _ in }
+            reloadTimelines: {}
         )
         return UserData(
             store: InMemoryUserProfileStore(),

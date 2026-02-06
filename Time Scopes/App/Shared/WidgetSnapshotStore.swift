@@ -25,18 +25,18 @@ final class WidgetSnapshotStore {
     private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.widgetSnapshotStore.io")
 
     private let container: WidgetSharedContainer
-    private let reloadTimeline: (String) -> Void
+    private let reloadTimelines: () -> Void
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
 
     init(
         container: WidgetSharedContainer = .default,
-        reloadTimeline: @escaping (String) -> Void = { kind in
-            WidgetCenter.shared.reloadTimelines(ofKind: kind)
+        reloadTimelines: @escaping () -> Void = {
+            WidgetCenter.shared.reloadAllTimelines()
         }
     ) {
         self.container = container
-        self.reloadTimeline = reloadTimeline
+        self.reloadTimelines = reloadTimelines
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
         self.encoder = encoder
@@ -51,19 +51,19 @@ final class WidgetSnapshotStore {
         }
     }
 
-    func saveSnapshot(_ snapshot: WidgetSnapshot) {
+    func saveSnapshot(_ snapshot: WidgetSnapshot, requestTimelineReload: Bool = true) {
         let didSave = Self.ioQueue.sync {
             saveSnapshotToDisk(snapshot)
         }
-        guard didSave else { return }
+        guard didSave, requestTimelineReload else { return }
         reloadWidgetTimelines()
     }
 
-    func updateSnapshot(_ transform: (WidgetSnapshot) -> WidgetSnapshot) {
+    func updateSnapshot(requestTimelineReload: Bool = true, _ transform: (WidgetSnapshot) -> WidgetSnapshot) {
         let didSave = Self.ioQueue.sync {
             mutateSnapshotOnDisk(transform)
         }
-        guard didSave else { return }
+        guard didSave, requestTimelineReload else { return }
         reloadWidgetTimelines()
     }
 
@@ -148,8 +148,6 @@ final class WidgetSnapshotStore {
     }
 
     private func reloadWidgetTimelines() {
-        WidgetSharedConstants.allWidgetKinds.forEach { kind in
-            reloadTimeline(kind)
-        }
+        reloadTimelines()
     }
 }

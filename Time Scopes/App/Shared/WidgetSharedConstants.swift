@@ -24,5 +24,6 @@ enum WidgetSharedConstants {
         pulseWeeklyWidgetKind,
         pulsePrescriptionsWidgetKind,
         pulseJournalWidgetKind,
+        pulseJournalControlKind,
     ]
 }

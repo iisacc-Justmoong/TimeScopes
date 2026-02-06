@@ -224,15 +224,11 @@ final class ReminderProvider: ObservableObject {
                     let isAllDay = effectiveComponents.hour == nil
                         && effectiveComponents.minute == nil
                         && effectiveComponents.second == nil
-                    var dueDate = effectiveDueDate
-                    if let startDate, !isAllDay, dueDate <= startDate {
-                        dueDate = self.calendar.date(byAdding: .minute, value: 15, to: startDate) ?? startDate
-                    }
                     return ReminderItem(
                         id: reminder.calendarItemIdentifier,
                         title: reminder.title ?? "Untitled",
                         startDate: startDate,
-                        dueDate: dueDate,
+                        dueDate: effectiveDueDate,
                         isAllDay: isAllDay,
                         isCompleted: reminder.isCompleted,
                         color: self.listColor(for: reminder.calendar),

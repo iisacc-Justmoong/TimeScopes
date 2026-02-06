@@ -242,10 +242,10 @@ extension HomeView {
     }
 
     func syncWidgetSnapshotIfNeeded(at now: Date, force: Bool = false) {
-        let interval: TimeInterval = 30
+        let interval: TimeInterval = 120
         guard force || now.timeIntervalSince(lastWidgetSync) >= interval else { return }
         lastWidgetSync = now
-        widgetStore.updateSnapshot { current in
+        widgetStore.updateSnapshot(requestTimelineReload: force) { current in
             buildWidgetSnapshot(at: now, pulse: current.pulse)
         }
     }

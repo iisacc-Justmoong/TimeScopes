@@ -42,7 +42,7 @@ extension PulseView {
         lastPeriodicRefresh = now
         journalStore.reload()
         refreshData()
-        syncPulseWidgetSnapshot()
+        syncPulseWidgetSnapshot(requestTimelineReload: force)
     }
 
     func isPeriodicRefreshDue(at now: Date) -> Bool {
@@ -289,9 +289,9 @@ extension PulseView {
         reminderProvider.refreshReminders(in: interval)
     }
 
-    func syncPulseWidgetSnapshot() {
+    func syncPulseWidgetSnapshot(requestTimelineReload: Bool = true) {
         let pulseSnapshot = buildPulseSnapshot()
-        widgetStore.updateSnapshot { current in
+        widgetStore.updateSnapshot(requestTimelineReload: requestTimelineReload) { current in
             WidgetSnapshot(
                 updatedAt: Date(),
                 profile: current.profile,
@@ -413,7 +413,7 @@ extension PulseView {
         var reminderSpans: [PulseHourlyLoadCalculator.Span] = []
         var reminderMoments: [Date] = []
         for reminder in reminderProvider.allReminders where !reminder.isAllDay {
-            if let startDate = reminder.startDate {
+            if let startDate = reminder.startDate, reminder.dueDate > startDate {
                 reminderSpans.append(PulseHourlyLoadCalculator.Span(start: startDate, end: reminder.dueDate))
             } else {
                 reminderMoments.append(reminder.dueDate)
