@@ -244,6 +244,7 @@ struct HomeView: View {
                             matchingPolicy: .nextTimePreservingSmallerComponents
                         ) ?? endOfToday
                         let remainingToNextHourSeconds = max(0, Int(nextHour.timeIntervalSince(now)))
+                        let elapsedToNextHourSeconds = max(0, 3_600 - remainingToNextHourSeconds)
                         let nextHourText = formatMS(remainingToNextHourSeconds)
                         let eventSeconds = Int(eventProvider.events(on: startOfToday).reduce(0.0) { total, event in
                             total + clampedDuration(for: event, in: dayInterval)
@@ -254,7 +255,8 @@ struct HomeView: View {
                         let totalDaySeconds = 24 * 3_600
                         let remainingSeconds = max(0, Int(endOfToday.timeIntervalSince(now)))
                         let remainingText = formatHMS(remainingSeconds)
-                        let remainingPercent = percentText(value: remainingSeconds, total: totalDaySeconds)
+                        let elapsedSeconds = max(0, totalDaySeconds - remainingSeconds)
+                        let timeProgressPercent = percentText(value: elapsedSeconds, total: totalDaySeconds)
                         let sunGauge = sunGaugeData(for: now)
 
                         let workHours = max(0, min(userData.workHoursPerDay, 24))
@@ -266,8 +268,8 @@ struct HomeView: View {
                         DailyEventGaugeRow(
                             title: "Until Next Hour",
                             valueText: nextHourText,
-                            percentText: percentText(value: remainingToNextHourSeconds, total: 3_600),
-                            gaugeValue: Double(remainingToNextHourSeconds),
+                            percentText: percentText(value: elapsedToNextHourSeconds, total: 3_600),
+                            gaugeValue: Double(elapsedToNextHourSeconds),
                             gaugeMax: 3_600
                         )
                         .glassRow()
@@ -284,8 +286,8 @@ struct HomeView: View {
                         DailyEventGaugeRow(
                             title: "Time Left Today",
                             valueText: remainingText,
-                            percentText: remainingPercent,
-                            gaugeValue: Double(remainingSeconds),
+                            percentText: timeProgressPercent,
+                            gaugeValue: Double(elapsedSeconds),
                             gaugeMax: Double(totalDaySeconds)
                         )
                         .glassRow()
@@ -403,13 +405,14 @@ struct HomeView: View {
 
         let remaining = max(0, Int(window.nextDate.timeIntervalSince(date)))
         let segment = max(1, Int(window.nextDate.timeIntervalSince(window.previousDate)))
+        let elapsed = max(0, segment - remaining)
         let title = window.nextEvent == .sunrise ? "Until Sunrise" : "Until Sunset"
 
         return SunGaugeData(
             title: title,
             valueText: formatHMS(remaining),
-            percentText: percentText(value: remaining, total: segment),
-            value: Double(remaining),
+            percentText: percentText(value: elapsed, total: segment),
+            value: Double(elapsed),
             max: Double(segment)
         )
     }
@@ -466,8 +469,9 @@ struct HomeView: View {
             matchingPolicy: .nextTimePreservingSmallerComponents
         ) ?? endOfToday
         let remainingToNextHourSeconds = max(0, Int(nextHour.timeIntervalSince(now)))
+        let elapsedToNextHourSeconds = max(0, 3_600 - remainingToNextHourSeconds)
         let nextHourText = formatMS(remainingToNextHourSeconds)
-        let nextHourPercent = percentText(value: remainingToNextHourSeconds, total: 3_600)
+        let nextHourProgressPercent = percentText(value: elapsedToNextHourSeconds, total: 3_600)
 
         let eventSeconds = Int(eventProvider.events(on: startOfToday).reduce(0.0) { total, event in
             total + clampedDuration(for: event, in: dayInterval)
@@ -478,7 +482,8 @@ struct HomeView: View {
         let totalDaySeconds = 24 * 3_600
         let remainingSeconds = max(0, Int(endOfToday.timeIntervalSince(now)))
         let remainingText = formatHMS(remainingSeconds)
-        let remainingPercent = percentText(value: remainingSeconds, total: totalDaySeconds)
+        let elapsedSeconds = max(0, totalDaySeconds - remainingSeconds)
+        let timeProgressPercent = percentText(value: elapsedSeconds, total: totalDaySeconds)
         let sunGauge = sunGaugeData(for: now)
 
         let workHours = max(0, min(userData.workHoursPerDay, 24))
@@ -489,12 +494,12 @@ struct HomeView: View {
 
         let daily = WidgetSnapshot.DailySummary(
             nextHourText: nextHourText,
-            nextHourPercent: nextHourPercent,
+            nextHourPercent: nextHourProgressPercent,
             sunTitle: sunGauge.title,
             sunValueText: sunGauge.valueText,
             sunPercentText: sunGauge.percentText,
             timeLeftText: remainingText,
-            timeLeftPercent: remainingPercent,
+            timeLeftPercent: timeProgressPercent,
             freeTimeText: formatHMS(freeSeconds),
             freeTimePercent: percentText(value: freeSeconds, total: totalDaySeconds),
             allocatedTimeText: formatHMS(scheduledSeconds),
