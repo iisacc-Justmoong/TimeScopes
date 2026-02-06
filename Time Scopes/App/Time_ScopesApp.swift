@@ -84,7 +84,7 @@ private struct RootTabView: View {
         .onAppear {
             routeWidgetActionIfNeeded()
         }
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 routeWidgetActionIfNeeded()
             } else {

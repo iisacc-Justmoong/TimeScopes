@@ -54,7 +54,7 @@ struct PulseView: View {
                 .onAppear {
                     scrollToDeepLinkIfNeeded(using: proxy)
                 }
-                .onChange(of: deepLinkCenter.route?.id) { _ in
+                .onChange(of: deepLinkCenter.route?.id) {
                     scrollToDeepLinkIfNeeded(using: proxy)
                 }
             }
@@ -71,7 +71,7 @@ struct PulseView: View {
             performPeriodicRefreshIfNeeded(at: Date(), force: true)
             presentComposerIfRequestedFromWidget()
         }
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             if phase == .active {
                 performPeriodicRefreshIfNeeded(at: Date(), force: true)
                 presentComposerIfRequestedFromWidget()
@@ -106,7 +106,7 @@ struct PulseView: View {
                 isPresentingJournal = false
             }
         }
-        .onChange(of: isPresentingJournal) { isPresented in
+        .onChange(of: isPresentingJournal) { _, isPresented in
             if !isPresented {
                 journalDraft = ""
                 editingEntry = nil

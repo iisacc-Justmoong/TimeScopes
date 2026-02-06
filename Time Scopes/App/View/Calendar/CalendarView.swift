@@ -59,14 +59,14 @@ struct CalendarView: View {
             }
             .glassScreen()
         }
-        .onChange(of: displayedMonth) { newValue in
+        .onChange(of: displayedMonth) { _, newValue in
             if !calendar.isDate(selectedDate, equalTo: newValue, toGranularity: .month) {
                 selectedDate = newValue
             }
             let newMonthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: newValue)) ?? newValue
             refreshAgenda(for: newMonthStart, calendar: calendar)
         }
-        .onChange(of: selectedDate) { newValue in
+        .onChange(of: selectedDate) { _, newValue in
             jumpDate = newValue
         }
         .task {
@@ -79,7 +79,7 @@ struct CalendarView: View {
                 force: true
             )
         }
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             performPeriodicRefreshIfNeeded(
                 at: dateProvider.now(),
@@ -113,7 +113,7 @@ struct CalendarView: View {
                 sheetHeight: $jumpSheetHeight,
                 onDone: { isJumpPresented = false }
             )
-            .onChange(of: jumpDate) { newValue in
+            .onChange(of: jumpDate) { _, newValue in
                 displayedMonth = newValue
                 selectedDate = newValue
             }

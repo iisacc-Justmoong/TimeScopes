@@ -52,7 +52,7 @@ final class LocationPermissionManager: NSObject, ObservableObject {
 
     private func isAuthorized(_ status: CLAuthorizationStatus) -> Bool {
         switch status {
-        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+        case .authorizedAlways, .authorizedWhenInUse:
             return true
         default:
             return false

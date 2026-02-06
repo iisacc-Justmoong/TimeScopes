@@ -96,7 +96,7 @@ struct HomeView: View {
                     .onAppear {
                         scrollToDeepLinkIfNeeded(using: proxy)
                     }
-                    .onChange(of: deepLinkCenter.route?.id) { _ in
+                    .onChange(of: deepLinkCenter.route?.id) {
                         scrollToDeepLinkIfNeeded(using: proxy)
                     }
                 }
@@ -123,23 +123,23 @@ struct HomeView: View {
         .onReceive(locationPermission.$location) { _ in
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             guard phase == .active else { return }
             performPeriodicRefreshIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: userData.name) { _ in
+        .onChange(of: userData.name) {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: userData.birthday) { _ in
+        .onChange(of: userData.birthday) {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: userData.deathDate) { _ in
+        .onChange(of: userData.deathDate) {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: userData.workHoursPerDay) { _ in
+        .onChange(of: userData.workHoursPerDay) {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
-        .onChange(of: userData.sleepHoursPerDay) { _ in
+        .onChange(of: userData.sleepHoursPerDay) {
             syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
         .onAppear {

@@ -40,7 +40,7 @@ struct ProfileWidgetConfigurationIntent: AppIntent, WidgetConfigurationIntent {
     static var description = IntentDescription("Choose which profile value is highlighted.")
 
     @Parameter(title: "Primary Metric")
-    var primaryMetric: ProfileMetric
+    var primaryMetric: ProfileMetric?
 
     init() {
         self.primaryMetric = .age
@@ -95,7 +95,7 @@ struct ElapsedWidgetConfigurationIntent: AppIntent, WidgetConfigurationIntent {
     static var description = IntentDescription("Choose which elapsed value is highlighted.")
 
     @Parameter(title: "Primary Metric")
-    var primaryMetric: ElapsedMetric
+    var primaryMetric: ElapsedMetric?
 
     init() {
         self.primaryMetric = .days
@@ -144,7 +144,7 @@ struct MilestonesWidgetConfigurationIntent: AppIntent, WidgetConfigurationIntent
     static var description = IntentDescription("Choose which milestone value is highlighted.")
 
     @Parameter(title: "Primary Metric")
-    var primaryMetric: MilestonesMetric
+    var primaryMetric: MilestonesMetric?
 
     init() {
         self.primaryMetric = .yearsUntilNextDecade
@@ -193,7 +193,7 @@ struct HighlightsWidgetConfigurationIntent: AppIntent, WidgetConfigurationIntent
     static var description = IntentDescription("Choose which highlight value is displayed.")
 
     @Parameter(title: "Primary Metric")
-    var primaryMetric: HighlightsMetric
+    var primaryMetric: HighlightsMetric?
 
     init() {
         self.primaryMetric = .yearRemaining
@@ -246,7 +246,7 @@ struct DailyWidgetConfigurationIntent: AppIntent, WidgetConfigurationIntent {
     static var description = IntentDescription("Choose which daily value is displayed.")
 
     @Parameter(title: "Primary Metric")
-    var primaryMetric: DailyMetric
+    var primaryMetric: DailyMetric?
 
     init() {
         self.primaryMetric = .timeLeft
@@ -325,6 +325,26 @@ private func percentValue(_ text: String) -> Double {
     let trimmed = text.replacingOccurrences(of: "%", with: "")
     let value = Double(trimmed) ?? 0
     return Swift.min(100, Swift.max(0, value))
+}
+
+private func resolvedMetric(_ metric: ProfileMetric?) -> ProfileMetric {
+    metric ?? .age
+}
+
+private func resolvedMetric(_ metric: ElapsedMetric?) -> ElapsedMetric {
+    metric ?? .days
+}
+
+private func resolvedMetric(_ metric: MilestonesMetric?) -> MilestonesMetric {
+    metric ?? .yearsUntilNextDecade
+}
+
+private func resolvedMetric(_ metric: HighlightsMetric?) -> HighlightsMetric {
+    metric ?? .yearRemaining
+}
+
+private func resolvedMetric(_ metric: DailyMetric?) -> DailyMetric {
+    metric ?? .timeLeft
 }
 
 private func profileDisplay(_ metric: ProfileMetric, profile: WidgetSnapshot.Profile) -> MetricDisplay {
@@ -678,7 +698,8 @@ struct TimeScopesProfileWidgetView: View {
 
     var body: some View {
         let profile = entry.snapshot.profile
-        let display = profileDisplay(entry.configuration.primaryMetric, profile: profile)
+        let metric = resolvedMetric(entry.configuration.primaryMetric)
+        let display = profileDisplay(metric, profile: profile)
         let isMedium = family == .systemMedium
         let valueFont: Font = isMedium ? .title2 : .title3
         let labelFont: Font = isMedium ? .callout : .footnote
@@ -707,7 +728,7 @@ struct TimeScopesProfileWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
-        .widgetURL(homeDeepLink(section: "profile", item: entry.configuration.primaryMetric.rawValue))
+        .widgetURL(homeDeepLink(section: "profile", item: metric.rawValue))
     }
 }
 
@@ -717,7 +738,8 @@ struct TimeScopesElapsedWidgetView: View {
 
     var body: some View {
         let elapsed = entry.snapshot.elapsed
-        let display = elapsedDisplay(entry.configuration.primaryMetric, elapsed: elapsed)
+        let metric = resolvedMetric(entry.configuration.primaryMetric)
+        let display = elapsedDisplay(metric, elapsed: elapsed)
         let isMedium = family == .systemMedium
         let valueFont: Font = isMedium ? .title2 : .title3
         let labelFont: Font = isMedium ? .callout : .footnote
@@ -740,7 +762,7 @@ struct TimeScopesElapsedWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
-        .widgetURL(homeDeepLink(section: "elapsed", item: entry.configuration.primaryMetric.rawValue))
+        .widgetURL(homeDeepLink(section: "elapsed", item: metric.rawValue))
     }
 }
 
@@ -750,7 +772,8 @@ struct TimeScopesMilestonesWidgetView: View {
 
     var body: some View {
         let milestones = entry.snapshot.milestones
-        let display = milestonesDisplay(entry.configuration.primaryMetric, milestones: milestones)
+        let metric = resolvedMetric(entry.configuration.primaryMetric)
+        let display = milestonesDisplay(metric, milestones: milestones)
         let isMedium = family == .systemMedium
         let valueFont: Font = isMedium ? .title2 : .title3
         let labelFont: Font = isMedium ? .callout : .footnote
@@ -773,7 +796,7 @@ struct TimeScopesMilestonesWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
-        .widgetURL(homeDeepLink(section: "milestones", item: entry.configuration.primaryMetric.rawValue))
+        .widgetURL(homeDeepLink(section: "milestones", item: metric.rawValue))
     }
 }
 
@@ -783,7 +806,8 @@ struct TimeScopesHighlightsWidgetView: View {
 
     var body: some View {
         let highlights = entry.snapshot.highlights
-        let display = highlightsDisplay(entry.configuration.primaryMetric, highlights: highlights)
+        let metric = resolvedMetric(entry.configuration.primaryMetric)
+        let display = highlightsDisplay(metric, highlights: highlights)
         let isMedium = family == .systemMedium
         let valueFont: Font = isMedium ? .title2 : .title3
         let labelFont: Font = isMedium ? .callout : .footnote
@@ -806,7 +830,7 @@ struct TimeScopesHighlightsWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
-        .widgetURL(homeDeepLink(section: "highlights", item: entry.configuration.primaryMetric.rawValue))
+        .widgetURL(homeDeepLink(section: "highlights", item: metric.rawValue))
     }
 }
 
@@ -816,7 +840,8 @@ struct TimeScopesDailyWidgetView: View {
 
     var body: some View {
         let daily = entry.snapshot.daily
-        let display = dailyDisplay(entry.configuration.primaryMetric, daily: daily)
+        let metric = resolvedMetric(entry.configuration.primaryMetric)
+        let display = dailyDisplay(metric, daily: daily)
         let isMedium = family == .systemMedium
         let valueFont: Font = isMedium ? .title2 : .title3
         let labelFont: Font = isMedium ? .callout : .footnote
@@ -839,7 +864,7 @@ struct TimeScopesDailyWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
-        .widgetURL(homeDeepLink(section: "daily", item: entry.configuration.primaryMetric.rawValue))
+        .widgetURL(homeDeepLink(section: "daily", item: metric.rawValue))
     }
 }
 
@@ -935,7 +960,7 @@ private struct PulseWeekBarChart: View {
     }
 }
 
-private struct PulsePrescriptionRow: View {
+private struct PulseWidgetPrescriptionRow: View {
     let prescription: WidgetSnapshot.Pulse.Prescription
 
     var body: some View {
@@ -1023,7 +1048,7 @@ struct PulsePrescriptionsWidgetView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(items.indices, id: \.self) { index in
-                        PulsePrescriptionRow(prescription: items[index])
+                        PulseWidgetPrescriptionRow(prescription: items[index])
                         if index < items.count - 1 {
                             Divider().opacity(0.35)
                         }

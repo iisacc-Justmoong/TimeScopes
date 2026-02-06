@@ -11,6 +11,8 @@ fi
 RESULT_BUNDLE_PATH="$1"
 TARGET_NAME="${COVERAGE_TARGET_NAME:-Time Scopes.app}"
 MIN_COVERAGE="${MIN_COVERAGE:-50.0}"
+WIDGET_TARGET_NAME="${WIDGET_EXTENSION_COVERAGE_TARGET_NAME:-TimeScopesWidgetExtension.appex}"
+MIN_WIDGET_COVERAGE="${MIN_COVERAGE_WIDGET_EXTENSION:-}"
 
 if [[ ! -d "$RESULT_BUNDLE_PATH" ]]; then
     echo "xcresult not found: $RESULT_BUNDLE_PATH" >&2
@@ -22,25 +24,45 @@ if ! command -v jq >/dev/null 2>&1; then
     exit 1
 fi
 
-COVERAGE="$(xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" \
-    | jq -r --arg target "$TARGET_NAME" '.targets[] | select(.name == $target) | (.lineCoverage * 100)' \
-    | head -n 1)"
+resolve_coverage() {
+    local target="$1"
+    xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" \
+        | jq -r --arg target "$target" '.targets[] | select(.name == $target) | (.lineCoverage * 100)' \
+        | head -n 1
+}
 
-if [[ -z "$COVERAGE" || "$COVERAGE" == "null" ]]; then
-    echo "Coverage target not found: $TARGET_NAME" >&2
-    echo "Available targets:" >&2
-    xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" | jq -r '.targets[].name' | sed 's/^/ - /' >&2
-    exit 1
+ensure_target_exists() {
+    local target="$1"
+    local coverage="$2"
+    if [[ -z "$coverage" || "$coverage" == "null" ]]; then
+        echo "Coverage target not found: $target" >&2
+        echo "Available targets:" >&2
+        xcrun xccov view --report --json "$RESULT_BUNDLE_PATH" | jq -r '.targets[].name' | sed 's/^/ - /' >&2
+        exit 1
+    fi
+}
+
+check_gate() {
+    local target="$1"
+    local min_coverage="$2"
+    local coverage
+    coverage="$(resolve_coverage "$target")"
+    ensure_target_exists "$target" "$coverage"
+
+    printf "Coverage target: %s\n" "$target"
+    printf "Current line coverage: %.2f%%\n" "$coverage"
+    printf "Required minimum: %.2f%%\n" "$min_coverage"
+
+    if ! awk "BEGIN { exit !($coverage >= $min_coverage) }"; then
+        echo "Coverage gate failed for target: $target" >&2
+        exit 1
+    fi
+}
+
+check_gate "$TARGET_NAME" "$MIN_COVERAGE"
+
+if [[ -n "$MIN_WIDGET_COVERAGE" ]]; then
+    check_gate "$WIDGET_TARGET_NAME" "$MIN_WIDGET_COVERAGE"
 fi
 
-printf "Coverage target: %s\n" "$TARGET_NAME"
-printf "Current line coverage: %.2f%%\n" "$COVERAGE"
-printf "Required minimum: %.2f%%\n" "$MIN_COVERAGE"
-
-if awk "BEGIN { exit !($COVERAGE >= $MIN_COVERAGE) }"; then
-    echo "Coverage gate passed."
-    exit 0
-fi
-
-echo "Coverage gate failed." >&2
-exit 1
+echo "Coverage gate passed."

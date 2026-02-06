@@ -79,13 +79,13 @@ struct PreferencesView: View {
             .navigationTitle("Preferences")
         }
         .onAppear(perform: refreshStatuses)
-        .onChange(of: locationPermission.authorizationStatus) { _ in
+        .onChange(of: locationPermission.authorizationStatus) {
             locationPermission.refreshStatus()
         }
-        .onChange(of: userData.workHoursPerDay) { _ in
+        .onChange(of: userData.workHoursPerDay) {
             userData.saveProfile()
         }
-        .onChange(of: userData.sleepHoursPerDay) { _ in
+        .onChange(of: userData.sleepHoursPerDay) {
             userData.saveProfile()
         }
     }
@@ -107,7 +107,7 @@ struct PreferencesView: View {
             Button("Open Settings") {
                 openSettings()
             }
-        case .authorized, .fullAccess:
+        case .fullAccess:
             Text("Access granted.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
@@ -116,9 +116,15 @@ struct PreferencesView: View {
                 .font(.callout)
                 .foregroundStyle(.secondary)
         @unknown default:
-            Text("Unknown status.")
-                .font(.callout)
-                .foregroundStyle(.secondary)
+            if status.rawValue == 3 {
+                Text("Access granted.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            } else {
+                Text("Unknown status.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            }
         }
     }
 
@@ -130,14 +136,12 @@ struct PreferencesView: View {
             return "Denied"
         case .restricted:
             return "Restricted"
-        case .authorized:
-            return "Allowed"
         case .fullAccess:
             return "Allowed"
         case .writeOnly:
             return "Write only"
         @unknown default:
-            return "Unknown"
+            return status.rawValue == 3 ? "Allowed" : "Unknown"
         }
     }
 
@@ -153,8 +157,6 @@ struct PreferencesView: View {
             return "Always"
         case .authorizedWhenInUse:
             return "When in Use"
-        case .authorized:
-            return "Allowed"
         @unknown default:
             return "Unknown"
         }
@@ -178,15 +180,7 @@ struct PreferencesView: View {
                 isRequestingCalendar = false
                 refreshStatuses()
             }
-            if #available(iOS 17.0, *) {
-                _ = try? await store.requestFullAccessToEvents()
-            } else {
-                _ = await withCheckedContinuation { continuation in
-                    store.requestAccess(to: .event) { _, _ in
-                        continuation.resume(returning: ())
-                    }
-                }
-            }
+            _ = try? await store.requestFullAccessToEvents()
         }
     }
 
@@ -197,15 +191,7 @@ struct PreferencesView: View {
                 isRequestingReminders = false
                 refreshStatuses()
             }
-            if #available(iOS 17.0, *) {
-                _ = try? await store.requestFullAccessToReminders()
-            } else {
-                _ = await withCheckedContinuation { continuation in
-                    store.requestAccess(to: .reminder) { _, _ in
-                        continuation.resume(returning: ())
-                    }
-                }
-            }
+            _ = try? await store.requestFullAccessToReminders()
         }
     }
 
@@ -224,7 +210,7 @@ struct PreferencesView: View {
             Button("Open Settings") {
                 openSettings()
             }
-        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+        case .authorizedAlways, .authorizedWhenInUse:
             Text("Access granted.")
                 .font(.callout)
                 .foregroundStyle(.secondary)

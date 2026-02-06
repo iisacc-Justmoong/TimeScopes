@@ -50,13 +50,13 @@ struct WeekdayScopeDetailContent: View {
                 WeekdayDetailRow(title: "Seconds", value: remainingWorkSleepSeconds, unit: "seconds")
             }
         }
-        .onChange(of: userData.workHoursPerDay) { _ in
+        .onChange(of: userData.workHoursPerDay) {
             resetCountdown(at: ticker.now)
         }
-        .onChange(of: userData.sleepHoursPerDay) { _ in
+        .onChange(of: userData.sleepHoursPerDay) {
             resetCountdown(at: ticker.now)
         }
-        .onChange(of: userData.deathDate) { _ in
+        .onChange(of: userData.deathDate) {
             resetCountdown(at: ticker.now)
         }
         .onAppear {

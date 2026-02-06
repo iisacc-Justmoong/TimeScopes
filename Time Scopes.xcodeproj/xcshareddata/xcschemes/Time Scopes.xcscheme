@@ -41,9 +41,18 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
       shouldAutocreateTestPlan = "YES">
+      <CodeCoverageTargets>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "F9216D842E0AAD3D0011A560"
+            BuildableName = "Time Scopes.app"
+            BlueprintName = "Time Scopes"
+            ReferencedContainer = "container:Time Scopes.xcodeproj">
+         </BuildableReference>
+      </CodeCoverageTargets>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -56,15 +65,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <CodeCoverageTargets>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F9216D842E0AAD3D0011A560"
-            BuildableName = "Time Scopes.app"
-            BlueprintName = "Time Scopes"
-            ReferencedContainer = "container:Time Scopes.xcodeproj">
-         </BuildableReference>
-      </CodeCoverageTargets>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

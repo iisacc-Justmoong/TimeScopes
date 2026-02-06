@@ -37,10 +37,7 @@ final class CalendarEventProvider: ObservableObject {
     }
 
     var hasAccess: Bool {
-        if #available(iOS 17.0, *) {
-            return authorizationStatus == .fullAccess
-        }
-        return authorizationStatus == .authorized
+        authorizationStatus == .fullAccess
     }
 
     func refreshAuthorizationStatus() {
@@ -50,16 +47,7 @@ final class CalendarEventProvider: ObservableObject {
     func requestAccessIfNeeded() async {
         refreshAuthorizationStatus()
         guard authorizationStatus == .notDetermined else { return }
-        let granted: Bool
-        if #available(iOS 17.0, *) {
-            granted = (try? await store.requestFullAccessToEvents()) ?? false
-        } else {
-            granted = await withCheckedContinuation { continuation in
-                store.requestAccess(to: .event) { allowed, _ in
-                    continuation.resume(returning: allowed)
-                }
-            }
-        }
+        let granted = (try? await store.requestFullAccessToEvents()) ?? false
         authorizationStatus = EKEventStore.authorizationStatus(for: .event)
         if !granted {
             events = []
@@ -173,10 +161,7 @@ final class ReminderProvider: ObservableObject {
     }
 
     var hasAccess: Bool {
-        if #available(iOS 17.0, *) {
-            return authorizationStatus == .fullAccess
-        }
-        return authorizationStatus == .authorized
+        authorizationStatus == .fullAccess
     }
 
     func refreshAuthorizationStatus() {
@@ -186,16 +171,7 @@ final class ReminderProvider: ObservableObject {
     func requestAccessIfNeeded() async {
         refreshAuthorizationStatus()
         guard authorizationStatus == .notDetermined else { return }
-        let granted: Bool
-        if #available(iOS 17.0, *) {
-            granted = (try? await store.requestFullAccessToReminders()) ?? false
-        } else {
-            granted = await withCheckedContinuation { continuation in
-                store.requestAccess(to: .reminder) { allowed, _ in
-                    continuation.resume(returning: allowed)
-                }
-            }
-        }
+        let granted = (try? await store.requestFullAccessToReminders()) ?? false
         authorizationStatus = EKEventStore.authorizationStatus(for: .reminder)
         if !granted {
             reminders = []

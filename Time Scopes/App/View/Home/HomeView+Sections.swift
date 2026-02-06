@@ -121,7 +121,6 @@ extension HomeView {
                 let secondsToNextBirthday = max(0, Int(nextBirthdayDate.timeIntervalSince(now)))
                 let minutesToNextBirthday = secondsToNextBirthday / 60
                 let hoursToNextBirthday = secondsToNextBirthday / 3_600
-                let daysToNextBirthday = secondsToNextBirthday / 86_400
                 EventDetailView(
                     title: "Until Next Birthday",
                     count: nextBirthdayStats.daysUntilNextBirthday,
