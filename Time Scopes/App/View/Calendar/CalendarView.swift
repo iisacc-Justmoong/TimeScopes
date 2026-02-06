@@ -9,18 +9,18 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject var userData: UserData
-    @StateObject private var eventProvider = CalendarEventProvider()
-    @StateObject private var reminderProvider = ReminderProvider()
-    @StateObject private var journalStore = PulseJournalStore()
+    @StateObject var eventProvider = CalendarEventProvider()
+    @StateObject var reminderProvider = ReminderProvider()
+    @StateObject var journalStore = PulseJournalStore()
 
-    @State private var displayedMonth: Date
-    @State private var selectedDate: Date
-    @State private var jumpDate: Date
-    @State private var isJumpPresented = false
-    @State private var jumpSheetHeight: CGFloat = 520
+    @State var displayedMonth: Date
+    @State var selectedDate: Date
+    @State var jumpDate: Date
+    @State var isJumpPresented = false
+    @State var jumpSheetHeight: CGFloat = 520
 
-    private let dateProvider: DateProviding
-    private let ageCalculator: AgeCalculating
+    let dateProvider: DateProviding
+    let ageCalculator: AgeCalculating
 
     init(
         dateProvider: DateProviding = SystemDateProvider(),

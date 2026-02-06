@@ -1,0 +1,669 @@
+{
+  "" : {
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time Scopes-primary.dia",
+    "emit-module-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time Scopes-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time Scopes-primary-emit-module.dia",
+    "pch" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time Scopes-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time Scopes-primary.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Data/CalendarEventProvider.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarEventProvider~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Data/PulseJournalStore.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseJournalStore~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Data/UserDefaultsUserProfileStore.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserDefaultsUserProfileStore~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Data/UserProfileStore.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileStore~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/DateProviding.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateProviding~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Models/LivedTime.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTime~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Models/UserProfile.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/AgeCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/LivedTimeCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LivedTimeCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/NextEventCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextEventCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/RemainingTimeCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingTimeCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/WorkingTimeCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WorkingTimeCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/Annual/AnnualChristmas.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualChristmas~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/Annual/AnnualMonday.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AnnualMonday~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/Annual/ElapsedDateInThisYear.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ElapsedDateInThisYear~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/DayCount.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DayCount~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/LifeRemainingWorkingTime.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LifeRemainingWorkingTime~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/MonthCount.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/MonthCount~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/RemainingCount.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingCount~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Events/WeekCount.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekCount~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Shared/WidgetSharedConstants.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSharedConstants~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Shared/WidgetSnapshot.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Shared/WidgetSnapshotStore.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Time_ScopesApp.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/User/UntilBirth.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/User/UserData.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserData~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/User/UserLivedTime.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserLivedTime~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/DateUtility.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/DateUtility~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/GlassStyle.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GlassStyle~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/LeftGradientBackgroundView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LeftGradientBackgroundView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/LocationPermissionManager.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/LocationPermissionManager~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/RightGradientBackgroundView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RightGradientBackgroundView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/SecondTicker.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SecondTicker~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Utility/SunEventCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/SunEventCalculator~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarComponents.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarComponents~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarFormatters.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarModels.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView+Data.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView+Layout.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/EventDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventDetailView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/EventGaugeView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventGaugeView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/EventPlainVIew.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/EventPlainVIew~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeComponents.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeComponents~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeFormatting.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeFormatting~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeModels.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeModels~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeView+Data.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Data~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeView+Sections.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView+Sections~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/HomeView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/WeekdayScopeDetailContent.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WeekdayScopeDetailContent~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/InputView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/InputView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/NextChristmasDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/NextChristmasDetailView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/PreferencesView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/ProgressHeatmapView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseComponents.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseComponents~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseConstants.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseConstants~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseFormatters.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseFormatters~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseModels.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseModels~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseView+Data.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Data~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseView+Sections.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView+Sections~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Pulse/PulseView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PulseView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/RemainingMondaysDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/ThisYearDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/TimeScopeHeatmapDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/UserProfileView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView~partial.swiftmodule"
+  },
+  "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/PreferencesView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/PreferencesView.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/ProgressHeatmapView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ProgressHeatmapView.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/RemainingMondaysDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/RemainingMondaysDetailView.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/ThisYearDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/ThisYearDetailView.swiftdeps"
+  }
+}

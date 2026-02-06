@@ -1,0 +1,48 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeView+Sections.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Profile",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "Elapsed Time",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 47
+        }
+      },
+      {
+        "comment": "",
+        "key": "Upcoming Milestones",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 66
+        }
+      },
+      {
+        "comment": "",
+        "key": "Annual Highlights",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Daily Summary",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 204
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -759,7 +759,7 @@ private struct RangeLabels: View {
     }
 }
 
-private struct TimeScopesProfileWidgetView: View {
+struct TimeScopesProfileWidgetView: View {
     let entry: ProfileWidgetEntry
     @Environment(\.widgetFamily) private var family
 
@@ -797,7 +797,7 @@ private struct TimeScopesProfileWidgetView: View {
     }
 }
 
-private struct TimeScopesElapsedWidgetView: View {
+struct TimeScopesElapsedWidgetView: View {
     let entry: ElapsedWidgetEntry
     @Environment(\.widgetFamily) private var family
 
@@ -829,7 +829,7 @@ private struct TimeScopesElapsedWidgetView: View {
     }
 }
 
-private struct TimeScopesMilestonesWidgetView: View {
+struct TimeScopesMilestonesWidgetView: View {
     let entry: MilestonesWidgetEntry
     @Environment(\.widgetFamily) private var family
 
@@ -861,7 +861,7 @@ private struct TimeScopesMilestonesWidgetView: View {
     }
 }
 
-private struct TimeScopesHighlightsWidgetView: View {
+struct TimeScopesHighlightsWidgetView: View {
     let entry: HighlightsWidgetEntry
     @Environment(\.widgetFamily) private var family
 
@@ -893,7 +893,7 @@ private struct TimeScopesHighlightsWidgetView: View {
     }
 }
 
-private struct TimeScopesDailyWidgetView: View {
+struct TimeScopesDailyWidgetView: View {
     let entry: DailyWidgetEntry
     @Environment(\.widgetFamily) private var family
 
@@ -1037,7 +1037,7 @@ private struct PulsePrescriptionRow: View {
     }
 }
 
-private struct PulseTodayStructureWidgetView: View {
+struct PulseTodayStructureWidgetView: View {
     let entry: PulseWidgetEntry
 
     var body: some View {
@@ -1063,7 +1063,7 @@ private struct PulseTodayStructureWidgetView: View {
     }
 }
 
-private struct PulseWeeklyRhythmWidgetView: View {
+struct PulseWeeklyRhythmWidgetView: View {
     let entry: PulseWidgetEntry
 
     var body: some View {
@@ -1089,7 +1089,7 @@ private struct PulseWeeklyRhythmWidgetView: View {
     }
 }
 
-private struct PulsePrescriptionsWidgetView: View {
+struct PulsePrescriptionsWidgetView: View {
     let entry: PulseWidgetEntry
 
     var body: some View {
@@ -1114,7 +1114,7 @@ private struct PulsePrescriptionsWidgetView: View {
     }
 }
 
-private struct PulseJournalWidgetView: View {
+struct PulseJournalWidgetView: View {
     let entry: PulseWidgetEntry
 
     var body: some View {
@@ -1139,137 +1139,5 @@ private struct PulseJournalWidgetView: View {
                 .tint(.accentColor)
             }
         }
-    }
-}
-
-struct TimeScopesProfileWidget: Widget {
-    let kind: String = WidgetSharedConstants.profileWidgetKind
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ProfileWidgetConfigurationIntent.self, provider: ProfileWidgetProvider()) { entry in
-            TimeScopesProfileWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Profile")
-        .description("Profile section")
-        .supportedFamilies([.systemSmall, .systemMedium])
-    }
-}
-
-struct TimeScopesElapsedWidget: Widget {
-    let kind: String = WidgetSharedConstants.elapsedWidgetKind
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ElapsedWidgetConfigurationIntent.self, provider: ElapsedWidgetProvider()) { entry in
-            TimeScopesElapsedWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Elapsed Time")
-        .description("Elapsed time section")
-        .supportedFamilies([.systemSmall, .systemMedium])
-    }
-}
-
-struct TimeScopesMilestonesWidget: Widget {
-    let kind: String = WidgetSharedConstants.milestonesWidgetKind
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: MilestonesWidgetConfigurationIntent.self, provider: MilestonesWidgetProvider()) { entry in
-            TimeScopesMilestonesWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Upcoming Milestones")
-        .description("Upcoming milestones section")
-        .supportedFamilies([.systemSmall, .systemMedium])
-    }
-}
-
-struct TimeScopesHighlightsWidget: Widget {
-    let kind: String = WidgetSharedConstants.highlightsWidgetKind
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: HighlightsWidgetConfigurationIntent.self, provider: HighlightsWidgetProvider()) { entry in
-            TimeScopesHighlightsWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Annual Highlights")
-        .description("Annual highlights section")
-        .supportedFamilies([.systemSmall, .systemMedium])
-    }
-}
-
-struct TimeScopesDailyWidget: Widget {
-    let kind: String = WidgetSharedConstants.dailyWidgetKind
-
-    var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: DailyWidgetConfigurationIntent.self, provider: DailyWidgetProvider()) { entry in
-            TimeScopesDailyWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Daily Summary")
-        .description("Daily summary section")
-        .supportedFamilies([.systemSmall, .systemMedium])
-    }
-}
-
-struct TimeScopesPulseTodayWidget: Widget {
-    let kind: String = WidgetSharedConstants.pulseTodayWidgetKind
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
-            PulseTodayStructureWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Pulse Today Structure")
-        .description("Today structure pulse chart")
-        .supportedFamilies([.systemMedium])
-    }
-}
-
-struct TimeScopesPulseWeeklyWidget: Widget {
-    let kind: String = WidgetSharedConstants.pulseWeeklyWidgetKind
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
-            PulseWeeklyRhythmWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Pulse Weekly Rhythm")
-        .description("Weekly rhythm pulse chart")
-        .supportedFamilies([.systemMedium])
-    }
-}
-
-struct TimeScopesPulsePrescriptionsWidget: Widget {
-    let kind: String = WidgetSharedConstants.pulsePrescriptionsWidgetKind
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
-            PulsePrescriptionsWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Pulse Prescriptions")
-        .description("Actionable prescriptions")
-        .supportedFamilies([.systemMedium])
-    }
-}
-
-struct TimeScopesPulseJournalWidget: Widget {
-    let kind: String = WidgetSharedConstants.pulseJournalWidgetKind
-
-    var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
-            PulseJournalWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Pulse Daily Journal")
-        .description("Quick daily journal entry")
-        .supportedFamilies([.systemSmall])
-    }
-}
-
-@main
-struct TimeScopesWidgetBundle: WidgetBundle {
-    var body: some Widget {
-        TimeScopesProfileWidget()
-        TimeScopesElapsedWidget()
-        TimeScopesMilestonesWidget()
-        TimeScopesHighlightsWidget()
-        TimeScopesDailyWidget()
-        TimeScopesPulseTodayWidget()
-        TimeScopesPulseWeeklyWidget()
-        TimeScopesPulsePrescriptionsWidget()
-        TimeScopesPulseJournalWidget()
     }
 }

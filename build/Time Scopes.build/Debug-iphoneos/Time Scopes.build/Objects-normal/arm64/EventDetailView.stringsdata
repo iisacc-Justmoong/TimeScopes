@@ -1,0 +1,48 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/EventDetailView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld %@",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 84
+        }
+      },
+      {
+        "comment": "",
+        "key": "Breakdown",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld %@",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 104
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.0f%%",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 129
+        }
+      }
+    ]
+  },
+  "version": 1
+}

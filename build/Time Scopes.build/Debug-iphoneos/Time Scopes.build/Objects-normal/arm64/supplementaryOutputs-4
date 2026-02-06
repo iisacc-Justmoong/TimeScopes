@@ -1,0 +1,37 @@
+{
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarFormatters.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarFormatters.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarModels.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarModels.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView+Data.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Data.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView+Layout.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView+Layout.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/CalendarView.swiftdeps"
+  }
+}

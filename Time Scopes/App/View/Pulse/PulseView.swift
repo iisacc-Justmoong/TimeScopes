@@ -9,19 +9,19 @@ import SwiftUI
 
 struct PulseView: View {
     @Environment(\.scenePhase) private var scenePhase
-    @StateObject private var eventProvider = CalendarEventProvider()
-    @StateObject private var reminderProvider = ReminderProvider()
-    @StateObject private var journalStore = PulseJournalStore()
+    @StateObject var eventProvider = CalendarEventProvider()
+    @StateObject var reminderProvider = ReminderProvider()
+    @StateObject var journalStore = PulseJournalStore()
 
-    @State private var isPresentingJournal = false
-    @State private var journalDraft = ""
-    @State private var editingEntry: PulseJournalEntry?
-    @State private var entryToDelete: PulseJournalEntry?
-    @State private var isConfirmingDelete = false
-    @State private var currentPrompt = ""
+    @State var isPresentingJournal = false
+    @State var journalDraft = ""
+    @State var editingEntry: PulseJournalEntry?
+    @State var entryToDelete: PulseJournalEntry?
+    @State var isConfirmingDelete = false
+    @State var currentPrompt = ""
 
-    private let calendar = Calendar.autoupdatingCurrent
-    private let widgetStore = WidgetSnapshotStore()
+    let calendar = Calendar.autoupdatingCurrent
+    let widgetStore = WidgetSnapshotStore()
 
     var body: some View {
         NavigationStack {

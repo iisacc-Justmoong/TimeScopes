@@ -1,0 +1,24 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/EventGaugeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 31
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -14,30 +14,30 @@ struct HomeView: View {
     @EnvironmentObject var dayCount: DayCount
 
     @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
-    @StateObject private var weekdayTicker = SecondTicker()
-    @StateObject private var eventProvider = CalendarEventProvider()
-    @StateObject private var reminderProvider = ReminderProvider()
-    @EnvironmentObject private var locationPermission: LocationPermissionManager
-    private let widgetStore = WidgetSnapshotStore()
-    @State private var lastWidgetSync: Date = .distantPast
+    @StateObject var weekdayTicker = SecondTicker()
+    @StateObject var eventProvider = CalendarEventProvider()
+    @StateObject var reminderProvider = ReminderProvider()
+    @EnvironmentObject var locationPermission: LocationPermissionManager
+    let widgetStore = WidgetSnapshotStore()
+    @State var lastWidgetSync: Date = .distantPast
 
-    private let dateProvider: DateProviding
-    private let nextEventCalculator: NextEventCalculating
-    private let livedTimeCalculator: LivedTimeCalculating
+    let dateProvider: DateProviding
+    let nextEventCalculator: NextEventCalculating
+    let livedTimeCalculator: LivedTimeCalculating
 
-    private var christmas: AnnualChristmasProperties {
+    var christmas: AnnualChristmasProperties {
         AnnualChristmasProperties(dateProvider: dateProvider)
     }
 
-    private var annualMondays: AnnualMondayProperties {
+    var annualMondays: AnnualMondayProperties {
         AnnualMondayProperties(dateProvider: dateProvider)
     }
 
-    private var elapsedDateInThisYear: ElapsedDateInThisYear {
+    var elapsedDateInThisYear: ElapsedDateInThisYear {
         ElapsedDateInThisYear(dateProvider: dateProvider)
     }
 
-    @State private var isPresented = false
+    @State var isPresented = false
 
     init(
         lifeRemainingWorkingTime: LifeRemainingWorkingTime,

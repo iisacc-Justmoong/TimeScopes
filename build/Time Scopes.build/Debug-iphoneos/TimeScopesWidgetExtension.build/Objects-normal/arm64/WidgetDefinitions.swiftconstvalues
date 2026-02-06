@@ -1,0 +1,2799 @@
+[
+  {
+    "typeName": "TimeScopesWidgetExtension.AddPulseJournalEntryIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension26AddPulseJournalEntryIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 15,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "some AppIntents.IntentResult",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension26AddPulseJournalEntryIntentV7performQryYaKFQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.IntentResult"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy25TimeScopesWidgetExtension020AddPulseJournalEntryC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 16,
+        "valueKind": "RawLiteral",
+        "value": "Add Pulse Entry"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 17,
+        "valueKind": "RawLiteral",
+        "value": "Add a quick pulse journal entry."
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.ProfileMetric",
+    "mangledTypeName": "25TimeScopesWidgetExtension13ProfileMetricO",
+    "kind": "enum",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 110,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.CaseIterable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.ProfileMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension13ProfileMetricO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.ProfileMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension13ProfileMetricO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy25TimeScopesWidgetExtension13ProfileMetricO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<TimeScopesWidgetExtension.ProfileMetric>",
+        "substitutedMangledTypeName": "Say25TimeScopesWidgetExtension13ProfileMetricOG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 116,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Profile Metric"
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<TimeScopesWidgetExtension.ProfileMetric, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 117,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "age"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Age"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "monthsLeft"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Months Left"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "weeksLeft"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Weeks Left"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "daysLeft"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Days Left"
+            }
+          }
+        ]
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<TimeScopesWidgetExtension.ProfileMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "age"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "monthsLeft"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "weeksLeft"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "daysLeft"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "age",
+        "rawValue": "age"
+      },
+      {
+        "name": "monthsLeft",
+        "rawValue": "monthsLeft"
+      },
+      {
+        "name": "weeksLeft",
+        "rawValue": "weeksLeft"
+      },
+      {
+        "name": "daysLeft",
+        "rawValue": "daysLeft"
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.ProfileWidgetConfigurationIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension07ProfileC19ConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 125,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension07ProfileC19ConfigurationIntentV16parameterSummaryQrvpZQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      }
+    ],
+    "properties": [
+      {
+        "label": "_primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ProfileMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 130,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ProfileMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.ProfileMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.ProfileMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 126,
+        "valueKind": "RawLiteral",
+        "value": "Profile Widget"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 127,
+        "valueKind": "RawLiteral",
+        "value": "Choose which profile value is highlighted."
+      },
+      {
+        "label": "primaryMetric",
+        "type": "TimeScopesWidgetExtension.ProfileMetric",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 130,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ProfileMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.ProfileMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.ProfileMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+            "line": 129,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Primary Metric"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ProfileMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 130,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "parameterSummary",
+        "type": "some AppIntents.ParameterSummary",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 136,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameterSummary<TimeScopesWidgetExtension.ProfileWidgetConfigurationIntent>",
+          "arguments": [
+            {
+              "label": "",
+              "type": "AppIntents.ParameterSummaryString<TimeScopesWidgetExtension.ProfileWidgetConfigurationIntent>",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": "Show "
+                  },
+                  {
+                    "valueKind": "KeyPath",
+                    "value": {
+                      "path": "$primaryMetric",
+                      "rootType": "TimeScopesWidgetExtension.ProfileWidgetConfigurationIntent",
+                      "components": [
+                        {
+                          "label": "$primaryMetric",
+                          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ProfileMetric>"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.ElapsedMetric",
+    "mangledTypeName": "25TimeScopesWidgetExtension13ElapsedMetricO",
+    "kind": "enum",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 161,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.CaseIterable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.ElapsedMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension13ElapsedMetricO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.ElapsedMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension13ElapsedMetricO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy25TimeScopesWidgetExtension13ElapsedMetricO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<TimeScopesWidgetExtension.ElapsedMetric>",
+        "substitutedMangledTypeName": "Say25TimeScopesWidgetExtension13ElapsedMetricOG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 169,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Elapsed Metric"
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<TimeScopesWidgetExtension.ElapsedMetric, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 170,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "months"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Months"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "weeks"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Weeks"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "days"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Days"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "hours"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Hours"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "minutes"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Minutes"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "seconds"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Seconds"
+            }
+          }
+        ]
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<TimeScopesWidgetExtension.ElapsedMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "months"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "weeks"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "days"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "hours"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "minutes"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "seconds"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "months",
+        "rawValue": "months"
+      },
+      {
+        "name": "weeks",
+        "rawValue": "weeks"
+      },
+      {
+        "name": "days",
+        "rawValue": "days"
+      },
+      {
+        "name": "hours",
+        "rawValue": "hours"
+      },
+      {
+        "name": "minutes",
+        "rawValue": "minutes"
+      },
+      {
+        "name": "seconds",
+        "rawValue": "seconds"
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.ElapsedWidgetConfigurationIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension07ElapsedC19ConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 180,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension07ElapsedC19ConfigurationIntentV16parameterSummaryQrvpZQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      }
+    ],
+    "properties": [
+      {
+        "label": "_primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ElapsedMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 185,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ElapsedMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.ElapsedMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.ElapsedMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 181,
+        "valueKind": "RawLiteral",
+        "value": "Elapsed Time Widget"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 182,
+        "valueKind": "RawLiteral",
+        "value": "Choose which elapsed value is highlighted."
+      },
+      {
+        "label": "primaryMetric",
+        "type": "TimeScopesWidgetExtension.ElapsedMetric",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 185,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ElapsedMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.ElapsedMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.ElapsedMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+            "line": 184,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Primary Metric"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ElapsedMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 185,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "parameterSummary",
+        "type": "some AppIntents.ParameterSummary",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 191,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameterSummary<TimeScopesWidgetExtension.ElapsedWidgetConfigurationIntent>",
+          "arguments": [
+            {
+              "label": "",
+              "type": "AppIntents.ParameterSummaryString<TimeScopesWidgetExtension.ElapsedWidgetConfigurationIntent>",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": "Show "
+                  },
+                  {
+                    "valueKind": "KeyPath",
+                    "value": {
+                      "path": "$primaryMetric",
+                      "rootType": "TimeScopesWidgetExtension.ElapsedWidgetConfigurationIntent",
+                      "components": [
+                        {
+                          "label": "$primaryMetric",
+                          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.ElapsedMetric>"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.MilestonesMetric",
+    "mangledTypeName": "25TimeScopesWidgetExtension16MilestonesMetricO",
+    "kind": "enum",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 216,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.CaseIterable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.MilestonesMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension16MilestonesMetricO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.MilestonesMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension16MilestonesMetricO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy25TimeScopesWidgetExtension16MilestonesMetricO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<TimeScopesWidgetExtension.MilestonesMetric>",
+        "substitutedMangledTypeName": "Say25TimeScopesWidgetExtension16MilestonesMetricOG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 221,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Milestone Metric"
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<TimeScopesWidgetExtension.MilestonesMetric, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 222,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "yearsUntilNextDecade"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Years Until Next Decade"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "daysUntilNextBirthday"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Days Until Next Birthday"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "weekdaysRemaining"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Weekdays Remaining"
+            }
+          }
+        ]
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<TimeScopesWidgetExtension.MilestonesMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "yearsUntilNextDecade"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "daysUntilNextBirthday"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "weekdaysRemaining"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "yearsUntilNextDecade",
+        "rawValue": "yearsUntilNextDecade"
+      },
+      {
+        "name": "daysUntilNextBirthday",
+        "rawValue": "daysUntilNextBirthday"
+      },
+      {
+        "name": "weekdaysRemaining",
+        "rawValue": "weekdaysRemaining"
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.MilestonesWidgetConfigurationIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension010MilestonesC19ConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 229,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension010MilestonesC19ConfigurationIntentV16parameterSummaryQrvpZQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      }
+    ],
+    "properties": [
+      {
+        "label": "_primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.MilestonesMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 234,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.MilestonesMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.MilestonesMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.MilestonesMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 230,
+        "valueKind": "RawLiteral",
+        "value": "Milestones Widget"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 231,
+        "valueKind": "RawLiteral",
+        "value": "Choose which milestone value is highlighted."
+      },
+      {
+        "label": "primaryMetric",
+        "type": "TimeScopesWidgetExtension.MilestonesMetric",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 234,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.MilestonesMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.MilestonesMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.MilestonesMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+            "line": 233,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Primary Metric"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.MilestonesMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 234,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "parameterSummary",
+        "type": "some AppIntents.ParameterSummary",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 240,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameterSummary<TimeScopesWidgetExtension.MilestonesWidgetConfigurationIntent>",
+          "arguments": [
+            {
+              "label": "",
+              "type": "AppIntents.ParameterSummaryString<TimeScopesWidgetExtension.MilestonesWidgetConfigurationIntent>",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": "Show "
+                  },
+                  {
+                    "valueKind": "KeyPath",
+                    "value": {
+                      "path": "$primaryMetric",
+                      "rootType": "TimeScopesWidgetExtension.MilestonesWidgetConfigurationIntent",
+                      "components": [
+                        {
+                          "label": "$primaryMetric",
+                          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.MilestonesMetric>"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.HighlightsMetric",
+    "mangledTypeName": "25TimeScopesWidgetExtension16HighlightsMetricO",
+    "kind": "enum",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 265,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.CaseIterable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.HighlightsMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension16HighlightsMetricO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.HighlightsMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension16HighlightsMetricO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy25TimeScopesWidgetExtension16HighlightsMetricO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<TimeScopesWidgetExtension.HighlightsMetric>",
+        "substitutedMangledTypeName": "Say25TimeScopesWidgetExtension16HighlightsMetricOG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 270,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Highlight Metric"
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<TimeScopesWidgetExtension.HighlightsMetric, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 271,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "yearRemaining"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Year Remaining"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "nextChristmas"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Next Christmas"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "remainingMondays"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Remaining Mondays"
+            }
+          }
+        ]
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<TimeScopesWidgetExtension.HighlightsMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "yearRemaining"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "nextChristmas"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "remainingMondays"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "yearRemaining",
+        "rawValue": "yearRemaining"
+      },
+      {
+        "name": "nextChristmas",
+        "rawValue": "nextChristmas"
+      },
+      {
+        "name": "remainingMondays",
+        "rawValue": "remainingMondays"
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.HighlightsWidgetConfigurationIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension010HighlightsC19ConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 278,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension010HighlightsC19ConfigurationIntentV16parameterSummaryQrvpZQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      }
+    ],
+    "properties": [
+      {
+        "label": "_primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.HighlightsMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 283,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.HighlightsMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.HighlightsMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.HighlightsMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 279,
+        "valueKind": "RawLiteral",
+        "value": "Highlights Widget"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 280,
+        "valueKind": "RawLiteral",
+        "value": "Choose which highlight value is displayed."
+      },
+      {
+        "label": "primaryMetric",
+        "type": "TimeScopesWidgetExtension.HighlightsMetric",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 283,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.HighlightsMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.HighlightsMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.HighlightsMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+            "line": 282,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Primary Metric"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.HighlightsMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 283,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "parameterSummary",
+        "type": "some AppIntents.ParameterSummary",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 289,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameterSummary<TimeScopesWidgetExtension.HighlightsWidgetConfigurationIntent>",
+          "arguments": [
+            {
+              "label": "",
+              "type": "AppIntents.ParameterSummaryString<TimeScopesWidgetExtension.HighlightsWidgetConfigurationIntent>",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": "Show "
+                  },
+                  {
+                    "valueKind": "KeyPath",
+                    "value": {
+                      "path": "$primaryMetric",
+                      "rootType": "TimeScopesWidgetExtension.HighlightsWidgetConfigurationIntent",
+                      "components": [
+                        {
+                          "label": "$primaryMetric",
+                          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.HighlightsMetric>"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.DailyMetric",
+    "mangledTypeName": "25TimeScopesWidgetExtension11DailyMetricO",
+    "kind": "enum",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 314,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.CaseIterable",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.DailyMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension11DailyMetricO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "TimeScopesWidgetExtension.DailyMetric",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension11DailyMetricO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy25TimeScopesWidgetExtension11DailyMetricO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<TimeScopesWidgetExtension.DailyMetric>",
+        "substitutedMangledTypeName": "Say25TimeScopesWidgetExtension11DailyMetricOG"
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 321,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.TypeDisplayRepresentation",
+          "arguments": [
+            {
+              "label": "name",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Daily Metric"
+            },
+            {
+              "label": "numericFormat",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<TimeScopesWidgetExtension.DailyMetric, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 322,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "nextHour"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Until Next Hour"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "sun"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Sun Window"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "timeLeft"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Time Left Today"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "freeTime"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Free Time"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "allocatedTime"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Allocated Time"
+            }
+          }
+        ]
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<TimeScopesWidgetExtension.DailyMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "nextHour"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "sun"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "timeLeft"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "freeTime"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "allocatedTime"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "nextHour",
+        "rawValue": "nextHour"
+      },
+      {
+        "name": "sun",
+        "rawValue": "sun"
+      },
+      {
+        "name": "timeLeft",
+        "rawValue": "timeLeft"
+      },
+      {
+        "name": "freeTime",
+        "rawValue": "freeTime"
+      },
+      {
+        "name": "allocatedTime",
+        "rawValue": "allocatedTime"
+      }
+    ]
+  },
+  {
+    "typeName": "TimeScopesWidgetExtension.DailyWidgetConfigurationIntent",
+    "mangledTypeName": "25TimeScopesWidgetExtension05DailyC19ConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+    "line": 331,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "TimeScopesWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "25TimeScopesWidgetExtension05DailyC19ConfigurationIntentV16parameterSummaryQrvpZQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      }
+    ],
+    "properties": [
+      {
+        "label": "_primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.DailyMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 336,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.DailyMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.DailyMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.DailyMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 332,
+        "valueKind": "RawLiteral",
+        "value": "Daily Summary Widget"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 333,
+        "valueKind": "RawLiteral",
+        "value": "Choose which daily value is displayed."
+      },
+      {
+        "label": "primaryMetric",
+        "type": "TimeScopesWidgetExtension.DailyMetric",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 336,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.DailyMetric>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Primary Metric"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<TimeScopesWidgetExtension.DailyMetric>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<TimeScopesWidgetExtension.DailyMetric>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+            "line": 335,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Primary Metric"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$primaryMetric",
+        "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.DailyMetric>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 336,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "parameterSummary",
+        "type": "some AppIntents.ParameterSummary",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "file": "/Users/ymy/Developer/TimeScopes/PulseReportExtension/WidgetDefinitions.swift",
+        "line": 342,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameterSummary<TimeScopesWidgetExtension.DailyWidgetConfigurationIntent>",
+          "arguments": [
+            {
+              "label": "",
+              "type": "AppIntents.ParameterSummaryString<TimeScopesWidgetExtension.DailyWidgetConfigurationIntent>",
+              "valueKind": "InterpolatedStringLiteral",
+              "value": {
+                "segments": [
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": "Show "
+                  },
+                  {
+                    "valueKind": "KeyPath",
+                    "value": {
+                      "path": "$primaryMetric",
+                      "rootType": "TimeScopesWidgetExtension.DailyWidgetConfigurationIntent",
+                      "components": [
+                        {
+                          "label": "$primaryMetric",
+                          "type": "AppIntents.IntentParameter<TimeScopesWidgetExtension.DailyMetric>"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "valueKind": "RawLiteral",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

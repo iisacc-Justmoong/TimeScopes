@@ -1,0 +1,2 @@
+Target dependency graph (1 target)
+Target 'TimeScopesWidgetExtension' in project 'Time Scopes' (no dependencies)

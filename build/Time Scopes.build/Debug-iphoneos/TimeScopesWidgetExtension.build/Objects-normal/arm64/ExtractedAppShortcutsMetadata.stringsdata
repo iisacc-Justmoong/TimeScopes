@@ -1,0 +1,11 @@
+{
+  "version" : 1,
+  "source" : "ExtractedAppShortcutsMetadata",
+  "tables" : {
+    "Localizable" : [
+      {
+        "key" : "Show ${primaryMetric}"
+      }
+    ]
+  }
+}

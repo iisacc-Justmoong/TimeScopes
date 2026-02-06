@@ -1,0 +1,16 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/HomeComponents.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "%lld %@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 52
+        }
+      }
+    ]
+  },
+  "version": 1
+}

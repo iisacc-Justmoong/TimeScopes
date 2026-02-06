@@ -1,0 +1,37 @@
+{
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Models/UserProfile.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfile.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Domain/Services/AgeCalculator.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/AgeCalculator.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Shared/WidgetSnapshot.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshot.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Shared/WidgetSnapshotStore.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/WidgetSnapshotStore.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/User/UntilBirth.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UntilBirth.swiftdeps"
+  }
+}

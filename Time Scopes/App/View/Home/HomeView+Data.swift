@@ -71,12 +71,12 @@ extension HomeView {
         let startOfToday = calendar.startOfDay(for: now)
         let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday) ?? now
         let dayInterval = DateInterval(start: startOfToday, end: endOfToday)
-        let nextHour = calendar.nextDate(
+        let nextHourDate = calendar.nextDate(
             after: now,
             matching: DateComponents(minute: 0, second: 0),
             matchingPolicy: .nextTimePreservingSmallerComponents
         ) ?? endOfToday
-        let remainingToNextHourSeconds = max(0, Int(nextHour.timeIntervalSince(now)))
+        let remainingToNextHourSeconds = max(0, Int(nextHourDate.timeIntervalSince(now)))
         let elapsedToNextHourSeconds = max(0, 3_600 - remainingToNextHourSeconds)
         let nextHourText = HomeFormatting.formatMS(remainingToNextHourSeconds)
         let nextHourPercent = HomeFormatting.percentText(value: elapsedToNextHourSeconds, total: 3_600)

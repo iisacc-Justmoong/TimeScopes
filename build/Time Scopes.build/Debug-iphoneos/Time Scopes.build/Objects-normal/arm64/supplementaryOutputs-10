@@ -1,0 +1,30 @@
+{
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/Time_ScopesApp.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/Time_ScopesApp.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/TimeScopeHeatmapDetailView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/TimeScopeHeatmapDetailView.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/UserProfileView.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/UserProfileView.swiftdeps"
+  },
+  "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "object" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/ymy/Developer/TimeScopes/build/Time Scopes.build/Debug-iphoneos/Time Scopes.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  }
+}

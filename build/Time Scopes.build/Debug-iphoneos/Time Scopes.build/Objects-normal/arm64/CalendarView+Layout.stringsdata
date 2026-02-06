@@ -1,0 +1,120 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Calendar/CalendarView+Layout.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Today",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Jump",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 40
+        }
+      },
+      {
+        "comment": "",
+        "key": "Agenda",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "No events or reminders.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 148
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calendar access not granted.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "No calendars found.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reminders access not granted.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 168
+        }
+      },
+      {
+        "comment": "",
+        "key": "No reminder lists found.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Agenda This Month",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 189
+        }
+      },
+      {
+        "comment": "",
+        "key": "No events or reminders this month.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Calendar access not granted.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 203
+        }
+      },
+      {
+        "comment": "",
+        "key": "No calendars found.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 207
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reminders access not granted.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 213
+        }
+      },
+      {
+        "comment": "",
+        "key": "No reminder lists found.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 217
+        }
+      }
+    ]
+  },
+  "version": 1
+}

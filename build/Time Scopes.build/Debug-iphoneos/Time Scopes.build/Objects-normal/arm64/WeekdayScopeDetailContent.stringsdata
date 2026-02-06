@@ -1,0 +1,32 @@
+{
+  "source": "/Users/ymy/Developer/TimeScopes/Time Scopes/App/View/Home/WeekdayScopeDetailContent.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Weekday Conversions",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 31
+        }
+      },
+      {
+        "comment": "",
+        "key": "Remaining Free Time (Weekdays, Work %lldh)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 38
+        }
+      },
+      {
+        "comment": "",
+        "key": "Remaining Free Time (Weekdays, Work %lldh + Sleep %lldh)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 46
+        }
+      }
+    ]
+  },
+  "version": 1
+}
