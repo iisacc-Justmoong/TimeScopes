@@ -12,6 +12,101 @@ private func loadSnapshot() -> WidgetSnapshot {
     WidgetSnapshotStore().loadSnapshot()
 }
 
+struct AddPulseJournalEntryIntent: AppIntent {
+    static var title: LocalizedStringResource = "Add Pulse Entry"
+    static var description = IntentDescription("Add a quick pulse journal entry.")
+
+    func perform() async throws -> some IntentResult {
+        PulseJournalWidgetStore.addEntry(note: PulseJournalWidgetStore.quickNote())
+        return .result()
+    }
+}
+
+private enum PulseJournalWidgetStore {
+    private static let storeKey = "PulseJournalEntries"
+
+    private static var encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        return encoder
+    }()
+
+    private static var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+
+    private struct StoredEntry: Codable {
+        let id: UUID
+        let date: Date
+        let note: String
+    }
+
+    static func quickNote() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return "Quick entry \(formatter.string(from: Date()))"
+    }
+
+    static func addEntry(note: String) {
+        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty,
+              let defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) else {
+            return
+        }
+        var entries = loadEntries(from: defaults)
+        entries.insert(StoredEntry(id: UUID(), date: Date(), note: trimmed), at: 0)
+        persist(entries, to: defaults)
+        updateSnapshot(with: entries.first)
+    }
+
+    private static func loadEntries(from defaults: UserDefaults) -> [StoredEntry] {
+        guard let data = defaults.data(forKey: storeKey),
+              let decoded = try? decoder.decode([StoredEntry].self, from: data) else {
+            return []
+        }
+        return decoded
+    }
+
+    private static func persist(_ entries: [StoredEntry], to defaults: UserDefaults) {
+        guard let data = try? encoder.encode(entries) else { return }
+        defaults.set(data, forKey: storeKey)
+    }
+
+    private static func updateSnapshot(with entry: StoredEntry?) {
+        guard let entry else { return }
+        let store = WidgetSnapshotStore()
+        let snapshot = store.loadSnapshot()
+        var recentEntries = snapshot.pulse.recentEntries
+        let journalEntry = WidgetSnapshot.Pulse.JournalEntry(date: entry.date, note: entry.note)
+        recentEntries.insert(journalEntry, at: 0)
+        recentEntries = Array(recentEntries.prefix(3))
+        let updatedPulse = WidgetSnapshot.Pulse(
+            todaySeries: snapshot.pulse.todaySeries,
+            todayMax: snapshot.pulse.todayMax,
+            currentFraction: snapshot.pulse.currentFraction,
+            weeklyDays: snapshot.pulse.weeklyDays,
+            weeklyPatternText: snapshot.pulse.weeklyPatternText,
+            weeklyPeakText: snapshot.pulse.weeklyPeakText,
+            weeklyLowText: snapshot.pulse.weeklyLowText,
+            prescriptions: snapshot.pulse.prescriptions,
+            journalPrompt: snapshot.pulse.journalPrompt,
+            recentEntries: recentEntries
+        )
+        let updatedSnapshot = WidgetSnapshot(
+            updatedAt: Date(),
+            profile: snapshot.profile,
+            elapsed: snapshot.elapsed,
+            milestones: snapshot.milestones,
+            highlights: snapshot.highlights,
+            daily: snapshot.daily,
+            pulse: updatedPulse
+        )
+        store.saveSnapshot(updatedSnapshot)
+    }
+}
+
 enum ProfileMetric: String, AppEnum {
     case age
     case monthsLeft
@@ -266,6 +361,25 @@ struct DailyWidgetProvider: AppIntentTimelineProvider {
 
     func timeline(for configuration: DailyWidgetConfigurationIntent, in context: Context) async -> Timeline<DailyWidgetEntry> {
         makeTimeline(DailyWidgetEntry(date: Date(), snapshot: loadSnapshot(), configuration: configuration))
+    }
+}
+
+struct PulseWidgetEntry: TimelineEntry {
+    let date: Date
+    let snapshot: WidgetSnapshot
+}
+
+struct PulseWidgetProvider: TimelineProvider {
+    func placeholder(in context: Context) -> PulseWidgetEntry {
+        PulseWidgetEntry(date: Date(), snapshot: .empty)
+    }
+
+    func getSnapshot(in context: Context, completion: @escaping (PulseWidgetEntry) -> Void) {
+        completion(PulseWidgetEntry(date: Date(), snapshot: loadSnapshot()))
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<PulseWidgetEntry>) -> Void) {
+        completion(makeTimeline(PulseWidgetEntry(date: Date(), snapshot: loadSnapshot())))
     }
 }
 
@@ -811,6 +925,223 @@ private struct TimeScopesDailyWidgetView: View {
     }
 }
 
+private struct PulseLineChart: View {
+    let values: [Double]
+    let maxValue: Double
+    let currentFraction: Double
+
+    var body: some View {
+        GeometryReader { proxy in
+            let width = max(1, proxy.size.width)
+            let height = max(1, proxy.size.height)
+            let safeValues = values.count < 2 ? [0, 0] : values
+            let count = safeValues.count
+            let maxLoad = max(1, maxValue)
+            let step = width / CGFloat(max(1, count - 1))
+
+            Path { path in
+                for index in 0..<count {
+                    let x = CGFloat(index) * step
+                    let normalized = min(1, safeValues[index] / maxLoad)
+                    let y = height - CGFloat(normalized) * height
+                    if index == 0 {
+                        path.move(to: CGPoint(x: x, y: y))
+                    } else {
+                        path.addLine(to: CGPoint(x: x, y: y))
+                    }
+                }
+            }
+            .stroke(Color.accentColor, lineWidth: 2)
+
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: height))
+                for index in 0..<count {
+                    let x = CGFloat(index) * step
+                    let normalized = min(1, safeValues[index] / maxLoad)
+                    let y = height - CGFloat(normalized) * height
+                    path.addLine(to: CGPoint(x: x, y: y))
+                }
+                path.addLine(to: CGPoint(x: width, y: height))
+                path.closeSubpath()
+            }
+            .fill(Color.accentColor.opacity(0.12))
+
+            let clamped = min(1, max(0, currentFraction))
+            let currentX = clamped * width
+            Path { path in
+                path.move(to: CGPoint(x: currentX, y: 0))
+                path.addLine(to: CGPoint(x: currentX, y: height))
+            }
+            .stroke(Color.primary.opacity(0.25), lineWidth: 1)
+        }
+    }
+}
+
+private struct PulseWeekBarChart: View {
+    let days: [WidgetSnapshot.Pulse.Day]
+
+    var body: some View {
+        GeometryReader { proxy in
+            let safeDays = days.isEmpty
+                ? [
+                    WidgetSnapshot.Pulse.Day(label: "M", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "T", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "W", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "T", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "F", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "S", intensity: 0),
+                    WidgetSnapshot.Pulse.Day(label: "S", intensity: 0),
+                ]
+                : days
+            let spacing: CGFloat = 6
+            let count = max(1, safeDays.count)
+            let totalSpacing = spacing * CGFloat(max(0, count - 1))
+            let barWidth = max(8, (proxy.size.width - totalSpacing) / CGFloat(count))
+
+            HStack(alignment: .bottom, spacing: spacing) {
+                ForEach(Array(safeDays.enumerated()), id: \.offset) { _, day in
+                    let height = max(10, proxy.size.height * CGFloat(day.intensity))
+                    VStack(spacing: 4) {
+                        RoundedRectangle(cornerRadius: 5, style: .continuous)
+                            .fill(Color.accentColor.opacity(0.8))
+                            .frame(width: barWidth, height: height)
+                        Text(day.label)
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .frame(width: barWidth, alignment: .center)
+                    }
+                }
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .bottomLeading)
+        }
+    }
+}
+
+private struct PulsePrescriptionRow: View {
+    let prescription: WidgetSnapshot.Pulse.Prescription
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(prescription.focus.uppercased())
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .frame(width: 46, alignment: .leading)
+            Text(prescription.title)
+                .font(.caption)
+                .lineLimit(2)
+            Spacer(minLength: 8)
+            Text(prescription.impact)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+    }
+}
+
+private struct PulseTodayStructureWidgetView: View {
+    let entry: PulseWidgetEntry
+
+    var body: some View {
+        let pulse = entry.snapshot.pulse
+        let values = pulse.todaySeries
+        let maxValue = max(pulse.todayMax, values.max() ?? 0)
+        let lastIndex = max(0, values.count - 1)
+        let currentIndex = min(lastIndex, Int((pulse.currentFraction * Double(lastIndex)).rounded()))
+        let currentValue = values.indices.contains(currentIndex) ? values[currentIndex] : 0
+        WidgetCard(title: "Today Structure") {
+            VStack(alignment: .leading, spacing: 6) {
+                PulseLineChart(values: values, maxValue: maxValue, currentFraction: pulse.currentFraction)
+                    .frame(height: 90)
+                HStack {
+                    Text("Now \(Int(currentValue))")
+                    Spacer()
+                    Text("Max \(Int(maxValue))")
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+private struct PulseWeeklyRhythmWidgetView: View {
+    let entry: PulseWidgetEntry
+
+    var body: some View {
+        let pulse = entry.snapshot.pulse
+        WidgetCard(title: "Weekly Rhythm") {
+            VStack(alignment: .leading, spacing: 6) {
+                PulseWeekBarChart(days: pulse.weeklyDays)
+                    .frame(height: 90)
+                Text(pulse.weeklyPatternText)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                HStack {
+                    Text("Peak \(pulse.weeklyPeakText)")
+                    Spacer()
+                    Text("Low \(pulse.weeklyLowText)")
+                }
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+            }
+        }
+    }
+}
+
+private struct PulsePrescriptionsWidgetView: View {
+    let entry: PulseWidgetEntry
+
+    var body: some View {
+        let pulse = entry.snapshot.pulse
+        let items = Array(pulse.prescriptions.prefix(3))
+        WidgetCard(title: "Prescriptions") {
+            VStack(alignment: .leading, spacing: 6) {
+                if items.isEmpty {
+                    Text("No prescriptions yet.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(items.indices, id: \.self) { index in
+                        PulsePrescriptionRow(prescription: items[index])
+                        if index < items.count - 1 {
+                            Divider().opacity(0.35)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct PulseJournalWidgetView: View {
+    let entry: PulseWidgetEntry
+
+    var body: some View {
+        let pulse = entry.snapshot.pulse
+        WidgetCard(title: "Daily Journal") {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(pulse.journalPrompt)
+                    .font(.footnote)
+                    .lineLimit(3)
+                if let recent = pulse.recentEntries.first {
+                    Text(recent.note)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                }
+                Spacer(minLength: 0)
+                Button(intent: AddPulseJournalEntryIntent()) {
+                    Label("Add Entry", systemImage: "plus")
+                        .font(.caption)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.accentColor)
+            }
+        }
+    }
+}
+
 struct TimeScopesProfileWidget: Widget {
     let kind: String = WidgetSharedConstants.profileWidgetKind
 
@@ -876,6 +1207,58 @@ struct TimeScopesDailyWidget: Widget {
     }
 }
 
+struct TimeScopesPulseTodayWidget: Widget {
+    let kind: String = WidgetSharedConstants.pulseTodayWidgetKind
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
+            PulseTodayStructureWidgetView(entry: entry)
+        }
+        .configurationDisplayName("Pulse Today Structure")
+        .description("Today structure pulse chart")
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+struct TimeScopesPulseWeeklyWidget: Widget {
+    let kind: String = WidgetSharedConstants.pulseWeeklyWidgetKind
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
+            PulseWeeklyRhythmWidgetView(entry: entry)
+        }
+        .configurationDisplayName("Pulse Weekly Rhythm")
+        .description("Weekly rhythm pulse chart")
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+struct TimeScopesPulsePrescriptionsWidget: Widget {
+    let kind: String = WidgetSharedConstants.pulsePrescriptionsWidgetKind
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
+            PulsePrescriptionsWidgetView(entry: entry)
+        }
+        .configurationDisplayName("Pulse Prescriptions")
+        .description("Actionable prescriptions")
+        .supportedFamilies([.systemMedium])
+    }
+}
+
+struct TimeScopesPulseJournalWidget: Widget {
+    let kind: String = WidgetSharedConstants.pulseJournalWidgetKind
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: PulseWidgetProvider()) { entry in
+            PulseJournalWidgetView(entry: entry)
+        }
+        .configurationDisplayName("Pulse Daily Journal")
+        .description("Quick daily journal entry")
+        .supportedFamilies([.systemSmall])
+    }
+}
+
 @main
 struct TimeScopesWidgetBundle: WidgetBundle {
     var body: some Widget {
@@ -884,5 +1267,9 @@ struct TimeScopesWidgetBundle: WidgetBundle {
         TimeScopesMilestonesWidget()
         TimeScopesHighlightsWidget()
         TimeScopesDailyWidget()
+        TimeScopesPulseTodayWidget()
+        TimeScopesPulseWeeklyWidget()
+        TimeScopesPulsePrescriptionsWidget()
+        TimeScopesPulseJournalWidget()
     }
 }

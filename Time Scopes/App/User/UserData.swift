@@ -128,7 +128,8 @@ final class UserData: ObservableObject {
             elapsed: current.elapsed,
             milestones: current.milestones,
             highlights: current.highlights,
-            daily: current.daily
+            daily: current.daily,
+            pulse: current.pulse
         )
         widgetStore.saveSnapshot(snapshot)
     }

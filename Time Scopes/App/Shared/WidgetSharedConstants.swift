@@ -8,11 +8,19 @@ enum WidgetSharedConstants {
     static let milestonesWidgetKind = "TimeScopesMilestonesWidget"
     static let highlightsWidgetKind = "TimeScopesHighlightsWidget"
     static let dailyWidgetKind = "TimeScopesDailyWidget"
+    static let pulseTodayWidgetKind = "TimeScopesPulseTodayWidget"
+    static let pulseWeeklyWidgetKind = "TimeScopesPulseWeeklyWidget"
+    static let pulsePrescriptionsWidgetKind = "TimeScopesPulsePrescriptionsWidget"
+    static let pulseJournalWidgetKind = "TimeScopesPulseJournalWidget"
     static let allWidgetKinds = [
         profileWidgetKind,
         elapsedWidgetKind,
         milestonesWidgetKind,
         highlightsWidgetKind,
         dailyWidgetKind,
+        pulseTodayWidgetKind,
+        pulseWeeklyWidgetKind,
+        pulsePrescriptionsWidgetKind,
+        pulseJournalWidgetKind,
     ]
 }

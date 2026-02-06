@@ -512,7 +512,8 @@ struct HomeView: View {
             elapsed: elapsed,
             milestones: milestones,
             highlights: highlights,
-            daily: daily
+            daily: daily,
+            pulse: .empty
         )
     }
 }

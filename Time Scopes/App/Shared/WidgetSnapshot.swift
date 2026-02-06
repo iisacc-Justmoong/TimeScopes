@@ -67,12 +67,55 @@ struct WidgetSnapshot: Codable, Equatable {
         )
     }
 
+    struct Pulse: Codable, Equatable {
+        struct Day: Codable, Equatable {
+            let label: String
+            let intensity: Double
+        }
+
+        struct Prescription: Codable, Equatable {
+            let focus: String
+            let title: String
+            let impact: String
+        }
+
+        struct JournalEntry: Codable, Equatable {
+            let date: Date
+            let note: String
+        }
+
+        let todaySeries: [Double]
+        let todayMax: Double
+        let currentFraction: Double
+        let weeklyDays: [Day]
+        let weeklyPatternText: String
+        let weeklyPeakText: String
+        let weeklyLowText: String
+        let prescriptions: [Prescription]
+        let journalPrompt: String
+        let recentEntries: [JournalEntry]
+
+        static let empty = Pulse(
+            todaySeries: Array(repeating: 0, count: 24),
+            todayMax: 0,
+            currentFraction: 0,
+            weeklyDays: [],
+            weeklyPatternText: "Not enough data yet.",
+            weeklyPeakText: "No data",
+            weeklyLowText: "No data",
+            prescriptions: [],
+            journalPrompt: "Write one sentence.",
+            recentEntries: []
+        )
+    }
+
     let updatedAt: Date
     let profile: Profile
     let elapsed: Elapsed
     let milestones: Milestones
     let highlights: Highlights
     let daily: DailySummary
+    let pulse: Pulse
 
     enum CodingKeys: String, CodingKey {
         case updatedAt
@@ -81,6 +124,7 @@ struct WidgetSnapshot: Codable, Equatable {
         case milestones
         case highlights
         case daily
+        case pulse
     }
 
     static let empty = WidgetSnapshot(
@@ -89,16 +133,18 @@ struct WidgetSnapshot: Codable, Equatable {
         elapsed: .empty,
         milestones: .empty,
         highlights: .empty,
-        daily: .empty
+        daily: .empty,
+        pulse: .empty
     )
 
-    init(updatedAt: Date, profile: Profile, elapsed: Elapsed, milestones: Milestones, highlights: Highlights, daily: DailySummary) {
+    init(updatedAt: Date, profile: Profile, elapsed: Elapsed, milestones: Milestones, highlights: Highlights, daily: DailySummary, pulse: Pulse) {
         self.updatedAt = updatedAt
         self.profile = profile
         self.elapsed = elapsed
         self.milestones = milestones
         self.highlights = highlights
         self.daily = daily
+        self.pulse = pulse
     }
 
     init(from decoder: Decoder) throws {
@@ -109,5 +155,6 @@ struct WidgetSnapshot: Codable, Equatable {
         milestones = try container.decodeIfPresent(Milestones.self, forKey: .milestones) ?? .empty
         highlights = try container.decodeIfPresent(Highlights.self, forKey: .highlights) ?? .empty
         daily = try container.decodeIfPresent(DailySummary.self, forKey: .daily) ?? .empty
+        pulse = try container.decodeIfPresent(Pulse.self, forKey: .pulse) ?? .empty
     }
 }

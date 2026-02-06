@@ -24,6 +24,8 @@ final class PulseJournalStore: ObservableObject {
     private let storeKey = "PulseJournalEntries"
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
+    private let defaults: UserDefaults
+    private let legacyDefaults = UserDefaults.standard
 
     init() {
         let encoder = JSONEncoder()
@@ -32,6 +34,8 @@ final class PulseJournalStore: ObservableObject {
         decoder.dateDecodingStrategy = .iso8601
         self.encoder = encoder
         self.decoder = decoder
+        self.defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) ?? .standard
+        migrateIfNeeded()
         load()
         NotificationCenter.default.addObserver(
             forName: .pulseJournalDidChange,
@@ -77,7 +81,7 @@ final class PulseJournalStore: ObservableObject {
     }
 
     private func load() {
-        guard let data = UserDefaults.standard.data(forKey: storeKey) else {
+        guard let data = defaults.data(forKey: storeKey) else {
             entries = []
             return
         }
@@ -91,10 +95,18 @@ final class PulseJournalStore: ObservableObject {
     private func persist() {
         do {
             let data = try encoder.encode(entries)
-            UserDefaults.standard.set(data, forKey: storeKey)
+            defaults.set(data, forKey: storeKey)
             NotificationCenter.default.post(name: .pulseJournalDidChange, object: nil)
         } catch {
             return
         }
+    }
+
+    private func migrateIfNeeded() {
+        guard defaults.object(forKey: storeKey) == nil,
+              let legacyData = legacyDefaults.data(forKey: storeKey) else {
+            return
+        }
+        defaults.set(legacyData, forKey: storeKey)
     }
 }

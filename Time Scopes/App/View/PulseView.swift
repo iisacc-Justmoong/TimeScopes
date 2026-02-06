@@ -22,6 +22,7 @@ struct PulseView: View {
     @State private var currentPrompt = ""
 
     private let calendar = Calendar.autoupdatingCurrent
+    private let widgetStore = WidgetSnapshotStore()
     private static let journalPrompts: [String] = [
         "What single change would make tomorrow feel lighter?",
         "What did you protect well today?",
@@ -94,19 +95,26 @@ struct PulseView: View {
         }
         .onAppear {
             refreshPrompt()
+            syncPulseWidgetSnapshot()
         }
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
             refreshData()
+            syncPulseWidgetSnapshot()
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
                 refreshData()
+                syncPulseWidgetSnapshot()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             refreshData()
+            syncPulseWidgetSnapshot()
+        }
+        .onReceive(journalStore.$entries) { _ in
+            syncPulseWidgetSnapshot()
         }
         .sheet(isPresented: $isPresentingJournal) {
             PulseJournalComposer(
@@ -477,6 +485,49 @@ struct PulseView: View {
         let interval = weekInterval(for: Date())
         eventProvider.refreshEvents(in: interval)
         reminderProvider.refreshReminders(in: interval)
+    }
+
+    private func syncPulseWidgetSnapshot() {
+        let pulseSnapshot = buildPulseSnapshot()
+        let current = widgetStore.loadSnapshot()
+        let snapshot = WidgetSnapshot(
+            updatedAt: Date(),
+            profile: current.profile,
+            elapsed: current.elapsed,
+            milestones: current.milestones,
+            highlights: current.highlights,
+            daily: current.daily,
+            pulse: pulseSnapshot
+        )
+        widgetStore.saveSnapshot(snapshot)
+    }
+
+    private func buildPulseSnapshot() -> WidgetSnapshot.Pulse {
+        let weeklyDays = weeklyRhythm.map {
+            WidgetSnapshot.Pulse.Day(label: $0.day, intensity: $0.intensity)
+        }
+        let summary = weeklySummary
+        let prompt = currentPrompt.isEmpty
+            ? (PulseView.journalPrompts.randomElement() ?? "Write one sentence.")
+            : currentPrompt
+        let prescriptionsSnapshot = prescriptions.map {
+            WidgetSnapshot.Pulse.Prescription(focus: $0.focus, title: $0.title, impact: $0.impact)
+        }
+        let journalEntries = journalStore.recentEntries(limit: 3).map {
+            WidgetSnapshot.Pulse.JournalEntry(date: $0.date, note: $0.note)
+        }
+        return WidgetSnapshot.Pulse(
+            todaySeries: todayLoadSeries,
+            todayMax: todayLoadMax,
+            currentFraction: currentTimeFraction,
+            weeklyDays: weeklyDays,
+            weeklyPatternText: weeklyPatternText,
+            weeklyPeakText: summary.peakDayText,
+            weeklyLowText: summary.lowDayText,
+            prescriptions: prescriptionsSnapshot,
+            journalPrompt: prompt,
+            recentEntries: journalEntries
+        )
     }
 
     private func dayInterval(for date: Date) -> DateInterval {
