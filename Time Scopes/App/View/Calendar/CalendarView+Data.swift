@@ -53,6 +53,30 @@ extension CalendarView {
         return Array(markers.prefix(3))
     }
 
+    func markerOverflowCount(for date: Date, calendar: Calendar) -> Int {
+        let year = calendar.component(.year, from: date)
+        var total = 0
+
+        if calendar.isDate(date, inSameDayAs: dateProvider.now()) {
+            total += 1
+        }
+        if let birthdayInYear = birthdayDate(in: year, calendar: calendar),
+           calendar.isDate(date, inSameDayAs: birthdayInYear) {
+            total += 1
+        }
+        if calendar.isDate(date, inSameDayAs: userData.deathDate) {
+            total += 1
+        }
+
+        total += eventProvider.events(on: date).count
+        total += reminderProvider.allReminders(on: date).count
+        if !journalStore.entries(on: date, calendar: calendar).isEmpty {
+            total += 1
+        }
+
+        return max(0, total - 3)
+    }
+
     func dayBadges(for date: Date, calendar: Calendar) -> [String] {
         var labels: [String] = []
         let year = calendar.component(.year, from: date)
@@ -135,8 +159,8 @@ extension CalendarView {
                 id: "reminder-\($0.id)",
                 kind: .reminder,
                 title: $0.title,
-                startDate: $0.dueDate,
-                endDate: $0.dueDate,
+                startDate: $0.displayDate,
+                endDate: $0.displayDate,
                 isAllDay: $0.isAllDay,
                 color: $0.color
             )

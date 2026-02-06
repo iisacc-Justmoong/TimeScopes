@@ -68,6 +68,7 @@ final class ViewRenderingCoverageTests: XCTestCase {
                 isSelected: true,
                 isToday: true,
                 markers: [CalendarMarker(color: .blue), CalendarMarker(color: .orange)],
+                overflowCount: 2,
                 action: {}
             )
         )
@@ -77,6 +78,7 @@ final class ViewRenderingCoverageTests: XCTestCase {
                 isSelected: false,
                 isToday: false,
                 markers: [],
+                overflowCount: 0,
                 action: {}
             )
         )

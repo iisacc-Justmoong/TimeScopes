@@ -142,6 +142,10 @@ struct ReminderItem: Identifiable {
     let isCompleted: Bool
     let color: Color
     let listTitle: String
+
+    var displayDate: Date {
+        startDate ?? dueDate
+    }
 }
 
 @MainActor
@@ -235,7 +239,7 @@ final class ReminderProvider: ObservableObject {
                         listTitle: reminder.calendar.title
                     )
                 }
-                let all = mapped.sorted { $0.dueDate < $1.dueDate }
+                let all = mapped.sorted { $0.displayDate < $1.displayDate }
                 self.allReminders = all
                 self.rebuildAllRemindersByDay()
 
@@ -285,12 +289,12 @@ final class ReminderProvider: ObservableObject {
         var grouped: [Date: [ReminderItem]] = [:]
 
         for reminder in allReminders {
-            let day = calendar.startOfDay(for: reminder.dueDate)
+            let day = calendar.startOfDay(for: reminder.displayDate)
             grouped[day, default: []].append(reminder)
         }
 
         for key in grouped.keys {
-            grouped[key]?.sort { $0.dueDate < $1.dueDate }
+            grouped[key]?.sort { $0.displayDate < $1.displayDate }
         }
         allRemindersByDay = grouped
     }

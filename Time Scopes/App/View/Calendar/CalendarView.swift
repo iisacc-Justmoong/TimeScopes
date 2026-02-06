@@ -45,10 +45,7 @@ struct CalendarView: View {
         let weekdaySymbols = weekdaySymbols(for: calendar)
         let events = eventProvider.events
         let reminders = reminderProvider.allReminders.filter { reminder in
-            if let startDate = reminder.startDate {
-                return reminder.dueDate > month.start && startDate < month.end
-            }
-            return month.contains(reminder.dueDate)
+            month.contains(reminder.displayDate)
         }
 
         NavigationStack {

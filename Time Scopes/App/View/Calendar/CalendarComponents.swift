@@ -12,6 +12,7 @@ struct CalendarDayCell: View {
     let isSelected: Bool
     let isToday: Bool
     let markers: [CalendarMarker]
+    let overflowCount: Int
     let action: () -> Void
 
     var body: some View {
@@ -27,6 +28,11 @@ struct CalendarDayCell: View {
                             Circle()
                                 .fill(marker.color)
                                 .frame(width: 4, height: 4)
+                        }
+                        if overflowCount > 0 {
+                            Text("+")
+                                .font(.system(size: 8, weight: .bold))
+                                .foregroundStyle(.secondary)
                         }
                     }
                 } else {

@@ -356,7 +356,7 @@ extension PulseView {
             guard let day = calendar.date(byAdding: .day, value: offset, to: weekStart) else { continue }
             let interval = dayInterval(for: day)
             let events = eventProvider.events(on: day).filter { !$0.isAllDay }
-            let reminders = reminderProvider.reminders(on: day)
+            let reminders = reminderProvider.allReminders(on: day)
             let eventMinutes = events.reduce(0.0) { total, event in
                 total + clampedDuration(for: event, in: interval) / 60
             }

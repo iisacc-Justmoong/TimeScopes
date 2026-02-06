@@ -94,7 +94,8 @@ extension CalendarView {
                     day: day,
                     isSelected: calendar.isDate(date, inSameDayAs: selectedDate),
                     isToday: calendar.isDate(date, inSameDayAs: dateProvider.now()),
-                    markers: markers(for: date, calendar: calendar)
+                    markers: markers(for: date, calendar: calendar),
+                    overflowCount: markerOverflowCount(for: date, calendar: calendar)
                 ) {
                     selectedDate = date
                 }
