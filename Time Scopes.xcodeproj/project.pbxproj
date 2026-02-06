@@ -6,8 +6,36 @@
 	objectVersion = 90;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D0BBB1DEEFF5D8C3327605EB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9216D7D2E0AAD3D0011A560 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 052CA87A91E5A14414B7A60D;
+			remoteInfo = TimeScopesWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5D4BD6B22E1C536C5FF4AFBD /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				53526762B0EA2E243A957D27 /* TimeScopesWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		F9216D852E0AAD3D0011A560 /* Time Scopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Scopes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; includeInIndex = 0; path = TimeScopesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +44,25 @@
 			path = "Time Scopes";
 			sourceTree = "<group>";
 		};
+		AC788B7B1421F46B81FEB8FC /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Time Scopes/App/Shared";
+			sourceTree = "<group>";
+		};
+		7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PulseReportExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F9216D822E0AAD3D0011A560 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		5060B79B5134FF6E276F08B1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
 			);
@@ -31,6 +74,8 @@
 			isa = PBXGroup;
 			children = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
+				AC788B7B1421F46B81FEB8FC /* Shared */,
+				7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */,
 				F9216D862E0AAD3D0011A560 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				F9216D852E0AAD3D0011A560 /* Time Scopes.app */,
+				2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -53,8 +99,12 @@
 				F9216D812E0AAD3D0011A560 /* Sources */,
 				F9216D822E0AAD3D0011A560 /* Frameworks */,
 				F9216D832E0AAD3D0011A560 /* Resources */,
+				5D4BD6B22E1C536C5FF4AFBD /* Embed App Extensions */,
 			);
 			buildRules = (
+			);
+			dependencies = (
+				A218841A19F739B4C732F658 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
@@ -63,6 +113,25 @@
 			productName = "Time Scopes";
 			productReference = F9216D852E0AAD3D0011A560 /* Time Scopes.app */;
 			productType = "com.apple.product-type.application";
+		};
+		052CA87A91E5A14414B7A60D /* TimeScopesWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5D3977FDC0AE1A2354257F4E /* Build configuration list for PBXNativeTarget "TimeScopesWidgetExtension" */;
+			buildPhases = (
+				3DFA566C3FDEB8CF2A47244F /* Sources */,
+				5060B79B5134FF6E276F08B1 /* Frameworks */,
+				84A0DCD00DE1158BD1F357FC /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */,
+				AC788B7B1421F46B81FEB8FC /* Shared */,
+			);
+			name = TimeScopesWidgetExtension;
+			productName = TimeScopesWidgetExtension;
+			productReference = 2E09767DD0BBFC396CE5D655 /* TimeScopesWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -75,6 +144,9 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					F9216D842E0AAD3D0011A560 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					052CA87A91E5A14414B7A60D = {
 						CreatedOnToolsVersion = 16.4;
 					};
 				};
@@ -94,12 +166,18 @@
 			projectRoot = "";
 			targets = (
 				F9216D842E0AAD3D0011A560 /* Time Scopes */,
+				052CA87A91E5A14414B7A60D /* TimeScopesWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F9216D832E0AAD3D0011A560 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		84A0DCD00DE1158BD1F357FC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -112,7 +190,20 @@
 			files = (
 			);
 		};
+		3DFA566C3FDEB8CF2A47244F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A218841A19F739B4C732F658 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 052CA87A91E5A14414B7A60D /* TimeScopesWidgetExtension */;
+			targetProxy = D0BBB1DEEFF5D8C3327605EB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F9216D8E2E0AAD3E0011A560 /* Debug configuration for PBXProject "Time Scopes" */ = {
@@ -316,6 +407,48 @@
 			};
 			name = Release;
 		};
+		8AA8FC02B6B8817D27E9C36C /* Debug configuration for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/TimeScopesWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 5U49ST9XZH;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PulseReportExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iisacc.timescopes.Time-Scopes.Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B1443ACBD7198EEC7353368D /* Release configuration for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/TimeScopesWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 5U49ST9XZH;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PulseReportExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MARKETING_VERSION = 2;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.iisacc.timescopes.Time-Scopes.Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -332,6 +465,14 @@
 			buildConfigurations = (
 				F9216D912E0AAD3E0011A560 /* Debug configuration for PBXNativeTarget "Time Scopes" */,
 				F9216D922E0AAD3E0011A560 /* Release configuration for PBXNativeTarget "Time Scopes" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		5D3977FDC0AE1A2354257F4E /* Build configuration list for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AA8FC02B6B8817D27E9C36C /* Debug configuration for PBXNativeTarget "TimeScopesWidgetExtension" */,
+				B1443ACBD7198EEC7353368D /* Release configuration for PBXNativeTarget "TimeScopesWidgetExtension" */,
 			);
 			defaultConfigurationName = Release;
 		};

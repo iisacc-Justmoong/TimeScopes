@@ -21,7 +21,9 @@ struct HomeView: View {
     @StateObject private var eventProvider = CalendarEventProvider()
     @StateObject private var reminderProvider = ReminderProvider()
     @EnvironmentObject private var locationPermission: LocationPermissionManager
-    
+    private let widgetStore = WidgetSnapshotStore()
+    @State private var lastWidgetSync: Date = .distantPast
+
     private let dateProvider: DateProviding
     private let nextEventCalculator: NextEventCalculating
     private let livedTimeCalculator: LivedTimeCalculating
@@ -316,9 +318,41 @@ struct HomeView: View {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
             refreshDailyAgenda(for: dateProvider.now())
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             refreshDailyAgenda(for: dateProvider.now())
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(weekdayTicker.$now) { now in
+            syncWidgetSnapshotIfNeeded(at: now)
+        }
+        .onReceive(eventProvider.$events) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(reminderProvider.$reminders) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(locationPermission.$location) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.name) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.birthday) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.deathDate) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.workHoursPerDay) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.sleepHoursPerDay) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onAppear {
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
         }
         .glassScreen()
     }
@@ -377,6 +411,103 @@ struct HomeView: View {
             percentText: percentText(value: remaining, total: segment),
             value: Double(remaining),
             max: Double(segment)
+        )
+    }
+
+    private func syncWidgetSnapshotIfNeeded(at now: Date, force: Bool = false) {
+        let interval: TimeInterval = 30
+        guard force || now.timeIntervalSince(lastWidgetSync) >= interval else { return }
+        lastWidgetSync = now
+        widgetStore.saveSnapshot(buildWidgetSnapshot(at: now))
+    }
+
+    private func buildWidgetSnapshot(at now: Date) -> WidgetSnapshot {
+        let profile = WidgetSnapshot.Profile(
+            name: userData.name,
+            age: userData.age,
+            monthsLeft: monthCount.leftMonths,
+            weeksLeft: weekCount.leftWeeks,
+            daysLeft: dayCount.leftDays
+        )
+
+        let livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: now)
+        let elapsed = WidgetSnapshot.Elapsed(
+            months: livedTime.months,
+            weeks: livedTime.days / 7,
+            days: livedTime.days,
+            hours: livedTime.hours,
+            minutes: livedTime.minutes,
+            seconds: livedTime.seconds
+        )
+
+        let nextBirthdayStats = nextEventCalculator.nextBirthdayStats(from: userData.birthday)
+        let nextDecadeStats = nextEventCalculator.nextDecadeStats(from: userData.age)
+        let milestones = WidgetSnapshot.Milestones(
+            nextDecadeAge: nextDecadeStats.nextDecade,
+            yearsUntilNextDecade: nextDecadeStats.yearsUntilNextDecade,
+            daysUntilNextBirthday: nextBirthdayStats.daysUntilNextBirthday,
+            weekdaysRemaining: lifeRemainingWorkingTime.remainingWorkingDays
+        )
+
+        let daysInYear = dateProvider.daysInYear(for: now)
+        let highlights = WidgetSnapshot.Highlights(
+            yearRemainingDays: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
+            nextChristmasDays: christmas.count,
+            remainingMondays: annualMondays.count
+        )
+
+        let calendar = dateProvider.calendar
+        let startOfToday = calendar.startOfDay(for: now)
+        let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday) ?? now
+        let dayInterval = DateInterval(start: startOfToday, end: endOfToday)
+        let nextHour = calendar.nextDate(
+            after: now,
+            matching: DateComponents(minute: 0, second: 0),
+            matchingPolicy: .nextTimePreservingSmallerComponents
+        ) ?? endOfToday
+        let remainingToNextHourSeconds = max(0, Int(nextHour.timeIntervalSince(now)))
+        let nextHourText = formatMS(remainingToNextHourSeconds)
+        let nextHourPercent = percentText(value: remainingToNextHourSeconds, total: 3_600)
+
+        let eventSeconds = Int(eventProvider.events(on: startOfToday).reduce(0.0) { total, event in
+            total + clampedDuration(for: event, in: dayInterval)
+        })
+        let reminderSeconds = Int(reminderProvider.reminders(on: startOfToday).reduce(0.0) { total, reminder in
+            total + reminderDuration(for: reminder, in: dayInterval)
+        })
+        let totalDaySeconds = 24 * 3_600
+        let remainingSeconds = max(0, Int(endOfToday.timeIntervalSince(now)))
+        let remainingText = formatHMS(remainingSeconds)
+        let remainingPercent = percentText(value: remainingSeconds, total: totalDaySeconds)
+        let sunGauge = sunGaugeData(for: now)
+
+        let workHours = max(0, min(userData.workHoursPerDay, 24))
+        let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
+        let baseScheduledSeconds = min(24, workHours + sleepHours) * 3_600
+        let scheduledSeconds = min(totalDaySeconds, baseScheduledSeconds + eventSeconds + reminderSeconds)
+        let freeSeconds = max(0, totalDaySeconds - scheduledSeconds)
+
+        let daily = WidgetSnapshot.DailySummary(
+            nextHourText: nextHourText,
+            nextHourPercent: nextHourPercent,
+            sunTitle: sunGauge.title,
+            sunValueText: sunGauge.valueText,
+            sunPercentText: sunGauge.percentText,
+            timeLeftText: remainingText,
+            timeLeftPercent: remainingPercent,
+            freeTimeText: formatHMS(freeSeconds),
+            freeTimePercent: percentText(value: freeSeconds, total: totalDaySeconds),
+            allocatedTimeText: formatHMS(scheduledSeconds),
+            allocatedTimePercent: percentText(value: scheduledSeconds, total: totalDaySeconds)
+        )
+
+        return WidgetSnapshot(
+            updatedAt: now,
+            profile: profile,
+            elapsed: elapsed,
+            milestones: milestones,
+            highlights: highlights,
+            daily: daily
         )
     }
 }
