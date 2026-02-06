@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CalendarView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var userData: UserData
     @StateObject var eventProvider = CalendarEventProvider()
     @StateObject var reminderProvider = ReminderProvider()
@@ -68,6 +69,12 @@ struct CalendarView: View {
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
+            journalStore.reload()
+            refreshAgenda(for: monthStart, calendar: calendar)
+        }
+        .onChange(of: scenePhase) { phase in
+            guard phase == .active else { return }
+            journalStore.reload()
             refreshAgenda(for: monthStart, calendar: calendar)
         }
         .sheet(isPresented: $isJumpPresented) {

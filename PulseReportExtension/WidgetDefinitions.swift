@@ -77,33 +77,33 @@ private enum PulseJournalWidgetStore {
     private static func updateSnapshot(with entry: StoredEntry?) {
         guard let entry else { return }
         let store = WidgetSnapshotStore()
-        let snapshot = store.loadSnapshot()
-        var recentEntries = snapshot.pulse.recentEntries
-        let journalEntry = WidgetSnapshot.Pulse.JournalEntry(date: entry.date, note: entry.note)
-        recentEntries.insert(journalEntry, at: 0)
-        recentEntries = Array(recentEntries.prefix(3))
-        let updatedPulse = WidgetSnapshot.Pulse(
-            todaySeries: snapshot.pulse.todaySeries,
-            todayMax: snapshot.pulse.todayMax,
-            currentFraction: snapshot.pulse.currentFraction,
-            weeklyDays: snapshot.pulse.weeklyDays,
-            weeklyPatternText: snapshot.pulse.weeklyPatternText,
-            weeklyPeakText: snapshot.pulse.weeklyPeakText,
-            weeklyLowText: snapshot.pulse.weeklyLowText,
-            prescriptions: snapshot.pulse.prescriptions,
-            journalPrompt: snapshot.pulse.journalPrompt,
-            recentEntries: recentEntries
-        )
-        let updatedSnapshot = WidgetSnapshot(
-            updatedAt: Date(),
-            profile: snapshot.profile,
-            elapsed: snapshot.elapsed,
-            milestones: snapshot.milestones,
-            highlights: snapshot.highlights,
-            daily: snapshot.daily,
-            pulse: updatedPulse
-        )
-        store.saveSnapshot(updatedSnapshot)
+        store.updateSnapshot { snapshot in
+            var recentEntries = snapshot.pulse.recentEntries
+            let journalEntry = WidgetSnapshot.Pulse.JournalEntry(date: entry.date, note: entry.note)
+            recentEntries.insert(journalEntry, at: 0)
+            recentEntries = Array(recentEntries.prefix(3))
+            let updatedPulse = WidgetSnapshot.Pulse(
+                todaySeries: snapshot.pulse.todaySeries,
+                todayMax: snapshot.pulse.todayMax,
+                currentFraction: snapshot.pulse.currentFraction,
+                weeklyDays: snapshot.pulse.weeklyDays,
+                weeklyPatternText: snapshot.pulse.weeklyPatternText,
+                weeklyPeakText: snapshot.pulse.weeklyPeakText,
+                weeklyLowText: snapshot.pulse.weeklyLowText,
+                prescriptions: snapshot.pulse.prescriptions,
+                journalPrompt: snapshot.pulse.journalPrompt,
+                recentEntries: recentEntries
+            )
+            return WidgetSnapshot(
+                updatedAt: Date(),
+                profile: snapshot.profile,
+                elapsed: snapshot.elapsed,
+                milestones: snapshot.milestones,
+                highlights: snapshot.highlights,
+                daily: snapshot.daily,
+                pulse: updatedPulse
+            )
+        }
     }
 }
 

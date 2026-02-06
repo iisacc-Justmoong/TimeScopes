@@ -1,4 +1,0 @@
-Target dependency graph (2 targets)
-Target 'Time Scopes' in project 'Time Scopes'
-➜ Explicit dependency on target 'TimeScopesWidgetExtension' in project 'Time Scopes'
-Target 'TimeScopesWidgetExtension' in project 'Time Scopes' (no dependencies)

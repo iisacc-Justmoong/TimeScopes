@@ -16,6 +16,8 @@ struct WidgetSharedContainer {
 }
 
 final class WidgetSnapshotStore {
+    private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.widgetSnapshotStore.io")
+
     private let container: WidgetSharedContainer
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
@@ -31,22 +33,108 @@ final class WidgetSnapshotStore {
     }
 
     func loadSnapshot() -> WidgetSnapshot {
-        guard let url = container.snapshotURL,
-              let data = try? Data(contentsOf: url),
+        Self.ioQueue.sync {
+            loadSnapshotFromDisk()
+        }
+    }
+
+    func saveSnapshot(_ snapshot: WidgetSnapshot) {
+        let didSave = Self.ioQueue.sync {
+            saveSnapshotToDisk(snapshot)
+        }
+        guard didSave else { return }
+        reloadWidgetTimelines()
+    }
+
+    func updateSnapshot(_ transform: (WidgetSnapshot) -> WidgetSnapshot) {
+        let didSave = Self.ioQueue.sync {
+            mutateSnapshotOnDisk(transform)
+        }
+        guard didSave else { return }
+        reloadWidgetTimelines()
+    }
+
+    private func loadSnapshotFromDisk() -> WidgetSnapshot {
+        guard let url = container.snapshotURL else { return .empty }
+
+        var snapshot: WidgetSnapshot?
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        var coordinationError: NSError?
+        coordinator.coordinate(readingItemAt: url, options: [.withoutChanges], error: &coordinationError) { readURL in
+            snapshot = decodeSnapshot(at: readURL)
+        }
+
+        // Fallback for first-run / uncoordinated access paths.
+        if let snapshot {
+            return snapshot
+        }
+        return decodeSnapshot(at: url) ?? .empty
+    }
+
+    private func saveSnapshotToDisk(_ snapshot: WidgetSnapshot) -> Bool {
+        guard let url = container.snapshotURL else { return false }
+        guard ensureParentDirectory(for: url) else { return false }
+
+        var didWrite = false
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        var coordinationError: NSError?
+        coordinator.coordinate(writingItemAt: url, options: [.forMerging], error: &coordinationError) { writeURL in
+            didWrite = encodeSnapshot(snapshot, at: writeURL)
+        }
+        if didWrite {
+            return true
+        }
+        return encodeSnapshot(snapshot, at: url)
+    }
+
+    private func mutateSnapshotOnDisk(_ transform: (WidgetSnapshot) -> WidgetSnapshot) -> Bool {
+        guard let url = container.snapshotURL else { return false }
+        guard ensureParentDirectory(for: url) else { return false }
+
+        var didWrite = false
+        let coordinator = NSFileCoordinator(filePresenter: nil)
+        var coordinationError: NSError?
+        coordinator.coordinate(writingItemAt: url, options: [.forMerging], error: &coordinationError) { writeURL in
+            let current = decodeSnapshot(at: writeURL) ?? .empty
+            let updated = transform(current)
+            didWrite = encodeSnapshot(updated, at: writeURL)
+        }
+        if didWrite {
+            return true
+        }
+        let current = decodeSnapshot(at: url) ?? .empty
+        return encodeSnapshot(transform(current), at: url)
+    }
+
+    private func decodeSnapshot(at url: URL) -> WidgetSnapshot? {
+        guard let data = try? Data(contentsOf: url),
               let snapshot = try? decoder.decode(WidgetSnapshot.self, from: data) else {
-            return .empty
+            return nil
         }
         return snapshot
     }
 
-    func saveSnapshot(_ snapshot: WidgetSnapshot) {
-        guard let url = container.snapshotURL else { return }
+    private func encodeSnapshot(_ snapshot: WidgetSnapshot, at url: URL) -> Bool {
+        guard let data = try? encoder.encode(snapshot) else { return false }
         do {
-            let data = try encoder.encode(snapshot)
             try data.write(to: url, options: [.atomic])
+            return true
         } catch {
-            return
+            return false
         }
+    }
+
+    private func ensureParentDirectory(for url: URL) -> Bool {
+        let parent = url.deletingLastPathComponent()
+        do {
+            try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true, attributes: nil)
+            return true
+        } catch {
+            return false
+        }
+    }
+
+    private func reloadWidgetTimelines() {
         WidgetSharedConstants.allWidgetKinds.forEach { kind in
             WidgetCenter.shared.reloadTimelines(ofKind: kind)
         }

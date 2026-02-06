@@ -41,22 +41,26 @@ struct PulseView: View {
             .glassScreen()
         }
         .onAppear {
+            journalStore.reload()
             refreshPrompt()
             syncPulseWidgetSnapshot()
         }
         .task {
             await eventProvider.requestAccessIfNeeded()
             await reminderProvider.requestAccessIfNeeded()
+            journalStore.reload()
             refreshData()
             syncPulseWidgetSnapshot()
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
+                journalStore.reload()
                 refreshData()
                 syncPulseWidgetSnapshot()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            journalStore.reload()
             refreshData()
             syncPulseWidgetSnapshot()
         }

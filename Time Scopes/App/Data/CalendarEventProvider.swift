@@ -158,6 +158,7 @@ final class ReminderProvider: ObservableObject {
     private let store: EKEventStore
     private let calendar: Calendar
     private var remindersByDay: [Date: [ReminderItem]] = [:]
+    private var refreshToken = UUID()
 
     init(store: EKEventStore = EKEventStore(), calendar: Calendar = .autoupdatingCurrent) {
         self.store = store
@@ -192,6 +193,9 @@ final class ReminderProvider: ObservableObject {
     }
 
     func refreshReminders(in interval: DateInterval) {
+        let token = UUID()
+        refreshToken = token
+
         guard hasAccess else {
             reminders = []
             remindersByDay = [:]
@@ -211,6 +215,7 @@ final class ReminderProvider: ObservableObject {
         store.fetchReminders(matching: predicate) { [weak self] fetched in
             guard let self else { return }
             Task { @MainActor in
+                guard token == self.refreshToken else { return }
                 let mapped = (fetched ?? []).filter { !$0.isCompleted }.compactMap { reminder -> ReminderItem? in
                     let dueComponents = reminder.dueDateComponents
                     let startComponents = reminder.startDateComponents
@@ -242,6 +247,7 @@ final class ReminderProvider: ObservableObject {
                     }
                     return interval.contains(reminder.dueDate)
                 }
+                guard token == self.refreshToken else { return }
                 self.reminders = filtered.sorted { $0.dueDate < $1.dueDate }
                 self.rebuildRemindersByDay()
             }

@@ -9,7 +9,7 @@ import CoreLocation
 import Foundation
 
 @MainActor
-final class LocationPermissionManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+final class LocationPermissionManager: NSObject, ObservableObject {
     @Published private(set) var authorizationStatus: CLAuthorizationStatus
     @Published private(set) var location: CLLocation?
 
@@ -45,18 +45,6 @@ final class LocationPermissionManager: NSObject, ObservableObject, CLLocationMan
         requestLocationIfPossible()
     }
 
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        refreshStatus()
-    }
-
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.last
-    }
-
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        return
-    }
-
     private func requestLocationIfPossible() {
         guard isAuthorized(authorizationStatus) else { return }
         manager.requestLocation()
@@ -70,4 +58,21 @@ final class LocationPermissionManager: NSObject, ObservableObject, CLLocationMan
             return false
         }
     }
+}
+
+extension LocationPermissionManager: CLLocationManagerDelegate {
+    nonisolated func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        Task { @MainActor in
+            refreshStatus()
+        }
+    }
+
+    nonisolated func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latest = locations.last
+        Task { @MainActor in
+            location = latest
+        }
+    }
+
+    nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {}
 }

@@ -15,6 +15,14 @@ struct EventGaugeView: View {
     var min: Int
     var max: Int
     var unit: String
+
+    private var normalizedGauge: (value: Double, lower: Double, upper: Double) {
+        let lower = Double(Swift.min(min, max))
+        let rawUpper = Double(Swift.max(min, max))
+        let upper = rawUpper > lower ? rawUpper : lower + 1
+        let clamped = Swift.min(Swift.max(Double(gaugeValue), lower), upper)
+        return (value: clamped, lower: lower, upper: upper)
+    }
     
     var body: some View {
         VStack (alignment: .leading, spacing: 16) {
@@ -27,7 +35,7 @@ struct EventGaugeView: View {
                     .font(.headline)
                     .fontWeight(.bold)
             }
-            Gauge(value: Double(gaugeValue), in: Double(min)...Double(max)) {
+            Gauge(value: normalizedGauge.value, in: normalizedGauge.lower...normalizedGauge.upper) {
                 Text("\(gaugeValue)")
             }
             .gaugeStyle(.accessoryLinearCapacity)

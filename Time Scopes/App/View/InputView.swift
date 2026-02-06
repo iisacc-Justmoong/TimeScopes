@@ -18,8 +18,8 @@ struct InputView: View {
                 Section {
                     TextField("Name", text: $userData.name)
 
-                    DatePicker("Start date", selection: $userData.birthday, displayedComponents: .date)
-                    DatePicker("End Date", selection: $userData.deathDate, displayedComponents: .date)
+                    DatePicker("Start date", selection: $userData.birthday, in: ...userData.deathDate, displayedComponents: .date)
+                    DatePicker("End Date", selection: $userData.deathDate, in: userData.birthday..., displayedComponents: .date)
                 }
                 footer: {
                     Text("When you enter the start and end dates, it displays information about the time you've spent so far based on the current point and reference information that can help you with future activities.")

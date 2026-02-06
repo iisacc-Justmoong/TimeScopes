@@ -80,8 +80,9 @@ struct EventDetailView<ExtraContent: View>: View {
                 }
 
                 if let gauge {
-                    Gauge(value: Double(gauge.value), in: Double(gauge.min)...Double(gauge.max)) {
-                        Text("\(gauge.value)")
+                    let normalized = normalizeGauge(value: gauge.value, min: gauge.min, max: gauge.max)
+                    Gauge(value: normalized.value, in: normalized.lower...normalized.upper) {
+                        Text("\(Int(normalized.value))")
                     }
                     .gaugeStyle(.accessoryLinearCapacity)
                     .tint(Color.accentColor)
@@ -119,13 +120,16 @@ struct EventDetailView<ExtraContent: View>: View {
     }
 
     private var circularGaugeView: some View {
-        let gaugeValue = gauge?.value ?? count
-        let gaugeMin = gauge?.min ?? 0
-        let gaugeMax = gauge?.max ?? max(1, count)
-        let range = max(1, gaugeMax - gaugeMin)
-        let percent = Double(max(0, gaugeValue - gaugeMin)) / Double(range) * 100
+        let fallbackMax = Swift.max(1, count)
+        let normalized = normalizeGauge(
+            value: gauge?.value ?? count,
+            min: gauge?.min ?? 0,
+            max: gauge?.max ?? fallbackMax
+        )
+        let range = Swift.max(1, normalized.upper - normalized.lower)
+        let percent = (normalized.value - normalized.lower) / range * 100
 
-        return Gauge(value: Double(gaugeValue), in: Double(gaugeMin)...Double(gaugeMax)) {
+        return Gauge(value: normalized.value, in: normalized.lower...normalized.upper) {
             Text("\(percent, specifier: "%.0f")%")
                 .font(.headline)
         }
@@ -133,6 +137,14 @@ struct EventDetailView<ExtraContent: View>: View {
         .foregroundStyle(Color.accentColor)
         .tint(Color.accentColor)
         .frame(width: 64, height: 64, alignment: .topTrailing)
+    }
+
+    private func normalizeGauge(value: Int, min: Int, max: Int) -> (value: Double, lower: Double, upper: Double) {
+        let lower = Double(Swift.min(min, max))
+        let rawUpper = Double(Swift.max(min, max))
+        let upper = rawUpper > lower ? rawUpper : lower + 1
+        let clamped = Swift.min(Swift.max(Double(value), lower), upper)
+        return (value: clamped, lower: lower, upper: upper)
     }
 }
 

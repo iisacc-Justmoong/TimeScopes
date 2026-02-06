@@ -12,11 +12,17 @@ final class UserData: ObservableObject {
     @Published var name: String = ""
     @Published var birthday: Date = Date() {
         didSet {
+            if birthday > deathDate {
+                deathDate = birthday
+            }
             updateDerivedFields()
         }
     }
     @Published var deathDate: Date = Date() {
         didSet {
+            if deathDate < birthday {
+                deathDate = birthday
+            }
             updateDerivedFields()
         }
     }
@@ -114,23 +120,23 @@ final class UserData: ObservableObject {
     }
 
     private func syncWidgetSnapshot() {
-        let current = widgetStore.loadSnapshot()
-        let profile = WidgetSnapshot.Profile(
-            name: name,
-            age: age,
-            monthsLeft: current.profile.monthsLeft,
-            weeksLeft: current.profile.weeksLeft,
-            daysLeft: current.profile.daysLeft
-        )
-        let snapshot = WidgetSnapshot(
-            updatedAt: dateProvider.now(),
-            profile: profile,
-            elapsed: current.elapsed,
-            milestones: current.milestones,
-            highlights: current.highlights,
-            daily: current.daily,
-            pulse: current.pulse
-        )
-        widgetStore.saveSnapshot(snapshot)
+        widgetStore.updateSnapshot { current in
+            let profile = WidgetSnapshot.Profile(
+                name: name,
+                age: age,
+                monthsLeft: current.profile.monthsLeft,
+                weeksLeft: current.profile.weeksLeft,
+                daysLeft: current.profile.daysLeft
+            )
+            return WidgetSnapshot(
+                updatedAt: dateProvider.now(),
+                profile: profile,
+                elapsed: current.elapsed,
+                milestones: current.milestones,
+                highlights: current.highlights,
+                daily: current.daily,
+                pulse: current.pulse
+            )
+        }
     }
 }

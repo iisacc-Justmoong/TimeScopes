@@ -81,7 +81,7 @@ extension HomeView {
         let nextHourText = HomeFormatting.formatMS(remainingToNextHourSeconds)
         let nextHourPercent = HomeFormatting.percentText(value: elapsedToNextHourSeconds, total: 3_600)
 
-        let eventSeconds = Int(eventProvider.events(on: startOfToday).reduce(0.0) { total, event in
+        let eventSeconds = Int(eventProvider.events(on: startOfToday).filter { !$0.isAllDay }.reduce(0.0) { total, event in
             total + clampedDuration(for: event, in: dayInterval)
         })
         let reminderSeconds = Int(reminderProvider.reminders(on: startOfToday).reduce(0.0) { total, reminder in
@@ -146,10 +146,12 @@ extension HomeView {
         let interval: TimeInterval = 30
         guard force || now.timeIntervalSince(lastWidgetSync) >= interval else { return }
         lastWidgetSync = now
-        widgetStore.saveSnapshot(buildWidgetSnapshot(at: now))
+        widgetStore.updateSnapshot { current in
+            buildWidgetSnapshot(at: now, pulse: current.pulse)
+        }
     }
 
-    func buildWidgetSnapshot(at now: Date) -> WidgetSnapshot {
+    func buildWidgetSnapshot(at now: Date, pulse: WidgetSnapshot.Pulse) -> WidgetSnapshot {
         let profile = WidgetSnapshot.Profile(
             name: userData.name,
             age: userData.age,
@@ -206,7 +208,7 @@ extension HomeView {
             milestones: milestones,
             highlights: highlights,
             daily: daily,
-            pulse: .empty
+            pulse: pulse
         )
     }
 }

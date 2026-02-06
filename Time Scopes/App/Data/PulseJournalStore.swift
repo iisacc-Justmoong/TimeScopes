@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct PulseJournalEntry: Identifiable, Codable {
     let id: UUID
@@ -26,6 +27,7 @@ final class PulseJournalStore: ObservableObject {
     private let decoder: JSONDecoder
     private let defaults: UserDefaults
     private let legacyDefaults = UserDefaults.standard
+    private var observers: [NSObjectProtocol] = []
 
     init() {
         let encoder = JSONEncoder()
@@ -37,13 +39,52 @@ final class PulseJournalStore: ObservableObject {
         self.defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) ?? .standard
         migrateIfNeeded()
         load()
-        NotificationCenter.default.addObserver(
-            forName: .pulseJournalDidChange,
-            object: nil,
-            queue: .main
-        ) { [weak self] _ in
-            self?.load()
-        }
+        configureObservers()
+    }
+
+    deinit {
+        observers.forEach(NotificationCenter.default.removeObserver)
+    }
+
+    func reload() {
+        load()
+    }
+
+    private func configureObservers() {
+        let center = NotificationCenter.default
+        observers.append(
+            center.addObserver(
+                forName: .pulseJournalDidChange,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.load()
+                }
+            }
+        )
+        observers.append(
+            center.addObserver(
+                forName: UserDefaults.didChangeNotification,
+                object: defaults,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.load()
+                }
+            }
+        )
+        observers.append(
+            center.addObserver(
+                forName: UIApplication.willEnterForegroundNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor in
+                    self?.load()
+                }
+            }
+        )
     }
 
     func addEntry(note: String, date: Date = Date()) {
