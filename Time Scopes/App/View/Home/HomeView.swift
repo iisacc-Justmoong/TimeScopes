@@ -1,0 +1,120 @@
+//
+//  HomeView.swift
+//  Time Scopes
+//
+//  Created by 윤무영 on 9/26/24.
+//
+
+import SwiftUI
+
+struct HomeView: View {
+    @EnvironmentObject var userData: UserData
+    @EnvironmentObject var monthCount: MonthCount
+    @EnvironmentObject var weekCount: WeekCount
+    @EnvironmentObject var dayCount: DayCount
+
+    @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
+    @StateObject private var weekdayTicker = SecondTicker()
+    @StateObject private var eventProvider = CalendarEventProvider()
+    @StateObject private var reminderProvider = ReminderProvider()
+    @EnvironmentObject private var locationPermission: LocationPermissionManager
+    private let widgetStore = WidgetSnapshotStore()
+    @State private var lastWidgetSync: Date = .distantPast
+
+    private let dateProvider: DateProviding
+    private let nextEventCalculator: NextEventCalculating
+    private let livedTimeCalculator: LivedTimeCalculating
+
+    private var christmas: AnnualChristmasProperties {
+        AnnualChristmasProperties(dateProvider: dateProvider)
+    }
+
+    private var annualMondays: AnnualMondayProperties {
+        AnnualMondayProperties(dateProvider: dateProvider)
+    }
+
+    private var elapsedDateInThisYear: ElapsedDateInThisYear {
+        ElapsedDateInThisYear(dateProvider: dateProvider)
+    }
+
+    @State private var isPresented = false
+
+    init(
+        lifeRemainingWorkingTime: LifeRemainingWorkingTime,
+        dateProvider: DateProviding = SystemDateProvider(),
+        nextEventCalculator: NextEventCalculating = NextEventCalculator(),
+        livedTimeCalculator: LivedTimeCalculating = LivedTimeCalculator()
+    ) {
+        self.lifeRemainingWorkingTime = lifeRemainingWorkingTime
+        self.dateProvider = dateProvider
+        self.nextEventCalculator = nextEventCalculator
+        self.livedTimeCalculator = livedTimeCalculator
+    }
+
+    var body: some View {
+        NavigationStack {
+            TimelineView(.periodic(from: dateProvider.now(), by: 1)) { timeline in
+                List {
+                    profileSection()
+                    elapsedSection(at: timeline.date)
+                    upcomingMilestonesSection(at: timeline.date)
+                    annualHighlightsSection()
+                    dailySummarySection(at: timeline.date)
+                }
+                .scrollContentBackground(.hidden)
+                .listRowSeparator(.hidden)
+                .background(GlassScreenBackground())
+            }
+        }
+        .task {
+            await eventProvider.requestAccessIfNeeded()
+            await reminderProvider.requestAccessIfNeeded()
+            refreshDailyAgenda(for: dateProvider.now())
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            refreshDailyAgenda(for: dateProvider.now())
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(weekdayTicker.$now) { now in
+            syncWidgetSnapshotIfNeeded(at: now)
+        }
+        .onReceive(eventProvider.$events) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(reminderProvider.$reminders) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onReceive(locationPermission.$location) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.name) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.birthday) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.deathDate) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.workHoursPerDay) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onChange(of: userData.sleepHoursPerDay) { _ in
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .onAppear {
+            syncWidgetSnapshotIfNeeded(at: dateProvider.now(), force: true)
+        }
+        .glassScreen()
+    }
+}
+
+#Preview {
+    HomeView(lifeRemainingWorkingTime: LifeRemainingWorkingTime(userLivedTime: UserLivedTime(model: UserData())))
+        .environmentObject(UserData())
+        .environmentObject(UserLivedTime(model: UserData()))
+        .environmentObject(MonthCount(viewModel: UserData()))
+        .environmentObject(WeekCount(viewModel: UserData()))
+        .environmentObject(DayCount(viewModel: UserData()))
+}
