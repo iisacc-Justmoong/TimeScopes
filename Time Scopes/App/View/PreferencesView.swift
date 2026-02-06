@@ -5,17 +5,20 @@
 //  Created by OpenAI on 2026-02-04.
 //
 
+import CoreLocation
 import EventKit
 import SwiftUI
 
 struct PreferencesView: View {
     @Environment(\.openURL) private var openURL
     @EnvironmentObject private var userData: UserData
+    @EnvironmentObject private var locationPermission: LocationPermissionManager
 
     @State private var calendarStatus = EKEventStore.authorizationStatus(for: .event)
     @State private var reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
     @State private var isRequestingCalendar = false
     @State private var isRequestingReminders = false
+    @State private var isRequestingLocation = false
 
     private let store = EKEventStore()
 
@@ -48,10 +51,15 @@ struct PreferencesView: View {
                     )
                 }
 
-                Section("Notes") {
-                    Text("If access is denied, open Settings to enable it.")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                Section("Location") {
+                    PreferenceStatusRow(
+                        title: "Access",
+                        value: statusLabel(for: locationPermission.authorizationStatus)
+                    )
+                    locationActions(
+                        status: locationPermission.authorizationStatus,
+                        isRequesting: isRequestingLocation
+                    )
                 }
 
                 Section("Daily Schedule") {
@@ -71,6 +79,9 @@ struct PreferencesView: View {
             .navigationTitle("Preferences")
         }
         .onAppear(perform: refreshStatuses)
+        .onChange(of: locationPermission.authorizationStatus) { _ in
+            locationPermission.refreshStatus()
+        }
         .onChange(of: userData.workHoursPerDay) { _ in
             userData.saveProfile()
         }
@@ -130,9 +141,29 @@ struct PreferencesView: View {
         }
     }
 
+    private func statusLabel(for status: CLAuthorizationStatus) -> String {
+        switch status {
+        case .notDetermined:
+            return "Not determined"
+        case .restricted:
+            return "Restricted"
+        case .denied:
+            return "Denied"
+        case .authorizedAlways:
+            return "Always"
+        case .authorizedWhenInUse:
+            return "When in Use"
+        case .authorized:
+            return "Allowed"
+        @unknown default:
+            return "Unknown"
+        }
+    }
+
     private func refreshStatuses() {
         calendarStatus = EKEventStore.authorizationStatus(for: .event)
         reminderStatus = EKEventStore.authorizationStatus(for: .reminder)
+        locationPermission.refreshStatus()
     }
 
     private func openSettings() {
@@ -178,6 +209,40 @@ struct PreferencesView: View {
         }
     }
 
+    @ViewBuilder
+    private func locationActions(
+        status: CLAuthorizationStatus,
+        isRequesting: Bool
+    ) -> some View {
+        switch status {
+        case .notDetermined:
+            Button("Allow Location Access") {
+                requestLocationAccess()
+            }
+            .disabled(isRequesting)
+        case .denied, .restricted:
+            Button("Open Settings") {
+                openSettings()
+            }
+        case .authorizedAlways, .authorizedWhenInUse, .authorized:
+            Text("Access granted.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+        @unknown default:
+            Text("Unknown status.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func requestLocationAccess() {
+        isRequestingLocation = true
+        locationPermission.requestAccessIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            isRequestingLocation = false
+            locationPermission.refreshStatus()
+        }
+    }
 }
 
 private struct PreferenceStatusRow: View {

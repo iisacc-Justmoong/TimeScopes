@@ -14,6 +14,7 @@ struct TimeScopeApp: App {
     @StateObject var monthCount: MonthCount
     @StateObject var weekCount: WeekCount
     @StateObject var dayCount: DayCount
+    @StateObject var locationPermission: LocationPermissionManager
 
     init() {
         let sharedUserData = UserData()
@@ -22,6 +23,7 @@ struct TimeScopeApp: App {
         _monthCount = StateObject(wrappedValue: MonthCount(viewModel: sharedUserData))
         _weekCount = StateObject(wrappedValue: WeekCount(viewModel: sharedUserData))
         _dayCount = StateObject(wrappedValue: DayCount(viewModel: sharedUserData))
+        _locationPermission = StateObject(wrappedValue: LocationPermissionManager())
     }
 
     var body: some Scene {
@@ -49,6 +51,10 @@ struct TimeScopeApp: App {
             .environmentObject(monthCount)
             .environmentObject(weekCount)
             .environmentObject(dayCount)
+            .environmentObject(locationPermission)
+            .task {
+                locationPermission.requestAccessIfNeeded()
+            }
         }
     }
 }

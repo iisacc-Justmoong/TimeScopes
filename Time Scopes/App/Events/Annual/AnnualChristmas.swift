@@ -8,7 +8,7 @@
 import Foundation
 
 struct AnnualChristmasProperties {
-    let name: String = "Next Christmas :"
+    let name: String = "Next Christmas"
     var count: Int = 0
     var gaugeValue: Int = 0
 

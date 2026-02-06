@@ -18,6 +18,9 @@ struct HomeView: View {
     
     @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
     @StateObject private var weekdayTicker = SecondTicker()
+    @StateObject private var eventProvider = CalendarEventProvider()
+    @StateObject private var reminderProvider = ReminderProvider()
+    @EnvironmentObject private var locationPermission: LocationPermissionManager
     
     private let dateProvider: DateProviding
     private let nextEventCalculator: NextEventCalculating
@@ -53,7 +56,7 @@ struct HomeView: View {
         NavigationStack {
             TimelineView(.periodic(from: dateProvider.now(), by: 1)) { timeline in
                 List {
-                    Section(header: Text("About You")) {
+                    Section(header: Text("Profile")) {
                         UserProfileView()
                             .sheet(isPresented: $isPresented) {
                                 InputView()
@@ -67,39 +70,39 @@ struct HomeView: View {
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .month)
                         } label: {
-                            EventPlainView(title: "Months", count: monthCount.leftMonths, unit: "")
+                            EventPlainView(title: "Months Left", count: monthCount.leftMonths, unit: "")
                         }
                         .glassRow()
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .week)
                         } label: {
-                            EventPlainView(title: "Weeks", count: weekCount.leftWeeks, unit: "")
+                            EventPlainView(title: "Weeks Left", count: weekCount.leftWeeks, unit: "")
                         }
                         .glassRow()
                         NavigationLink {
                             TimeScopeHeatmapDetailView(unit: .day)
                         } label: {
-                            EventPlainView(title: "Days", count: dayCount.leftDays, unit: "")
+                            EventPlainView(title: "Days Left", count: dayCount.leftDays, unit: "")
                         }
                         .glassRow()
                     }
-                    Section(header: Text("Passed Time")) {
+                    Section(header: Text("Elapsed Time")) {
                         let livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: timeline.date)
-                        EventPlainView(title: "Months", count: livedTime.months, unit: "")
+                        EventPlainView(title: "Months Lived", count: livedTime.months, unit: "")
                             .glassRow()
-                        EventPlainView(title: "Weeks", count: livedTime.days / 7, unit: "")
+                        EventPlainView(title: "Weeks Lived", count: livedTime.days / 7, unit: "")
                             .glassRow()
-                        EventPlainView(title: "Days", count: livedTime.days, unit: "")
+                        EventPlainView(title: "Days Lived", count: livedTime.days, unit: "")
                             .glassRow()
-                        EventPlainView(title: "Hours", count: livedTime.hours, unit: "")
+                        EventPlainView(title: "Hours Lived", count: livedTime.hours, unit: "")
                             .glassRow()
-                        EventPlainView(title: "Minutes", count: livedTime.minutes, unit: "")
+                        EventPlainView(title: "Minutes Lived", count: livedTime.minutes, unit: "")
                             .glassRow()
-                        EventPlainView(title: "Seconds", count: livedTime.seconds, unit: "")
+                        EventPlainView(title: "Seconds Lived", count: livedTime.seconds, unit: "")
                             .glassRow()
                     }
                     // 생일까지 남은 날짜, 다음 N0세 까지 남은 날짜
-                Section(header: Text("In Your Life")) {
+                Section(header: Text("Upcoming Milestones")) {
                     let nextBirthdayStats = nextEventCalculator.nextBirthdayStats(from: userData.birthday)
                     let nextDecadeStats = nextEventCalculator.nextDecadeStats(from: userData.age)
                     let now = dateProvider.now()
@@ -112,7 +115,7 @@ struct HomeView: View {
                     let monthsToNextDecade = daysToNextDecade / 30
                     NavigationLink {
                         EventDetailView(
-                            title: "To Be Age \(nextDecadeStats.nextDecade)",
+                            title: "Until Age \(nextDecadeStats.nextDecade)",
                             count: nextDecadeStats.yearsUntilNextDecade,
                             unit: "years",
                             gauge: EventDetailView.GaugeData(value: 10 - nextDecadeStats.yearsUntilNextDecade, min: 0, max: 10),
@@ -127,7 +130,7 @@ struct HomeView: View {
                         )
                     } label: {
                         EventGaugeView(
-                            title: "To Be Age \(nextDecadeStats.nextDecade) :",
+                            title: "Until Age \(nextDecadeStats.nextDecade)",
                             count: nextDecadeStats.yearsUntilNextDecade,
                                 gaugeValue: 10 - nextDecadeStats.yearsUntilNextDecade,
                                 min: 0,
@@ -147,7 +150,7 @@ struct HomeView: View {
                         let hoursToNextBirthday = secondsToNextBirthday / 3_600
                         let daysToNextBirthday = secondsToNextBirthday / 86_400
                         EventDetailView(
-                            title: "To Next Birthday",
+                            title: "Until Next Birthday",
                             count: nextBirthdayStats.daysUntilNextBirthday,
                             unit: "days",
                             gauge: EventDetailView.GaugeData(
@@ -163,7 +166,7 @@ struct HomeView: View {
                         )
                     } label: {
                         EventGaugeView(
-                            title: "To Next Birthday :",
+                            title: "Until Next Birthday",
                             count: nextBirthdayStats.daysUntilNextBirthday,
                                 gaugeValue: nextBirthdayStats.daysInYear - nextBirthdayStats.daysUntilNextBirthday,
                                 min: 0,
@@ -175,7 +178,7 @@ struct HomeView: View {
                         NavigationLink {
                             let totalWeekdays = lifeRemainingWorkingTime.remainingWorkingDays
                             EventDetailView(
-                                title: "Remaining Weekdays in Scope",
+                                title: "Weekdays Remaining",
                                 count: totalWeekdays,
                                 unit: "days",
                                 gauge: EventDetailView.GaugeData(value: userData.age, min: 0, max: userData.deathAge),
@@ -189,7 +192,7 @@ struct HomeView: View {
                             )
                         } label: {
                             EventGaugeView(
-                                title: "Remaining Weekdays in Scope",
+                                title: "Weekdays Remaining",
                                 count: lifeRemainingWorkingTime.remainingWorkingDays,
                                 gaugeValue: userData.age,
                                 min: 0,
@@ -199,13 +202,13 @@ struct HomeView: View {
                         }
                         .glassRow()
                     }
-                    Section(header: Text("Annual Events")) {
+                    Section(header: Text("Annual Highlights")) {
                         let daysInYear = dateProvider.daysInYear(for: dateProvider.now())
                         NavigationLink {
                             ThisYearDetailView(dateProvider: dateProvider)
                         } label: {
                             EventGaugeView(
-                                title: "This Year",
+                                title: "Year Remaining",
                                 count: daysInYear - elapsedDateInThisYear.daysElapsedThisYear,
                                 gaugeValue: elapsedDateInThisYear.daysElapsedThisYear,
                                 min: 0,
@@ -227,13 +230,215 @@ struct HomeView: View {
                         }
                         .glassRow()
                     }
+                    Section(header: Text("Daily Summary")) {
+                        let now = dateProvider.now()
+                        let calendar = dateProvider.calendar
+                        let startOfToday = calendar.startOfDay(for: now)
+                        let endOfToday = calendar.date(byAdding: .day, value: 1, to: startOfToday) ?? now
+                        let dayInterval = DateInterval(start: startOfToday, end: endOfToday)
+                        let nextHour = calendar.nextDate(
+                            after: now,
+                            matching: DateComponents(minute: 0, second: 0),
+                            matchingPolicy: .nextTimePreservingSmallerComponents
+                        ) ?? endOfToday
+                        let remainingToNextHourSeconds = max(0, Int(nextHour.timeIntervalSince(now)))
+                        let nextHourText = formatMS(remainingToNextHourSeconds)
+                        let eventSeconds = Int(eventProvider.events(on: startOfToday).reduce(0.0) { total, event in
+                            total + clampedDuration(for: event, in: dayInterval)
+                        })
+                        let reminderSeconds = Int(reminderProvider.reminders(on: startOfToday).reduce(0.0) { total, reminder in
+                            total + reminderDuration(for: reminder, in: dayInterval)
+                        })
+                        let totalDaySeconds = 24 * 3_600
+                        let remainingSeconds = max(0, Int(endOfToday.timeIntervalSince(now)))
+                        let remainingText = formatHMS(remainingSeconds)
+                        let remainingPercent = percentText(value: remainingSeconds, total: totalDaySeconds)
+                        let sunGauge = sunGaugeData(for: now)
+
+                        let workHours = max(0, min(userData.workHoursPerDay, 24))
+                        let sleepHours = max(0, min(userData.sleepHoursPerDay, 24))
+                        let baseScheduledSeconds = min(24, workHours + sleepHours) * 3_600
+                        let scheduledSeconds = min(totalDaySeconds, baseScheduledSeconds + eventSeconds + reminderSeconds)
+                        let freeSeconds = max(0, totalDaySeconds - scheduledSeconds)
+
+                        DailyEventGaugeRow(
+                            title: "Until Next Hour",
+                            valueText: nextHourText,
+                            percentText: percentText(value: remainingToNextHourSeconds, total: 3_600),
+                            gaugeValue: Double(remainingToNextHourSeconds),
+                            gaugeMax: 3_600
+                        )
+                        .glassRow()
+
+                        DailyEventGaugeRow(
+                            title: sunGauge.title,
+                            valueText: sunGauge.valueText,
+                            percentText: sunGauge.percentText,
+                            gaugeValue: sunGauge.value,
+                            gaugeMax: sunGauge.max
+                        )
+                        .glassRow()
+
+                        DailyEventGaugeRow(
+                            title: "Time Left Today",
+                            valueText: remainingText,
+                            percentText: remainingPercent,
+                            gaugeValue: Double(remainingSeconds),
+                            gaugeMax: Double(totalDaySeconds)
+                        )
+                        .glassRow()
+
+                        DailyEventGaugeRow(
+                            title: "Free Time (Work + Sleep + Timed Items)",
+                            valueText: formatHMS(freeSeconds),
+                            percentText: percentText(value: freeSeconds, total: totalDaySeconds),
+                            gaugeValue: Double(freeSeconds),
+                            gaugeMax: Double(totalDaySeconds)
+                        )
+                        .glassRow()
+
+                        DailyEventGaugeRow(
+                            title: "Allocated Time (Work + Sleep + Timed Items)",
+                            valueText: formatHMS(scheduledSeconds),
+                            percentText: percentText(value: scheduledSeconds, total: totalDaySeconds),
+                            gaugeValue: Double(scheduledSeconds),
+                            gaugeMax: Double(totalDaySeconds)
+                        )
+                        .glassRow()
+                    }
                 }
                 .scrollContentBackground(.hidden)
                 .listRowSeparator(.hidden)
                 .background(GlassScreenBackground())
             }
         }
+        .task {
+            await eventProvider.requestAccessIfNeeded()
+            await reminderProvider.requestAccessIfNeeded()
+            refreshDailyAgenda(for: dateProvider.now())
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
+            refreshDailyAgenda(for: dateProvider.now())
+        }
         .glassScreen()
+    }
+
+    private func refreshDailyAgenda(for date: Date) {
+        let interval = dayInterval(for: date)
+        eventProvider.refreshEvents(in: interval)
+        reminderProvider.refreshReminders(in: interval)
+    }
+
+    private func dayInterval(for date: Date) -> DateInterval {
+        let calendar = dateProvider.calendar
+        let start = calendar.startOfDay(for: date)
+        let end = calendar.date(byAdding: .day, value: 1, to: start) ?? start
+        return DateInterval(start: start, end: end)
+    }
+
+    private func clampedDuration(for event: CalendarEventItem, in interval: DateInterval) -> TimeInterval {
+        let start = max(event.startDate, interval.start)
+        let end = min(event.endDate, interval.end)
+        return max(0, end.timeIntervalSince(start))
+    }
+
+    private func reminderDuration(for reminder: ReminderItem, in interval: DateInterval) -> TimeInterval {
+        guard let startDate = reminder.startDate else { return 0 }
+        let start = max(startDate, interval.start)
+        let end = min(reminder.dueDate, interval.end)
+        guard end > start else { return 0 }
+        return end.timeIntervalSince(start)
+    }
+
+    private func sunGaugeData(for date: Date) -> SunGaugeData {
+        guard let location = locationPermission.location,
+              let window = SunEventCalculator.nextEventWindow(
+                for: date,
+                location: location,
+                calendar: dateProvider.calendar,
+                timeZone: dateProvider.calendar.timeZone
+              ) else {
+            return SunGaugeData(
+                title: "Until Sunrise/Sunset",
+                valueText: "Location required",
+                percentText: "0%",
+                value: 0,
+                max: 1
+            )
+        }
+
+        let remaining = max(0, Int(window.nextDate.timeIntervalSince(date)))
+        let segment = max(1, Int(window.nextDate.timeIntervalSince(window.previousDate)))
+        let title = window.nextEvent == .sunrise ? "Until Sunrise" : "Until Sunset"
+
+        return SunGaugeData(
+            title: title,
+            valueText: formatHMS(remaining),
+            percentText: percentText(value: remaining, total: segment),
+            value: Double(remaining),
+            max: Double(segment)
+        )
+    }
+}
+
+private struct SunGaugeData {
+    let title: String
+    let valueText: String
+    let percentText: String
+    let value: Double
+    let max: Double
+}
+
+private func formatHMS(_ totalSeconds: Int) -> String {
+    let clamped = max(0, totalSeconds)
+    let hours = clamped / 3_600
+    let minutes = (clamped % 3_600) / 60
+    let seconds = clamped % 60
+    return "\(hours)h \(minutes)m \(seconds)s"
+}
+
+private func formatMS(_ totalSeconds: Int) -> String {
+    let clamped = max(0, totalSeconds)
+    let minutes = clamped / 60
+    let seconds = clamped % 60
+    return "\(minutes)m \(seconds)s"
+}
+
+private func percentText(value: Int, total: Int) -> String {
+    guard total > 0 else { return "0%" }
+    let percent = (Double(value) / Double(total)) * 100
+    return String(format: "%.0f%%", percent)
+}
+
+private struct DailyEventGaugeRow: View {
+    let title: String
+    let valueText: String
+    let percentText: String
+    let gaugeValue: Double
+    let gaugeMax: Double
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Text(title)
+                    .font(.callout)
+                Spacer()
+                Text(valueText)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(Color.accentColor)
+                Text(percentText)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Gauge(value: gaugeValue, in: 0...max(1, gaugeMax)) {
+                Text(percentText)
+            }
+            .gaugeStyle(.accessoryLinearCapacity)
+            .foregroundStyle(Color.accentColor)
+            .tint(Color.accentColor)
+            .labelsHidden()
+        }
     }
 }
 
@@ -258,14 +463,14 @@ private struct WeekdayScopeDetailContent: View {
 
         return VStack(alignment: .leading, spacing: 16) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Conversions")
+                Text("Weekday Conversions")
                     .font(.headline)
-                WeekdayDetailRow(title: "Weeks (weekday)", value: weeksEquivalent, unit: "weeks")
-                WeekdayDetailRow(title: "Months (weekday)", value: monthsEquivalent, unit: "months")
+                WeekdayDetailRow(title: "Weeks (weekdays)", value: weeksEquivalent, unit: "weeks")
+                WeekdayDetailRow(title: "Months (weekdays)", value: monthsEquivalent, unit: "months")
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Remaining Free Time (Work \(workHours)h)")
+                Text("Remaining Free Time (Weekdays, Work \(workHours)h)")
                     .font(.headline)
                 WeekdayDetailRow(title: "Hours", value: freeWorkHours, unit: "hours")
                 WeekdayDetailRow(title: "Minutes", value: freeWorkMinutes, unit: "minutes")
@@ -273,7 +478,7 @@ private struct WeekdayScopeDetailContent: View {
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Remaining Free Time (Work \(workHours)h + Sleep \(sleepHours)h)")
+                Text("Remaining Free Time (Weekdays, Work \(workHours)h + Sleep \(sleepHours)h)")
                     .font(.headline)
                 WeekdayDetailRow(title: "Hours", value: freeWorkSleepHours, unit: "hours")
                 WeekdayDetailRow(title: "Minutes", value: freeWorkSleepMinutes, unit: "minutes")

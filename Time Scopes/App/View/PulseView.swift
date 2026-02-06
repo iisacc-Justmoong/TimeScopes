@@ -163,16 +163,17 @@ struct PulseView: View {
                 title: "Today Structure",
                 subtitle: "A functional map of the next 24 hours."
             )
-            LazyVGrid(
-                columns: [
-                    GridItem(.flexible(), spacing: 12),
-                    GridItem(.flexible(), spacing: 12)
-                ],
-                spacing: 12
-            ) {
-                ForEach(todayMetrics) { metric in
-                    PulseMetricCard(metric: metric)
-                }
+            PulseDayLineChart(
+                values: todayLoadSeries,
+                maxValue: todayLoadMax,
+                currentFraction: currentTimeFraction
+            )
+            .frame(height: 160)
+            HStack {
+                Text("Event + task count per hour")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
             }
         }
         .glassCard(showBorder: false)
@@ -184,12 +185,7 @@ struct PulseView: View {
                 title: "Weekly Rhythm",
                 subtitle: "Pressure and energy across the week."
             )
-            HStack(alignment: .bottom, spacing: 10) {
-                ForEach(weeklyRhythm) { day in
-                    PulseDayBar(day: day)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            WeeklyRhythmChart(days: weeklyRhythm, highlightDay: todayWeekdayLabel)
             PulseCallout(
                 title: "Pattern",
                 detail: weeklyPatternText
@@ -259,56 +255,26 @@ struct PulseView: View {
         .glassCard(showBorder: false)
     }
 
-    private var todayMetrics: [PulseMetric] {
+    private var todayLoadSeries: [Double] {
         let today = Date()
-        let dayInterval = dayInterval(for: today)
-        let events = eventProvider.events(on: today).filter { !$0.isAllDay }
-        let reminders = reminderProvider.reminders(on: today)
+        return hourlyLoadSeries(for: today)
+    }
 
-        let fixed = events.reduce(0) { total, event in
-            total + clampedDuration(for: event, in: dayInterval)
-        }
-        let eventBuffers = Double(events.count) * 10 * 60
-        let reminderBuffers = Double(reminders.count) * 6 * 60
-        let recovery = min(2 * 3600, eventBuffers + reminderBuffers)
+    private var todayLoadMax: Double {
+        todayLoadSeries.max() ?? 0
+    }
 
-        let workTarget = max(0, Double(userData.workHoursPerDay) * 3600)
-        let sleepTarget = max(0, Double(userData.sleepHoursPerDay) * 3600)
-        let flexible = max(0, workTarget - fixed)
-        let unallocated = max(0, (24 * 3600) - (fixed + recovery + flexible))
+    private var todayWeekdayLabel: String {
+        PulseFormatters.weekdayFormatter.string(from: Date())
+    }
 
-        let totalDay = 24 * 3600.0
-
-        return [
-            PulseMetric(
-                title: "Fixed Time",
-                duration: fixed,
-                detail: "\(events.count) events today",
-                progress: fixed / totalDay,
-                tint: .orange
-            ),
-            PulseMetric(
-                title: "Flexible Time",
-                duration: flexible,
-                detail: "Work target \(userData.workHoursPerDay)h",
-                progress: flexible / totalDay,
-                tint: .mint
-            ),
-            PulseMetric(
-                title: "Recovery Time",
-                duration: recovery,
-                detail: "Buffers from events and tasks",
-                progress: recovery / totalDay,
-                tint: .blue
-            ),
-            PulseMetric(
-                title: "Unallocated",
-                duration: unallocated,
-                detail: "Sleep target \(userData.sleepHoursPerDay)h",
-                progress: unallocated / totalDay,
-                tint: .purple
-            )
-        ]
+    private var currentTimeFraction: Double {
+        let now = Date()
+        let startOfDay = calendar.startOfDay(for: now)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? now
+        let duration = max(1, endOfDay.timeIntervalSince(startOfDay))
+        let elapsed = now.timeIntervalSince(startOfDay)
+        return min(1, max(0, elapsed / duration))
     }
 
     private var weeklyRhythm: [PulseDayIntensity] {
@@ -370,21 +336,21 @@ struct PulseView: View {
     }
 
     private var recentEntries: [PulseJournalEntry] {
-        journalStore.recentEntries(limit: 3)
+        journalStore.entries(on: Date(), calendar: calendar)
     }
 
     private var dataStatusMessage: String? {
         var messages: [String] = []
         if !eventProvider.hasAccess {
             messages.append("Calendar access not granted.")
-        } else if !eventProvider.hasICloudCalendars {
-            messages.append("No iCloud calendars found.")
+        } else if !eventProvider.hasCalendars {
+            messages.append("No calendars found.")
         }
 
         if !reminderProvider.hasAccess {
             messages.append("Reminders access not granted.")
-        } else if !reminderProvider.hasICloudReminders {
-            messages.append("No iCloud reminder lists found.")
+        } else if !reminderProvider.hasReminderLists {
+            messages.append("No reminder lists found.")
         }
 
         return messages.isEmpty ? nil : messages.joined(separator: " ")
@@ -425,6 +391,7 @@ struct PulseView: View {
                 PulseSummaryCell(title: "Avg Load/Day", value: summary.averageLoadText)
                 PulseSummaryCell(title: "Avg Reminders/Day", value: summary.averageRemindersText)
                 PulseSummaryCell(title: "Distribution", value: summary.distributionText)
+                PulseSummaryCell(title: "Free Time in Week", value: summary.freeTimeText)
             }
             if !weeklyTopEvents.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
@@ -585,12 +552,60 @@ struct PulseView: View {
         return max(0, end.timeIntervalSince(start))
     }
 
+    private func overlaps(start: Date, end: Date, in interval: DateInterval) -> Bool {
+        end > interval.start && start < interval.end
+    }
+
+    private func reminderOverlaps(_ reminder: ReminderItem, in interval: DateInterval) -> Bool {
+        guard !reminder.isAllDay else { return false }
+        if let startDate = reminder.startDate {
+            return overlaps(start: startDate, end: reminder.dueDate, in: interval)
+        }
+        return interval.contains(reminder.dueDate)
+    }
+
+    private func hourlyLoadSeries(for date: Date) -> [Double] {
+        let calendar = Calendar.autoupdatingCurrent
+        let dayStart = calendar.startOfDay(for: date)
+        let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? date
+        let dayInterval = DateInterval(start: dayStart, end: dayEnd)
+        let events = eventProvider.events.filter {
+            !$0.isAllDay && $0.endDate > dayInterval.start && $0.startDate < dayInterval.end
+        }
+        let reminders = reminderProvider.reminders.filter { reminder in
+            if let startDate = reminder.startDate {
+                return reminder.dueDate > dayInterval.start && startDate < dayInterval.end
+            }
+            return dayInterval.contains(reminder.dueDate)
+        }
+
+        var series: [Double] = []
+        for hour in 0..<24 {
+            guard let start = calendar.date(byAdding: .hour, value: hour, to: dayStart),
+                  let end = calendar.date(byAdding: .hour, value: hour + 1, to: dayStart) else {
+                series.append(0)
+                continue
+            }
+            let interval = DateInterval(start: start, end: end)
+            let eventHits = events.reduce(0) { total, event in
+                total + (overlaps(start: event.startDate, end: event.endDate, in: interval) ? 1 : 0)
+            }
+            let reminderHits = reminders.reduce(0) { total, reminder in
+                total + (reminderOverlaps(reminder, in: interval) ? 1 : 0)
+            }
+            series.append(Double(eventHits + reminderHits))
+        }
+        return series
+    }
+
     private var weeklySummary: PulseWeeklySummary {
         let loads = weeklyLoads
         let totalEventCount = loads.reduce(0) { $0 + $1.eventCount }
         let totalReminderCount = loads.reduce(0) { $0 + $1.reminderCount }
         let totalEventMinutes = loads.reduce(0.0) { $0 + $1.eventMinutes }
         let totalLoadMinutes = loads.reduce(0.0) { $0 + $1.loadMinutes }
+        let totalWeekMinutes = Double(7 * 24 * 60)
+        let totalFreeMinutes = max(0, totalWeekMinutes - totalLoadMinutes)
         let averageLoad = loads.isEmpty ? 0 : totalLoadMinutes / Double(loads.count)
         let averageReminders = loads.isEmpty ? 0 : Double(totalReminderCount) / Double(loads.count)
         let hasLoad = totalLoadMinutes > 0
@@ -618,7 +633,8 @@ struct PulseView: View {
             totalLoadText: PulseFormatters.formatDuration(totalLoadMinutes * 60),
             averageLoadText: PulseFormatters.formatDuration(averageLoad * 60),
             averageRemindersText: String(format: "%.1f", averageReminders),
-            distributionText: distribution
+            distributionText: distribution,
+            freeTimeText: PulseFormatters.formatDuration(totalFreeMinutes * 60)
         )
     }
 
@@ -729,6 +745,7 @@ private struct PulseWeeklySummary {
     let averageLoadText: String
     let averageRemindersText: String
     let distributionText: String
+    let freeTimeText: String
 }
 
 private struct PulseWeeklyEvent: Identifiable {
@@ -857,6 +874,110 @@ private struct PulseDayBar: View {
     }
 }
 
+private struct WeeklyRhythmChart: View {
+    let days: [PulseDayIntensity]
+    let highlightDay: String
+
+    var body: some View {
+        GeometryReader { proxy in
+            let spacing: CGFloat = 8
+            let count = max(1, days.count)
+            let totalSpacing = spacing * CGFloat(max(0, count - 1))
+            let barWidth = max(10, (proxy.size.width - totalSpacing) / CGFloat(count))
+
+            HStack(alignment: .bottom, spacing: spacing) {
+                ForEach(days) { day in
+                    let isHighlight = day.day == highlightDay
+                    VStack(spacing: 6) {
+                        RoundedRectangle(cornerRadius: 6, style: .continuous)
+                            .fill(isHighlight ? Color.green : Color.accentColor.opacity(0.75))
+                            .frame(width: barWidth, height: max(16, 110 * day.intensity))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                    .stroke(Color.white.opacity(0.25), lineWidth: 0.5)
+                            )
+                        Text(day.day)
+                            .font(.caption2)
+                            .foregroundStyle(isHighlight ? Color.green : .secondary)
+                            .frame(width: barWidth, alignment: .center)
+                    }
+                }
+            }
+            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .bottomLeading)
+        }
+        .frame(height: 140)
+        .frame(maxWidth: .infinity)
+    }
+}
+
+private struct PulseDayLineChart: View {
+    let values: [Double]
+    let maxValue: Double
+    let currentFraction: Double
+
+    var body: some View {
+        GeometryReader { proxy in
+            let width = max(1, proxy.size.width)
+            let height = max(1, proxy.size.height)
+            let count = max(2, values.count)
+            let maxLoad = max(1, maxValue)
+            let step = width / CGFloat(count - 1)
+
+            Path { path in
+                for index in 0..<count {
+                    let x = CGFloat(index) * step
+                    let yValue = values[index]
+                    let normalized = min(1, yValue / maxLoad)
+                    let y = height - CGFloat(normalized) * height
+                    if index == 0 {
+                        path.move(to: CGPoint(x: x, y: y))
+                    } else {
+                        path.addLine(to: CGPoint(x: x, y: y))
+                    }
+                }
+            }
+            .stroke(Color.accentColor, lineWidth: 2)
+
+            Path { path in
+                path.move(to: CGPoint(x: 0, y: height))
+                for index in 0..<count {
+                    let x = CGFloat(index) * step
+                    let yValue = values[index]
+                    let normalized = min(1, yValue / maxLoad)
+                    let y = height - CGFloat(normalized) * height
+                    path.addLine(to: CGPoint(x: x, y: y))
+                }
+                path.addLine(to: CGPoint(x: width, y: height))
+                path.closeSubpath()
+            }
+            .fill(Color.accentColor.opacity(0.12))
+
+            let clamped = min(1, max(0, currentFraction))
+            let currentX = clamped * width
+            Path { path in
+                path.move(to: CGPoint(x: currentX, y: 0))
+                path.addLine(to: CGPoint(x: currentX, y: height))
+            }
+            .stroke(Color.primary.opacity(0.35), lineWidth: 1)
+
+            HStack {
+                Text("0")
+                Spacer()
+                Text("6")
+                Spacer()
+                Text("12")
+                Spacer()
+                Text("18")
+                Spacer()
+                Text("24")
+            }
+            .font(.caption2)
+            .foregroundStyle(.secondary)
+            .padding(.top, height - 16)
+        }
+    }
+}
+
 private struct PulsePrescriptionRow: View {
     let prescription: PulsePrescription
 
@@ -929,12 +1050,20 @@ private struct PulseJournalRow: View {
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            Text(PulseFormatters.timeFormatter.string(from: entry.date))
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-                .frame(width: 46, alignment: .leading)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(PulseFormatters.shortDateFormatter.string(from: entry.date))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                Text(PulseFormatters.timeFormatter.string(from: entry.date))
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            .font(.caption2)
+            .foregroundStyle(.secondary)
             Text(entry.note)
                 .font(.callout)
+                .lineLimit(2)
+                .truncationMode(.tail)
             Spacer(minLength: 0)
             VStack {
                 Spacer(minLength: 0)
@@ -1023,6 +1152,13 @@ private enum PulseFormatters {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .none
+        return formatter
+    }()
+
+    static let shortDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .none
         return formatter
     }()
 

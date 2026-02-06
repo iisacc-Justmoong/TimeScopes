@@ -8,7 +8,7 @@
 import Foundation
 
 struct AnnualMondayProperties {
-    let name: String = "Remining Mondays :"
+    let name: String = "Remaining Mondays"
     var count: Int = 0
 
     private let dateProvider: DateProviding

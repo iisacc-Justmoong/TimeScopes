@@ -24,7 +24,7 @@ struct CalendarEventItem: Identifiable {
 final class CalendarEventProvider: ObservableObject {
     @Published private(set) var authorizationStatus: EKAuthorizationStatus
     @Published private(set) var events: [CalendarEventItem] = []
-    @Published private(set) var hasICloudCalendars: Bool = true
+    @Published private(set) var hasCalendars: Bool = true
 
     private let store: EKEventStore
     private let calendar: Calendar
@@ -69,9 +69,9 @@ final class CalendarEventProvider: ObservableObject {
             return
         }
 
-        let calendars = iCloudCalendars()
-        hasICloudCalendars = !calendars.isEmpty
-        guard hasICloudCalendars else {
+        let calendars = availableCalendars()
+        hasCalendars = !calendars.isEmpty
+        guard hasCalendars else {
             events = []
             eventsByDay = [:]
             return
@@ -129,23 +129,8 @@ final class CalendarEventProvider: ObservableObject {
         eventsByDay = grouped
     }
 
-    private func iCloudCalendars() -> [EKCalendar] {
-        let calendars = store.calendars(for: .event)
-        return calendars.filter { isICloudSource($0.source) }
-    }
-
-    private func isICloudSource(_ source: EKSource) -> Bool {
-        guard source.sourceType == .calDAV else {
-            return false
-        }
-        let title = source.title.lowercased()
-        if title.contains("icloud") {
-            return true
-        }
-        if title.contains("@icloud.com") || title.contains("@me.com") || title.contains("@mac.com") {
-            return true
-        }
-        return false
+    private func availableCalendars() -> [EKCalendar] {
+        store.calendars(for: .event)
     }
 
     private func calendarColor(for calendar: EKCalendar) -> Color {
@@ -157,6 +142,7 @@ final class CalendarEventProvider: ObservableObject {
 struct ReminderItem: Identifiable {
     let id: String
     let title: String
+    let startDate: Date?
     let dueDate: Date
     let isAllDay: Bool
     let color: Color
@@ -167,7 +153,7 @@ struct ReminderItem: Identifiable {
 final class ReminderProvider: ObservableObject {
     @Published private(set) var authorizationStatus: EKAuthorizationStatus
     @Published private(set) var reminders: [ReminderItem] = []
-    @Published private(set) var hasICloudReminders: Bool = true
+    @Published private(set) var hasReminderLists: Bool = true
 
     private let store: EKEventStore
     private let calendar: Calendar
@@ -212,39 +198,51 @@ final class ReminderProvider: ObservableObject {
             return
         }
 
-        let calendars = iCloudReminderCalendars()
-        hasICloudReminders = !calendars.isEmpty
-        guard hasICloudReminders else {
+        let calendars = availableReminderLists()
+        hasReminderLists = !calendars.isEmpty
+        guard hasReminderLists else {
             reminders = []
             remindersByDay = [:]
             return
         }
 
-        let predicate = store.predicateForIncompleteReminders(
-            withDueDateStarting: interval.start,
-            ending: interval.end,
-            calendars: calendars
-        )
+        let predicate = store.predicateForReminders(in: calendars)
 
         store.fetchReminders(matching: predicate) { [weak self] fetched in
             guard let self else { return }
             Task { @MainActor in
-                let mapped = (fetched ?? []).compactMap { reminder -> ReminderItem? in
-                    guard let components = reminder.dueDateComponents,
-                          let dueDate = self.calendar.date(from: components) else {
+                let mapped = (fetched ?? []).filter { !$0.isCompleted }.compactMap { reminder -> ReminderItem? in
+                    let dueComponents = reminder.dueDateComponents
+                    let startComponents = reminder.startDateComponents
+                    guard let effectiveComponents = dueComponents ?? startComponents,
+                          let effectiveDueDate = self.calendar.date(from: effectiveComponents) else {
                         return nil
                     }
-                    let isAllDay = components.hour == nil && components.minute == nil && components.second == nil
+                    let startDate = startComponents.flatMap { self.calendar.date(from: $0) }
+                    let isAllDay = effectiveComponents.hour == nil
+                        && effectiveComponents.minute == nil
+                        && effectiveComponents.second == nil
+                    var dueDate = effectiveDueDate
+                    if let startDate, !isAllDay, dueDate <= startDate {
+                        dueDate = self.calendar.date(byAdding: .minute, value: 15, to: startDate) ?? startDate
+                    }
                     return ReminderItem(
                         id: reminder.calendarItemIdentifier,
                         title: reminder.title ?? "Untitled",
+                        startDate: startDate,
                         dueDate: dueDate,
                         isAllDay: isAllDay,
                         color: self.listColor(for: reminder.calendar),
                         listTitle: reminder.calendar.title
                     )
                 }
-                self.reminders = mapped.sorted { $0.dueDate < $1.dueDate }
+                let filtered = mapped.filter { reminder in
+                    if let startDate = reminder.startDate {
+                        return reminder.dueDate > interval.start && startDate < interval.end
+                    }
+                    return interval.contains(reminder.dueDate)
+                }
+                self.reminders = filtered.sorted { $0.dueDate < $1.dueDate }
                 self.rebuildRemindersByDay()
             }
         }
@@ -274,23 +272,8 @@ final class ReminderProvider: ObservableObject {
         remindersByDay = grouped
     }
 
-    private func iCloudReminderCalendars() -> [EKCalendar] {
-        let calendars = store.calendars(for: .reminder)
-        return calendars.filter { isICloudSource($0.source) }
-    }
-
-    private func isICloudSource(_ source: EKSource) -> Bool {
-        guard source.sourceType == .calDAV else {
-            return false
-        }
-        let title = source.title.lowercased()
-        if title.contains("icloud") {
-            return true
-        }
-        if title.contains("@icloud.com") || title.contains("@me.com") || title.contains("@mac.com") {
-            return true
-        }
-        return false
+    private func availableReminderLists() -> [EKCalendar] {
+        store.calendars(for: .reminder)
     }
 
     private func listColor(for calendar: EKCalendar) -> Color {

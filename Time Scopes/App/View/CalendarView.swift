@@ -235,8 +235,8 @@ struct CalendarView: View {
                     Text("Calendar access not granted.")
                         .foregroundStyle(.secondary)
                         .font(.caption)
-                } else if !eventProvider.hasICloudCalendars {
-                    Text("No iCloud calendars found. Move events into an iCloud calendar in Apple Calendar.")
+                } else if !eventProvider.hasCalendars {
+                    Text("No calendars found.")
                         .foregroundStyle(.secondary)
                         .font(.caption)
                 }
@@ -245,8 +245,8 @@ struct CalendarView: View {
                     Text("Reminders access not granted.")
                         .foregroundStyle(.secondary)
                         .font(.caption)
-                } else if !reminderProvider.hasICloudReminders {
-                    Text("No iCloud reminder lists found. Use an iCloud list in Reminders.")
+                } else if !reminderProvider.hasReminderLists {
+                    Text("No reminder lists found.")
                         .foregroundStyle(.secondary)
                         .font(.caption)
                 }
@@ -280,8 +280,8 @@ struct CalendarView: View {
                 Text("Calendar access not granted.")
                     .foregroundStyle(.secondary)
                     .font(.caption)
-            } else if !eventProvider.hasICloudCalendars {
-                Text("No iCloud calendars found. Move events into an iCloud calendar in Apple Calendar.")
+            } else if !eventProvider.hasCalendars {
+                Text("No calendars found.")
                     .foregroundStyle(.secondary)
                     .font(.caption)
             }
@@ -290,8 +290,8 @@ struct CalendarView: View {
                 Text("Reminders access not granted.")
                     .foregroundStyle(.secondary)
                     .font(.caption)
-            } else if !reminderProvider.hasICloudReminders {
-                Text("No iCloud reminder lists found. Use an iCloud list in Reminders.")
+            } else if !reminderProvider.hasReminderLists {
+                Text("No reminder lists found.")
                     .foregroundStyle(.secondary)
                     .font(.caption)
             }
