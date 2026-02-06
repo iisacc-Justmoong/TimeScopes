@@ -41,9 +41,15 @@ struct CalendarView: View {
     var body: some View {
         let calendar = dateProvider.calendar
         let monthStart = calendar.date(from: calendar.dateComponents([.year, .month], from: displayedMonth)) ?? displayedMonth
+        let month = monthInterval(for: monthStart, calendar: calendar)
         let weekdaySymbols = weekdaySymbols(for: calendar)
         let events = eventProvider.events
-        let reminders = reminderProvider.reminders
+        let reminders = reminderProvider.allReminders.filter { reminder in
+            if let startDate = reminder.startDate {
+                return reminder.dueDate > month.start && startDate < month.end
+            }
+            return month.contains(reminder.dueDate)
+        }
 
         NavigationStack {
             ScrollView {

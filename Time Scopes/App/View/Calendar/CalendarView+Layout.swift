@@ -112,7 +112,7 @@ extension CalendarView {
         let ageLabel = ageOnDate < 0 ? "Before birth" : "\(ageOnDate) yrs"
         let badges = dayBadges(for: date, calendar: calendar)
         let dayEvents = eventProvider.events(on: date)
-        let dayReminders = reminderProvider.reminders(on: date)
+        let dayReminders = reminderProvider.allReminders(on: date)
         let dayJournals = journalStore.entries(on: date, calendar: calendar)
         let agendaItems = agendaItems(events: dayEvents, reminders: dayReminders, journals: dayJournals)
 

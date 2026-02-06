@@ -258,7 +258,7 @@ final class ReminderProvider: ObservableObject {
     }
 
     func markerColors(for date: Date, limit: Int) -> [Color] {
-        let dayReminders = reminders(on: date)
+        let dayReminders = allReminders(on: date)
         guard !dayReminders.isEmpty else { return [] }
         return dayReminders.prefix(limit).map { $0.color }
     }
