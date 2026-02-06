@@ -7,11 +7,36 @@
 
 import SwiftUI
 
+enum HomeScrollTarget: String {
+    case profileAge
+    case profileMonthsLeft
+    case profileWeeksLeft
+    case profileDaysLeft
+    case elapsedMonths
+    case elapsedWeeks
+    case elapsedDays
+    case elapsedHours
+    case elapsedMinutes
+    case elapsedSeconds
+    case milestoneNextDecade
+    case milestoneNextBirthday
+    case milestoneWeekdaysRemaining
+    case highlightsYearRemaining
+    case highlightsNextChristmas
+    case highlightsRemainingMondays
+    case dailyNextHour
+    case dailySun
+    case dailyTimeLeft
+    case dailyFreeTime
+    case dailyAllocatedTime
+}
+
 struct HomeView: View {
     @EnvironmentObject var userData: UserData
     @EnvironmentObject var monthCount: MonthCount
     @EnvironmentObject var weekCount: WeekCount
     @EnvironmentObject var dayCount: DayCount
+    @EnvironmentObject var deepLinkCenter: AppDeepLinkCenter
 
     @ObservedObject var lifeRemainingWorkingTime: LifeRemainingWorkingTime
     @StateObject var weekdayTicker = SecondTicker()
@@ -53,17 +78,25 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            TimelineView(.periodic(from: dateProvider.now(), by: 1)) { timeline in
-                List {
-                    profileSection()
-                    elapsedSection(at: timeline.date)
-                    upcomingMilestonesSection(at: timeline.date)
-                    annualHighlightsSection()
-                    dailySummarySection(at: timeline.date)
+            ScrollViewReader { proxy in
+                TimelineView(.periodic(from: dateProvider.now(), by: 1)) { timeline in
+                    List {
+                        profileSection()
+                        elapsedSection(at: timeline.date)
+                        upcomingMilestonesSection(at: timeline.date)
+                        annualHighlightsSection()
+                        dailySummarySection(at: timeline.date)
+                    }
+                    .scrollContentBackground(.hidden)
+                    .listRowSeparator(.hidden)
+                    .background(GlassScreenBackground())
+                    .onAppear {
+                        scrollToDeepLinkIfNeeded(using: proxy)
+                    }
+                    .onChange(of: deepLinkCenter.route?.id) { _ in
+                        scrollToDeepLinkIfNeeded(using: proxy)
+                    }
                 }
-                .scrollContentBackground(.hidden)
-                .listRowSeparator(.hidden)
-                .background(GlassScreenBackground())
             }
         }
         .task {
@@ -117,4 +150,5 @@ struct HomeView: View {
         .environmentObject(MonthCount(viewModel: UserData()))
         .environmentObject(WeekCount(viewModel: UserData()))
         .environmentObject(DayCount(viewModel: UserData()))
+        .environmentObject(AppDeepLinkCenter())
 }

@@ -6,8 +6,37 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension PulseView {
+    func scrollTarget(for route: AppDeepLink) -> PulseScrollTarget? {
+        guard route.tab == .pulse else { return nil }
+        switch route.section {
+        case "todayStructure":
+            return .todayStructure
+        case "weeklyRhythm":
+            return .weeklyRhythm
+        case "prescriptions":
+            return .prescriptions
+        case "journal":
+            return .journal
+        default:
+            return nil
+        }
+    }
+
+    func scrollToDeepLinkIfNeeded(using proxy: ScrollViewProxy) {
+        guard let route = deepLinkCenter.route,
+              let target = scrollTarget(for: route) else {
+            return
+        }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                proxy.scrollTo(target, anchor: .top)
+            }
+        }
+    }
+
     var todayLoadSeries: [Double] {
         let today = Date()
         return hourlyLoadSeries(for: today)
@@ -435,6 +464,11 @@ extension PulseView {
         journalDraft = ""
         refreshPrompt()
         isPresentingJournal = true
+    }
+
+    func presentComposerIfRequestedFromWidget() {
+        guard PulseJournalWidgetAction.consumeOpenComposerRequest() else { return }
+        beginNewEntry()
     }
 
     func beginEdit(_ entry: PulseJournalEntry) {

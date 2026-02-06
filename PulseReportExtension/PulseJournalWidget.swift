@@ -9,7 +9,7 @@ struct TimeScopesPulseJournalWidget: Widget {
             PulseJournalWidgetView(entry: entry)
         }
         .configurationDisplayName("Pulse Daily Journal")
-        .description("Quick daily journal entry")
+        .description("Open the journal composer to write an entry")
         .supportedFamilies([.systemSmall])
     }
 }

@@ -20,24 +20,28 @@ extension HomeView {
                 .onTapGesture {
                     isPresented = true
                 }
+                .id(HomeScrollTarget.profileAge)
                 .glassRow()
             NavigationLink {
                 TimeScopeHeatmapDetailView(unit: .month)
             } label: {
                 EventPlainView(title: "Months Left", count: monthCount.leftMonths, unit: "")
             }
+            .id(HomeScrollTarget.profileMonthsLeft)
             .glassRow()
             NavigationLink {
                 TimeScopeHeatmapDetailView(unit: .week)
             } label: {
                 EventPlainView(title: "Weeks Left", count: weekCount.leftWeeks, unit: "")
             }
+            .id(HomeScrollTarget.profileWeeksLeft)
             .glassRow()
             NavigationLink {
                 TimeScopeHeatmapDetailView(unit: .day)
             } label: {
                 EventPlainView(title: "Days Left", count: dayCount.leftDays, unit: "")
             }
+            .id(HomeScrollTarget.profileDaysLeft)
             .glassRow()
         }
     }
@@ -47,16 +51,22 @@ extension HomeView {
         Section(header: Text("Elapsed Time")) {
             let livedTime = livedTimeCalculator.livedTime(from: userData.birthday, to: date)
             EventPlainView(title: "Months Lived", count: livedTime.months, unit: "")
+                .id(HomeScrollTarget.elapsedMonths)
                 .glassRow()
             EventPlainView(title: "Weeks Lived", count: livedTime.days / 7, unit: "")
+                .id(HomeScrollTarget.elapsedWeeks)
                 .glassRow()
             EventPlainView(title: "Days Lived", count: livedTime.days, unit: "")
+                .id(HomeScrollTarget.elapsedDays)
                 .glassRow()
             EventPlainView(title: "Hours Lived", count: livedTime.hours, unit: "")
+                .id(HomeScrollTarget.elapsedHours)
                 .glassRow()
             EventPlainView(title: "Minutes Lived", count: livedTime.minutes, unit: "")
+                .id(HomeScrollTarget.elapsedMinutes)
                 .glassRow()
             EventPlainView(title: "Seconds Lived", count: livedTime.seconds, unit: "")
+                .id(HomeScrollTarget.elapsedSeconds)
                 .glassRow()
         }
     }
@@ -99,6 +109,7 @@ extension HomeView {
                     unit: "years"
                 )
             }
+            .id(HomeScrollTarget.milestoneNextDecade)
             .glassRow()
 
             NavigationLink {
@@ -136,6 +147,7 @@ extension HomeView {
                     unit: "days"
                 )
             }
+            .id(HomeScrollTarget.milestoneNextBirthday)
             .glassRow()
 
             NavigationLink {
@@ -163,6 +175,7 @@ extension HomeView {
                     unit: "days"
                 )
             }
+            .id(HomeScrollTarget.milestoneWeekdaysRemaining)
             .glassRow()
         }
     }
@@ -183,18 +196,21 @@ extension HomeView {
                     unit: "days"
                 )
             }
+            .id(HomeScrollTarget.highlightsYearRemaining)
             .glassRow()
             NavigationLink {
                 NextChristmasDetailView(dateProvider: dateProvider)
             } label: {
                 EventPlainView(title: christmas.name, count: christmas.count, unit: "days")
             }
+            .id(HomeScrollTarget.highlightsNextChristmas)
             .glassRow()
             NavigationLink {
                 RemainingMondaysDetailView(dateProvider: dateProvider)
             } label: {
                 EventPlainView(title: annualMondays.name, count: annualMondays.count, unit: "times")
             }
+            .id(HomeScrollTarget.highlightsRemainingMondays)
             .glassRow()
         }
     }
@@ -210,6 +226,7 @@ extension HomeView {
                 gaugeValue: summary.nextHour.value,
                 gaugeMax: summary.nextHour.max
             )
+            .id(HomeScrollTarget.dailyNextHour)
             .glassRow()
 
             DailyEventGaugeRow(
@@ -219,6 +236,7 @@ extension HomeView {
                 gaugeValue: summary.sun.value,
                 gaugeMax: summary.sun.max
             )
+            .id(HomeScrollTarget.dailySun)
             .glassRow()
 
             DailyEventGaugeRow(
@@ -228,6 +246,7 @@ extension HomeView {
                 gaugeValue: summary.timeLeft.value,
                 gaugeMax: summary.timeLeft.max
             )
+            .id(HomeScrollTarget.dailyTimeLeft)
             .glassRow()
 
             DailyEventGaugeRow(
@@ -237,6 +256,7 @@ extension HomeView {
                 gaugeValue: summary.freeTime.value,
                 gaugeMax: summary.freeTime.max
             )
+            .id(HomeScrollTarget.dailyFreeTime)
             .glassRow()
 
             DailyEventGaugeRow(
@@ -246,6 +266,7 @@ extension HomeView {
                 gaugeValue: summary.allocatedTime.value,
                 gaugeMax: summary.allocatedTime.max
             )
+            .id(HomeScrollTarget.dailyAllocatedTime)
             .glassRow()
         }
     }

@@ -12,99 +12,12 @@ private func loadSnapshot() -> WidgetSnapshot {
     WidgetSnapshotStore().loadSnapshot()
 }
 
-struct AddPulseJournalEntryIntent: AppIntent {
-    static var title: LocalizedStringResource = "Add Pulse Entry"
-    static var description = IntentDescription("Add a quick pulse journal entry.")
-
-    func perform() async throws -> some IntentResult {
-        PulseJournalWidgetStore.addEntry(note: PulseJournalWidgetStore.quickNote())
-        return .result()
-    }
+private func homeDeepLink(section: String, item: String? = nil) -> URL {
+    AppDeepLink.url(tab: .home, section: section, item: item)
 }
 
-private enum PulseJournalWidgetStore {
-    private static let storeKey = "PulseJournalEntries"
-
-    private static var encoder: JSONEncoder = {
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-        return encoder
-    }()
-
-    private static var decoder: JSONDecoder = {
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
-        return decoder
-    }()
-
-    private struct StoredEntry: Codable {
-        let id: UUID
-        let date: Date
-        let note: String
-    }
-
-    static func quickNote() -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return "Quick entry \(formatter.string(from: Date()))"
-    }
-
-    static func addEntry(note: String) {
-        let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty,
-              let defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) else {
-            return
-        }
-        var entries = loadEntries(from: defaults)
-        entries.insert(StoredEntry(id: UUID(), date: Date(), note: trimmed), at: 0)
-        persist(entries, to: defaults)
-        updateSnapshot(with: entries.first)
-    }
-
-    private static func loadEntries(from defaults: UserDefaults) -> [StoredEntry] {
-        guard let data = defaults.data(forKey: storeKey),
-              let decoded = try? decoder.decode([StoredEntry].self, from: data) else {
-            return []
-        }
-        return decoded
-    }
-
-    private static func persist(_ entries: [StoredEntry], to defaults: UserDefaults) {
-        guard let data = try? encoder.encode(entries) else { return }
-        defaults.set(data, forKey: storeKey)
-    }
-
-    private static func updateSnapshot(with entry: StoredEntry?) {
-        guard let entry else { return }
-        let store = WidgetSnapshotStore()
-        store.updateSnapshot { snapshot in
-            var recentEntries = snapshot.pulse.recentEntries
-            let journalEntry = WidgetSnapshot.Pulse.JournalEntry(date: entry.date, note: entry.note)
-            recentEntries.insert(journalEntry, at: 0)
-            recentEntries = Array(recentEntries.prefix(3))
-            let updatedPulse = WidgetSnapshot.Pulse(
-                todaySeries: snapshot.pulse.todaySeries,
-                todayMax: snapshot.pulse.todayMax,
-                currentFraction: snapshot.pulse.currentFraction,
-                weeklyDays: snapshot.pulse.weeklyDays,
-                weeklyPatternText: snapshot.pulse.weeklyPatternText,
-                weeklyPeakText: snapshot.pulse.weeklyPeakText,
-                weeklyLowText: snapshot.pulse.weeklyLowText,
-                prescriptions: snapshot.pulse.prescriptions,
-                journalPrompt: snapshot.pulse.journalPrompt,
-                recentEntries: recentEntries
-            )
-            return WidgetSnapshot(
-                updatedAt: Date(),
-                profile: snapshot.profile,
-                elapsed: snapshot.elapsed,
-                milestones: snapshot.milestones,
-                highlights: snapshot.highlights,
-                daily: snapshot.daily,
-                pulse: updatedPulse
-            )
-        }
-    }
+private func pulseDeepLink(section: String, item: String? = nil) -> URL {
+    AppDeepLink.url(tab: .pulse, section: section, item: item)
 }
 
 enum ProfileMetric: String, AppEnum {
@@ -794,6 +707,7 @@ struct TimeScopesProfileWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
+        .widgetURL(homeDeepLink(section: "profile", item: entry.configuration.primaryMetric.rawValue))
     }
 }
 
@@ -826,6 +740,7 @@ struct TimeScopesElapsedWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
+        .widgetURL(homeDeepLink(section: "elapsed", item: entry.configuration.primaryMetric.rawValue))
     }
 }
 
@@ -858,6 +773,7 @@ struct TimeScopesMilestonesWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
+        .widgetURL(homeDeepLink(section: "milestones", item: entry.configuration.primaryMetric.rawValue))
     }
 }
 
@@ -890,6 +806,7 @@ struct TimeScopesHighlightsWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
+        .widgetURL(homeDeepLink(section: "highlights", item: entry.configuration.primaryMetric.rawValue))
     }
 }
 
@@ -922,6 +839,7 @@ struct TimeScopesDailyWidgetView: View {
                 RangeLabels(minLabel: display.minLabel, maxLabel: display.maxLabel, font: rangeFont)
             }
         }
+        .widgetURL(homeDeepLink(section: "daily", item: entry.configuration.primaryMetric.rawValue))
     }
 }
 
@@ -1060,6 +978,7 @@ struct PulseTodayStructureWidgetView: View {
                 .foregroundStyle(.secondary)
             }
         }
+        .widgetURL(pulseDeepLink(section: "todayStructure"))
     }
 }
 
@@ -1086,6 +1005,7 @@ struct PulseWeeklyRhythmWidgetView: View {
                 .lineLimit(1)
             }
         }
+        .widgetURL(pulseDeepLink(section: "weeklyRhythm"))
     }
 }
 
@@ -1111,6 +1031,7 @@ struct PulsePrescriptionsWidgetView: View {
                 }
             }
         }
+        .widgetURL(pulseDeepLink(section: "prescriptions"))
     }
 }
 
@@ -1135,9 +1056,8 @@ struct PulseJournalWidgetView: View {
                     Label("Add Entry", systemImage: "plus")
                         .font(.caption)
                 }
-                .buttonStyle(.borderedProminent)
-                .tint(.accentColor)
             }
         }
+        .widgetURL(pulseDeepLink(section: "journal"))
     }
 }

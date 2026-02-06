@@ -38,6 +38,7 @@ extension PulseView {
                 Spacer()
             }
         }
+        .id(PulseScrollTarget.todayStructure)
         .glassCard(showBorder: false)
     }
 
@@ -54,6 +55,7 @@ extension PulseView {
             )
             weeklyDetailSection
         }
+        .id(PulseScrollTarget.weeklyRhythm)
         .glassCard(showBorder: false)
     }
 
@@ -76,6 +78,7 @@ extension PulseView {
                 }
             }
         }
+        .id(PulseScrollTarget.prescriptions)
         .glassCard(showBorder: false)
     }
 
@@ -113,6 +116,7 @@ extension PulseView {
                 }
             }
         }
+        .id(PulseScrollTarget.journal)
         .frame(maxWidth: .infinity, alignment: .leading)
         .glassCard(showBorder: false)
     }

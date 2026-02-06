@@ -7,8 +7,16 @@
 
 import SwiftUI
 
+enum PulseScrollTarget: String {
+    case todayStructure
+    case weeklyRhythm
+    case prescriptions
+    case journal
+}
+
 struct PulseView: View {
     @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject var deepLinkCenter: AppDeepLinkCenter
     @StateObject var eventProvider = CalendarEventProvider()
     @StateObject var reminderProvider = ReminderProvider()
     @StateObject var journalStore = PulseJournalStore()
@@ -25,25 +33,34 @@ struct PulseView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                LazyVStack(alignment: .leading, spacing: 20) {
-                    headerSection
-                    if let message = dataStatusMessage {
-                        PulseCallout(title: "Data Status", detail: message)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 20) {
+                        headerSection
+                        if let message = dataStatusMessage {
+                            PulseCallout(title: "Data Status", detail: message)
+                        }
+                        todayStructureCard
+                        weeklyRhythmCard
+                        prescriptionCard
+                        journalCard
                     }
-                    todayStructureCard
-                    weeklyRhythmCard
-                    prescriptionCard
-                    journalCard
+                    .padding()
                 }
-                .padding()
+                .glassScreen()
+                .onAppear {
+                    scrollToDeepLinkIfNeeded(using: proxy)
+                }
+                .onChange(of: deepLinkCenter.route?.id) { _ in
+                    scrollToDeepLinkIfNeeded(using: proxy)
+                }
             }
-            .glassScreen()
         }
         .onAppear {
             journalStore.reload()
             refreshPrompt()
             syncPulseWidgetSnapshot()
+            presentComposerIfRequestedFromWidget()
         }
         .task {
             await eventProvider.requestAccessIfNeeded()
@@ -51,18 +68,23 @@ struct PulseView: View {
             journalStore.reload()
             refreshData()
             syncPulseWidgetSnapshot()
+            presentComposerIfRequestedFromWidget()
         }
         .onChange(of: scenePhase) { phase in
             if phase == .active {
                 journalStore.reload()
                 refreshData()
                 syncPulseWidgetSnapshot()
+                presentComposerIfRequestedFromWidget()
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in
             journalStore.reload()
             refreshData()
             syncPulseWidgetSnapshot()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .pulseJournalComposeRequested)) { _ in
+            presentComposerIfRequestedFromWidget()
         }
         .onReceive(journalStore.$entries) { _ in
             syncPulseWidgetSnapshot()
@@ -108,5 +130,6 @@ struct PulseView: View {
 
 #Preview {
     PulseView()
+        .environmentObject(AppDeepLinkCenter())
         .environmentObject(UserData())
 }

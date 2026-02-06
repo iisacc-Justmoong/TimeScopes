@@ -6,8 +6,94 @@
 //
 
 import Foundation
+import SwiftUI
 
 extension HomeView {
+    func scrollTarget(for route: AppDeepLink) -> HomeScrollTarget? {
+        guard route.tab == .home else { return nil }
+        switch route.section {
+        case "profile":
+            switch route.item {
+            case "monthsLeft":
+                return .profileMonthsLeft
+            case "weeksLeft":
+                return .profileWeeksLeft
+            case "daysLeft":
+                return .profileDaysLeft
+            default:
+                return .profileAge
+            }
+        case "elapsed":
+            switch route.item {
+            case "months":
+                return .elapsedMonths
+            case "weeks":
+                return .elapsedWeeks
+            case "days":
+                return .elapsedDays
+            case "hours":
+                return .elapsedHours
+            case "minutes":
+                return .elapsedMinutes
+            case "seconds":
+                return .elapsedSeconds
+            default:
+                return .elapsedDays
+            }
+        case "milestones":
+            switch route.item {
+            case "yearsUntilNextDecade":
+                return .milestoneNextDecade
+            case "daysUntilNextBirthday":
+                return .milestoneNextBirthday
+            case "weekdaysRemaining":
+                return .milestoneWeekdaysRemaining
+            default:
+                return .milestoneNextDecade
+            }
+        case "highlights":
+            switch route.item {
+            case "yearRemaining":
+                return .highlightsYearRemaining
+            case "nextChristmas":
+                return .highlightsNextChristmas
+            case "remainingMondays":
+                return .highlightsRemainingMondays
+            default:
+                return .highlightsYearRemaining
+            }
+        case "daily":
+            switch route.item {
+            case "nextHour":
+                return .dailyNextHour
+            case "sun":
+                return .dailySun
+            case "timeLeft":
+                return .dailyTimeLeft
+            case "freeTime":
+                return .dailyFreeTime
+            case "allocatedTime":
+                return .dailyAllocatedTime
+            default:
+                return .dailyTimeLeft
+            }
+        default:
+            return nil
+        }
+    }
+
+    func scrollToDeepLinkIfNeeded(using proxy: ScrollViewProxy) {
+        guard let route = deepLinkCenter.route,
+              let target = scrollTarget(for: route) else {
+            return
+        }
+        DispatchQueue.main.async {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                proxy.scrollTo(target, anchor: .center)
+            }
+        }
+    }
+
     func refreshDailyAgenda(for date: Date) {
         let interval = dayInterval(for: date)
         eventProvider.refreshEvents(in: interval)

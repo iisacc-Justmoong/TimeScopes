@@ -14,10 +14,6 @@ struct PulseJournalEntry: Identifiable, Codable {
     let note: String
 }
 
-extension Notification.Name {
-    static let pulseJournalDidChange = Notification.Name("PulseJournalDidChange")
-}
-
 @MainActor
 final class PulseJournalStore: ObservableObject {
     @Published private(set) var entries: [PulseJournalEntry] = []
