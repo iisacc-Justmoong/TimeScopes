@@ -21,21 +21,25 @@ struct AnnualChristmasProperties {
 
     func remainingChristmasDays() -> Int {
         let now = dateProvider.now()
-        let currentYear = dateProvider.calendar.component(.year, from: now)
+        let calendar = dateProvider.calendar
+        let currentYear = calendar.component(.year, from: now)
 
-        guard let christmasDate = dateProvider.calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) else {
+        guard let christmasDate = calendar.date(from: DateComponents(year: currentYear, month: 12, day: 25)) else {
             return 0
         }
 
-        if now > christmasDate {
-            guard let nextChristmasDate = dateProvider.calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) else {
+        let startOfToday = calendar.startOfDay(for: now)
+        let startOfChristmas = calendar.startOfDay(for: christmasDate)
+
+        if startOfToday > startOfChristmas {
+            guard let nextChristmasDate = calendar.date(from: DateComponents(year: currentYear + 1, month: 12, day: 25)) else {
                 return 0
             }
-            let days = dateProvider.calendar.dateComponents([.day], from: now, to: nextChristmasDate).day ?? 0
+            let days = calendar.dateComponents([.day], from: startOfToday, to: nextChristmasDate).day ?? 0
             return days
         }
 
-        let days = dateProvider.calendar.dateComponents([.day], from: now, to: christmasDate).day ?? 0
+        let days = calendar.dateComponents([.day], from: startOfToday, to: startOfChristmas).day ?? 0
         return days + 1
     }
 

@@ -32,7 +32,18 @@ struct NextEventCalculator: NextEventCalculating {
     func nextBirthdayStats(from birthday: Date) -> NextBirthdayStats {
         let today = dateProvider.today()
         let calendar = dateProvider.calendar
-        let nextBirthday = calendar.nextDate(after: today, matching: calendar.dateComponents([.month, .day], from: birthday), matchingPolicy: .nextTimePreservingSmallerComponents) ?? today
+        let birthdayComponents = calendar.dateComponents([.month, .day], from: birthday)
+        let todayMonth = calendar.component(.month, from: today)
+        let todayDay = calendar.component(.day, from: today)
+        if birthdayComponents.month == todayMonth && birthdayComponents.day == todayDay {
+            let daysInYear = dateProvider.daysInYear(for: today)
+            return NextBirthdayStats(daysUntilNextBirthday: 0, daysInYear: daysInYear)
+        }
+        let nextBirthday = calendar.nextDate(
+            after: today,
+            matching: birthdayComponents,
+            matchingPolicy: .nextTimePreservingSmallerComponents
+        ) ?? today
         let daysUntil = calendar.dateComponents([.day], from: today, to: nextBirthday).day ?? 0
         let daysInYear = dateProvider.daysInYear(for: today)
 

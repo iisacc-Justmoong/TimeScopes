@@ -23,9 +23,17 @@ struct HomeView: View {
     private let nextEventCalculator: NextEventCalculating
     private let livedTimeCalculator: LivedTimeCalculating
 
-    var christmas: AnnualChristmasProperties
-    var annualMondays: AnnualMondayProperties
-    var elapsedDateInThisYear: ElapsedDateInThisYear
+    private var christmas: AnnualChristmasProperties {
+        AnnualChristmasProperties(dateProvider: dateProvider)
+    }
+
+    private var annualMondays: AnnualMondayProperties {
+        AnnualMondayProperties(dateProvider: dateProvider)
+    }
+
+    private var elapsedDateInThisYear: ElapsedDateInThisYear {
+        ElapsedDateInThisYear(dateProvider: dateProvider)
+    }
     
     @State var isPresented: Bool = false
 
@@ -39,9 +47,6 @@ struct HomeView: View {
         self.dateProvider = dateProvider
         self.nextEventCalculator = nextEventCalculator
         self.livedTimeCalculator = livedTimeCalculator
-        self.christmas = AnnualChristmasProperties(dateProvider: dateProvider)
-        self.annualMondays = AnnualMondayProperties(dateProvider: dateProvider)
-        self.elapsedDateInThisYear = ElapsedDateInThisYear(dateProvider: dateProvider)
     }
     
     var body: some View {

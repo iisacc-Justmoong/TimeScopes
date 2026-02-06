@@ -27,8 +27,11 @@ final class LifeRemainingWorkingTime: ObservableObject {
     }
 
     func updateRemainingWorkingTime() {
-        let startDate = dateProvider.calendar.startOfDay(for: userLivedTime.userData.birthday)
-        let endDate = dateProvider.calendar.startOfDay(for: userLivedTime.userData.deathDate)
+        let calendar = dateProvider.calendar
+        let today = calendar.startOfDay(for: dateProvider.now())
+        let birthday = calendar.startOfDay(for: userLivedTime.userData.birthday)
+        let endDate = calendar.startOfDay(for: userLivedTime.userData.deathDate)
+        let startDate = max(today, birthday)
         guard endDate >= startDate else {
             remainingWorkingDays = 0
             remainingWorkingHours = 0
