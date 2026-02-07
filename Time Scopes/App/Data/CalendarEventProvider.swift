@@ -28,7 +28,9 @@ final class CalendarEventProvider: ObservableObject {
 
     private let store: EKEventStore
     private let calendar: Calendar
+    private let fetchQueue = DispatchQueue(label: "com.iisacc.timescopes.calendarEventProvider.fetch", qos: .userInitiated)
     private var eventsByDay: [Date: [CalendarEventItem]] = [:]
+    private var refreshToken = UUID()
 
     init(store: EKEventStore = EKEventStore(), calendar: Calendar = .autoupdatingCurrent) {
         self.store = store
@@ -56,6 +58,9 @@ final class CalendarEventProvider: ObservableObject {
     }
 
     func refreshEvents(in interval: DateInterval) {
+        let token = UUID()
+        refreshToken = token
+
         refreshAuthorizationStatus()
         guard hasAccess else {
             events = []
@@ -70,23 +75,27 @@ final class CalendarEventProvider: ObservableObject {
             eventsByDay = [:]
             return
         }
-        let predicate = store.predicateForEvents(withStart: interval.start, end: interval.end, calendars: calendars)
-        let fetched = store.events(matching: predicate).sorted { $0.startDate < $1.startDate }
-
-        let mapped = fetched.map { event in
-            CalendarEventItem(
-                id: event.eventIdentifier ?? UUID().uuidString,
-                title: event.title ?? "Untitled",
-                startDate: event.startDate,
-                endDate: event.endDate,
-                isAllDay: event.isAllDay,
-                color: calendarColor(for: event.calendar),
-                calendarTitle: event.calendar.title
-            )
+        let eventStore = store
+        let predicate = eventStore.predicateForEvents(withStart: interval.start, end: interval.end, calendars: calendars)
+        fetchQueue.async { [weak self] in
+            let fetched = eventStore.events(matching: predicate).sorted { $0.startDate < $1.startDate }
+            let mapped = fetched.map { event in
+                CalendarEventItem(
+                    id: event.eventIdentifier ?? UUID().uuidString,
+                    title: event.title ?? "Untitled",
+                    startDate: event.startDate,
+                    endDate: event.endDate,
+                    isAllDay: event.isAllDay,
+                    color: Color(UIColor(cgColor: event.calendar.cgColor ?? UIColor.systemBlue.cgColor)),
+                    calendarTitle: event.calendar.title
+                )
+            }
+            Task { @MainActor in
+                guard let self, token == self.refreshToken else { return }
+                self.events = mapped
+                self.rebuildEventsByDay()
+            }
         }
-
-        events = mapped
-        rebuildEventsByDay()
     }
 
     func events(on date: Date) -> [CalendarEventItem] {
@@ -127,10 +136,6 @@ final class CalendarEventProvider: ObservableObject {
         store.calendars(for: .event)
     }
 
-    private func calendarColor(for calendar: EKCalendar) -> Color {
-        let cgColor = calendar.cgColor ?? UIColor.systemBlue.cgColor
-        return Color(UIColor(cgColor: cgColor))
-    }
 }
 
 struct ReminderItem: Identifiable {

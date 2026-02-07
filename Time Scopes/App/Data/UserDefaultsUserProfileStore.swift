@@ -8,6 +8,8 @@
 import Foundation
 
 struct UserDefaultsUserProfileStore: UserProfileStoring {
+    private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.userProfileStore.io", qos: .utility)
+
     private let userDefaults: UserDefaults
     private let userDefaultsKey: String
 
@@ -47,6 +49,23 @@ struct UserDefaultsUserProfileStore: UserProfileStoring {
         )
         if let encoded = try? encoder.encode(snapshot) {
             userDefaults.set(encoded, forKey: userDefaultsKey)
+        }
+    }
+
+    func loadProfileAsync() async -> UserProfile? {
+        await withCheckedContinuation { continuation in
+            Self.ioQueue.async {
+                continuation.resume(returning: self.loadProfile())
+            }
+        }
+    }
+
+    func saveProfileAsync(_ profile: UserProfile) async {
+        await withCheckedContinuation { continuation in
+            Self.ioQueue.async {
+                self.saveProfile(profile)
+                continuation.resume()
+            }
         }
     }
 }

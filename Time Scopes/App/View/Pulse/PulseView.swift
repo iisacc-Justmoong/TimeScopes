@@ -86,6 +86,15 @@ struct PulseView: View {
         .onReceive(refreshTicker.$now) { now in
             performPeriodicRefreshIfNeeded(at: now)
         }
+        .onReceive(eventProvider.$events) { _ in
+            syncPulseWidgetSnapshot()
+        }
+        .onReceive(reminderProvider.$reminders) { _ in
+            syncPulseWidgetSnapshot()
+        }
+        .onReceive(reminderProvider.$allReminders) { _ in
+            syncPulseWidgetSnapshot()
+        }
         .onReceive(journalStore.$entries) { _ in
             syncPulseWidgetSnapshot()
         }

@@ -40,8 +40,9 @@ final class PulseJournalStore: ObservableObject {
         self.notificationCenter = notificationCenter
         self.observeLifecycle = observeLifecycle
         self.foregroundNotificationName = foregroundNotificationName
-        migrateIfNeeded()
-        load()
+        Task { [weak self] in
+            await self?.initializeStore()
+        }
         configureObservers()
     }
 
@@ -50,7 +51,14 @@ final class PulseJournalStore: ObservableObject {
     }
 
     func reload() {
-        load()
+        Task { [weak self] in
+            await self?.load()
+        }
+    }
+
+    private func initializeStore() async {
+        await migrateIfNeeded()
+        await load()
     }
 
     private func configureObservers() {
@@ -62,7 +70,7 @@ final class PulseJournalStore: ObservableObject {
                 queue: .main
             ) { [weak self] _ in
                 Task { @MainActor in
-                    self?.load()
+                    self?.reload()
                 }
             }
         )
@@ -73,7 +81,7 @@ final class PulseJournalStore: ObservableObject {
                 queue: .main
             ) { [weak self] _ in
                 Task { @MainActor in
-                    self?.load()
+                    self?.reload()
                 }
             }
         )
@@ -85,7 +93,7 @@ final class PulseJournalStore: ObservableObject {
                     queue: .main
                 ) { [weak self] _ in
                     Task { @MainActor in
-                        self?.load()
+                        self?.reload()
                     }
                 }
             )
@@ -95,56 +103,65 @@ final class PulseJournalStore: ObservableObject {
     func addEntry(note: String, date: Date = Date()) {
         let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        guard let updated = PulseJournalStorageCoordinator.mutateEntries(
-            defaults: defaults,
-            storeKey: storeKey,
-            transform: { entries in
-                entries.insert(
-                    PulseJournalStoredEntry(
-                        id: UUID(),
-                        date: date,
-                        note: trimmed
-                    ),
-                    at: 0
-                )
+        Task { [weak self] in
+            guard let self else { return }
+            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: defaults,
+                storeKey: storeKey,
+                transform: { entries in
+                    entries.insert(
+                        PulseJournalStoredEntry(
+                            id: UUID(),
+                            date: date,
+                            note: trimmed
+                        ),
+                        at: 0
+                    )
+                }
+            ) else {
+                return
             }
-        ) else {
-            return
+            entries = updated.map(Self.makeEntry)
+            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
         }
-        entries = updated.map(Self.makeEntry)
-        notificationCenter.post(name: .pulseJournalDidChange, object: nil)
     }
 
     func updateEntry(id: UUID, note: String) {
         let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        guard let updated = PulseJournalStorageCoordinator.mutateEntries(
-            defaults: defaults,
-            storeKey: storeKey,
-            transform: { entries in
-                guard let index = entries.firstIndex(where: { $0.id == id }) else { return }
-                let existing = entries[index]
-                entries[index] = PulseJournalStoredEntry(id: existing.id, date: existing.date, note: trimmed)
+        Task { [weak self] in
+            guard let self else { return }
+            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: defaults,
+                storeKey: storeKey,
+                transform: { entries in
+                    guard let index = entries.firstIndex(where: { $0.id == id }) else { return }
+                    let existing = entries[index]
+                    entries[index] = PulseJournalStoredEntry(id: existing.id, date: existing.date, note: trimmed)
+                }
+            ) else {
+                return
             }
-        ) else {
-            return
+            entries = updated.map(Self.makeEntry)
+            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
         }
-        entries = updated.map(Self.makeEntry)
-        notificationCenter.post(name: .pulseJournalDidChange, object: nil)
     }
 
     func deleteEntry(id: UUID) {
-        guard let updated = PulseJournalStorageCoordinator.mutateEntries(
-            defaults: defaults,
-            storeKey: storeKey,
-            transform: { entries in
-                entries.removeAll { $0.id == id }
+        Task { [weak self] in
+            guard let self else { return }
+            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: defaults,
+                storeKey: storeKey,
+                transform: { entries in
+                    entries.removeAll { $0.id == id }
+                }
+            ) else {
+                return
             }
-        ) else {
-            return
+            entries = updated.map(Self.makeEntry)
+            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
         }
-        entries = updated.map(Self.makeEntry)
-        notificationCenter.post(name: .pulseJournalDidChange, object: nil)
     }
 
     func recentEntries(limit: Int) -> [PulseJournalEntry] {
@@ -159,20 +176,17 @@ final class PulseJournalStore: ObservableObject {
         return entries.filter { $0.date >= start && $0.date < end }
     }
 
-    private func load() {
-        let stored = PulseJournalStorageCoordinator.loadEntries(defaults: defaults, storeKey: storeKey)
+    private func load() async {
+        let stored = await PulseJournalStorageCoordinator.loadEntriesAsync(defaults: defaults, storeKey: storeKey)
         entries = stored.map(Self.makeEntry)
     }
 
-    private func migrateIfNeeded() {
-        guard defaults.object(forKey: storeKey) == nil,
-              let legacyData = legacyDefaults.data(forKey: storeKey) else {
-            return
-        }
-        PulseJournalStorageCoordinator.withExclusiveLock(storeKey: storeKey) {
-            guard defaults.object(forKey: storeKey) == nil else { return }
-            defaults.set(legacyData, forKey: storeKey)
-        }
+    private func migrateIfNeeded() async {
+        await PulseJournalStorageCoordinator.migrateEntriesIfNeededAsync(
+            defaults: defaults,
+            legacyDefaults: legacyDefaults,
+            storeKey: storeKey
+        )
     }
 
     private static func makeEntry(_ stored: PulseJournalStoredEntry) -> PulseJournalEntry {

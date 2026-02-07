@@ -25,7 +25,7 @@ struct WidgetSharedContainer {
     }
 }
 
-final class WidgetSnapshotStore {
+final class WidgetSnapshotStore: @unchecked Sendable {
     private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.widgetSnapshotStore.io")
 
     private let container: WidgetSharedContainer
@@ -55,6 +55,14 @@ final class WidgetSnapshotStore {
         }
     }
 
+    func loadSnapshotAsync() async -> WidgetSnapshot {
+        await withCheckedContinuation { continuation in
+            Self.ioQueue.async {
+                continuation.resume(returning: self.loadSnapshotFromDisk())
+            }
+        }
+    }
+
     func saveSnapshot(_ snapshot: WidgetSnapshot, requestTimelineReload: Bool = true) {
         let didSave = Self.ioQueue.sync {
             saveSnapshotToDisk(snapshot)
@@ -63,9 +71,32 @@ final class WidgetSnapshotStore {
         reloadWidgetTimelines()
     }
 
+    func saveSnapshotAsync(_ snapshot: WidgetSnapshot, requestTimelineReload: Bool = true) async {
+        let didSave = await withCheckedContinuation { continuation in
+            Self.ioQueue.async {
+                continuation.resume(returning: self.saveSnapshotToDisk(snapshot))
+            }
+        }
+        guard didSave, requestTimelineReload else { return }
+        reloadWidgetTimelines()
+    }
+
     func updateSnapshot(requestTimelineReload: Bool = true, _ transform: (WidgetSnapshot) -> WidgetSnapshot) {
         let didSave = Self.ioQueue.sync {
             mutateSnapshotOnDisk(transform)
+        }
+        guard didSave, requestTimelineReload else { return }
+        reloadWidgetTimelines()
+    }
+
+    func updateSnapshotAsync(
+        requestTimelineReload: Bool = true,
+        _ transform: @escaping (WidgetSnapshot) -> WidgetSnapshot
+    ) async {
+        let didSave = await withCheckedContinuation { continuation in
+            Self.ioQueue.async {
+                continuation.resume(returning: self.mutateSnapshotOnDisk(transform))
+            }
         }
         guard didSave, requestTimelineReload else { return }
         reloadWidgetTimelines()

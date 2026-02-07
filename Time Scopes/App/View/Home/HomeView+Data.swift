@@ -245,12 +245,44 @@ extension HomeView {
         let interval: TimeInterval = 120
         guard force || now.timeIntervalSince(lastWidgetSync) >= interval else { return }
         lastWidgetSync = now
-        widgetStore.updateSnapshot(requestTimelineReload: force) { current in
-            buildWidgetSnapshot(at: now, pulse: current.pulse)
+        let sections = buildWidgetSnapshotSections(at: now)
+        Task {
+            await widgetStore.updateSnapshotAsync(requestTimelineReload: force) { current in
+                WidgetSnapshot(
+                    updatedAt: now,
+                    profile: sections.profile,
+                    elapsed: sections.elapsed,
+                    milestones: sections.milestones,
+                    highlights: sections.highlights,
+                    daily: sections.daily,
+                    pulse: current.pulse
+                )
+            }
         }
     }
 
     func buildWidgetSnapshot(at now: Date, pulse: WidgetSnapshot.Pulse) -> WidgetSnapshot {
+        let sections = buildWidgetSnapshotSections(at: now)
+        return WidgetSnapshot(
+            updatedAt: now,
+            profile: sections.profile,
+            elapsed: sections.elapsed,
+            milestones: sections.milestones,
+            highlights: sections.highlights,
+            daily: sections.daily,
+            pulse: pulse
+        )
+    }
+
+    func buildWidgetSnapshotSections(
+        at now: Date
+    ) -> (
+        profile: WidgetSnapshot.Profile,
+        elapsed: WidgetSnapshot.Elapsed,
+        milestones: WidgetSnapshot.Milestones,
+        highlights: WidgetSnapshot.Highlights,
+        daily: WidgetSnapshot.DailySummary
+    ) {
         let profile = WidgetSnapshot.Profile(
             name: userData.name,
             age: userData.age,
@@ -299,15 +331,12 @@ extension HomeView {
             allocatedTimeText: summary.allocatedTime.valueText,
             allocatedTimePercent: summary.allocatedTime.percentText
         )
-
-        return WidgetSnapshot(
-            updatedAt: now,
+        return (
             profile: profile,
             elapsed: elapsed,
             milestones: milestones,
             highlights: highlights,
-            daily: daily,
-            pulse: pulse
+            daily: daily
         )
     }
 }

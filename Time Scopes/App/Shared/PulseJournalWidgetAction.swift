@@ -55,28 +55,30 @@ enum PulseJournalWidgetAction {
             WidgetSnapshot.Pulse.JournalEntry(date: $0.date, note: $0.note)
         }
         let widgetStore = WidgetSnapshotStore()
-        widgetStore.updateSnapshot { current in
-            let pulse = current.pulse
-            return WidgetSnapshot(
-                updatedAt: Date(),
-                profile: current.profile,
-                elapsed: current.elapsed,
-                milestones: current.milestones,
-                highlights: current.highlights,
-                daily: current.daily,
-                pulse: WidgetSnapshot.Pulse(
-                    todaySeries: pulse.todaySeries,
-                    todayMax: pulse.todayMax,
-                    currentFraction: pulse.currentFraction,
-                    weeklyDays: pulse.weeklyDays,
-                    weeklyPatternText: pulse.weeklyPatternText,
-                    weeklyPeakText: pulse.weeklyPeakText,
-                    weeklyLowText: pulse.weeklyLowText,
-                    prescriptions: pulse.prescriptions,
-                    journalPrompt: pulse.journalPrompt,
-                    recentEntries: recentEntries
+        Task {
+            await widgetStore.updateSnapshotAsync { current in
+                let pulse = current.pulse
+                return WidgetSnapshot(
+                    updatedAt: Date(),
+                    profile: current.profile,
+                    elapsed: current.elapsed,
+                    milestones: current.milestones,
+                    highlights: current.highlights,
+                    daily: current.daily,
+                    pulse: WidgetSnapshot.Pulse(
+                        todaySeries: pulse.todaySeries,
+                        todayMax: pulse.todayMax,
+                        currentFraction: pulse.currentFraction,
+                        weeklyDays: pulse.weeklyDays,
+                        weeklyPatternText: pulse.weeklyPatternText,
+                        weeklyPeakText: pulse.weeklyPeakText,
+                        weeklyLowText: pulse.weeklyLowText,
+                        prescriptions: pulse.prescriptions,
+                        journalPrompt: pulse.journalPrompt,
+                        recentEntries: recentEntries
+                    )
                 )
-            )
+            }
         }
     }
 }

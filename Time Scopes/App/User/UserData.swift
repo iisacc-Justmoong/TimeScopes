@@ -60,7 +60,10 @@ final class UserData: ObservableObject {
     }
 
     func saveProfile() {
-        store.saveProfile(currentProfile())
+        let profile = currentProfile()
+        Task {
+            await store.saveProfileAsync(profile)
+        }
         syncWidgetSnapshot()
     }
 
@@ -121,23 +124,28 @@ final class UserData: ObservableObject {
     }
 
     private func syncWidgetSnapshot() {
-        widgetStore.updateSnapshot { current in
-            let profile = WidgetSnapshot.Profile(
-                name: name,
-                age: age,
-                monthsLeft: current.profile.monthsLeft,
-                weeksLeft: current.profile.weeksLeft,
-                daysLeft: current.profile.daysLeft
-            )
-            return WidgetSnapshot(
-                updatedAt: dateProvider.now(),
-                profile: profile,
-                elapsed: current.elapsed,
-                milestones: current.milestones,
-                highlights: current.highlights,
-                daily: current.daily,
-                pulse: current.pulse
-            )
+        let snapshotDate = dateProvider.now()
+        let currentName = name
+        let currentAge = age
+        Task {
+            await widgetStore.updateSnapshotAsync { current in
+                let profile = WidgetSnapshot.Profile(
+                    name: currentName,
+                    age: currentAge,
+                    monthsLeft: current.profile.monthsLeft,
+                    weeksLeft: current.profile.weeksLeft,
+                    daysLeft: current.profile.daysLeft
+                )
+                return WidgetSnapshot(
+                    updatedAt: snapshotDate,
+                    profile: profile,
+                    elapsed: current.elapsed,
+                    milestones: current.milestones,
+                    highlights: current.highlights,
+                    daily: current.daily,
+                    pulse: current.pulse
+                )
+            }
         }
     }
 }

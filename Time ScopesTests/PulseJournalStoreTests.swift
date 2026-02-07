@@ -32,6 +32,7 @@ final class PulseJournalStoreTests: XCTestCase {
         let secondDate = TestDateFactory.date("2026-02-07 10:30:00")
         store.addEntry(note: "  first  ", date: firstDate)
         store.addEntry(note: "second", date: secondDate)
+        waitUntil(store.entries.count == 2)
 
         XCTAssertEqual(store.entries.count, 2)
         XCTAssertEqual(store.entries.first?.note, "second")
@@ -39,6 +40,7 @@ final class PulseJournalStoreTests: XCTestCase {
 
         let firstID = try XCTUnwrap(store.entries.last?.id)
         store.updateEntry(id: firstID, note: "updated")
+        waitUntil(store.entries.last?.note == "updated")
         XCTAssertEqual(store.entries.last?.note, "updated")
         store.updateEntry(id: firstID, note: "   ")
         XCTAssertEqual(store.entries.last?.note, "updated")
@@ -48,6 +50,7 @@ final class PulseJournalStoreTests: XCTestCase {
         XCTAssertEqual(store.entries(on: secondDate, calendar: calendar).count, 1)
 
         store.deleteEntry(id: firstID)
+        waitUntil(store.entries.count == 1)
         XCTAssertEqual(store.entries.count, 1)
         XCTAssertEqual(store.entries.first?.note, "second")
     }
@@ -71,6 +74,7 @@ final class PulseJournalStoreTests: XCTestCase {
             notificationCenter: NotificationCenter(),
             observeLifecycle: false
         )
+        waitUntil(store.entries.count == 1)
 
         XCTAssertEqual(store.entries.count, 1)
         XCTAssertEqual(store.entries.first?.note, "legacy")

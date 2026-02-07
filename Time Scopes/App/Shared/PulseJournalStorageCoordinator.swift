@@ -7,7 +7,17 @@ struct PulseJournalStoredEntry: Codable, Equatable {
     let note: String
 }
 
+private final class UserDefaultsBox: @unchecked Sendable {
+    let value: UserDefaults
+
+    init(_ value: UserDefaults) {
+        self.value = value
+    }
+}
+
 enum PulseJournalStorageCoordinator {
+    private static let ioQueue = DispatchQueue(label: "com.iisacc.timescopes.pulseJournalStorage.io", qos: .utility)
+
     static func sharedDefaults() -> UserDefaults {
         guard FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: WidgetSharedConstants.appGroupID) != nil,
               let defaults = UserDefaults(suiteName: WidgetSharedConstants.appGroupID) else {
@@ -19,6 +29,15 @@ enum PulseJournalStorageCoordinator {
     static func loadEntries(defaults: UserDefaults, storeKey: String) -> [PulseJournalStoredEntry] {
         withExclusiveLock(storeKey: storeKey) {
             decodeEntries(from: defaults.data(forKey: storeKey))
+        }
+    }
+
+    static func loadEntriesAsync(defaults: UserDefaults, storeKey: String) async -> [PulseJournalStoredEntry] {
+        let defaultsBox = UserDefaultsBox(defaults)
+        return await withCheckedContinuation { continuation in
+            ioQueue.async {
+                continuation.resume(returning: loadEntries(defaults: defaultsBox.value, storeKey: storeKey))
+            }
         }
     }
 
@@ -44,6 +63,38 @@ enum PulseJournalStorageCoordinator {
             }
             defaults.set(data, forKey: storeKey)
             return entries
+        }
+    }
+
+    static func mutateEntriesAsync(
+        defaults: UserDefaults,
+        storeKey: String,
+        transform: @escaping (inout [PulseJournalStoredEntry]) -> Void
+    ) async -> [PulseJournalStoredEntry]? {
+        let defaultsBox = UserDefaultsBox(defaults)
+        return await withCheckedContinuation { continuation in
+            ioQueue.async {
+                continuation.resume(returning: mutateEntries(defaults: defaultsBox.value, storeKey: storeKey, transform: transform))
+            }
+        }
+    }
+
+    static func migrateEntriesIfNeededAsync(defaults: UserDefaults, legacyDefaults: UserDefaults, storeKey: String) async {
+        let defaultsBox = UserDefaultsBox(defaults)
+        let legacyDefaultsBox = UserDefaultsBox(legacyDefaults)
+        await withCheckedContinuation { continuation in
+            ioQueue.async {
+                guard defaultsBox.value.object(forKey: storeKey) == nil,
+                      let legacyData = legacyDefaultsBox.value.data(forKey: storeKey) else {
+                    continuation.resume()
+                    return
+                }
+                withExclusiveLock(storeKey: storeKey) {
+                    guard defaultsBox.value.object(forKey: storeKey) == nil else { return }
+                    defaultsBox.value.set(legacyData, forKey: storeKey)
+                }
+                continuation.resume()
+            }
         }
     }
 
