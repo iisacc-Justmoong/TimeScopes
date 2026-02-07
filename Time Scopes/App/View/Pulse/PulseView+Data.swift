@@ -293,17 +293,11 @@ extension PulseView {
         let pulseSnapshot = buildPulseSnapshot()
         let updatedAt = Date()
         Task {
-            await widgetStore.updateSnapshotAsync(requestTimelineReload: requestTimelineReload) { current in
-                WidgetSnapshot(
-                    updatedAt: updatedAt,
-                    profile: current.profile,
-                    elapsed: current.elapsed,
-                    milestones: current.milestones,
-                    highlights: current.highlights,
-                    daily: current.daily,
-                    pulse: pulseSnapshot
-                )
-            }
+            await WidgetSnapshotSyncCoordinator.shared.enqueuePulseSnapshot(
+                updatedAt: updatedAt,
+                pulse: pulseSnapshot,
+                requestTimelineReload: requestTimelineReload
+            )
         }
     }
 

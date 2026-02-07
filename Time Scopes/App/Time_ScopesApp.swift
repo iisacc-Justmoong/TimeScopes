@@ -89,10 +89,16 @@ private struct RootTabView: View {
                 routeWidgetActionIfNeeded()
             } else {
                 cancelRouteRetry()
+                Task {
+                    await WidgetSnapshotSyncCoordinator.shared.flushNow()
+                }
             }
         }
         .onDisappear {
             cancelRouteRetry()
+            Task {
+                await WidgetSnapshotSyncCoordinator.shared.flushNow()
+            }
         }
         .onOpenURL { url in
             handleDeepLinkURL(url)

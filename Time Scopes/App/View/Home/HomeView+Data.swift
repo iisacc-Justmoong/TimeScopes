@@ -242,22 +242,20 @@ extension HomeView {
     }
 
     func syncWidgetSnapshotIfNeeded(at now: Date, force: Bool = false) {
-        let interval: TimeInterval = 120
+        let interval: TimeInterval = 30
         guard force || now.timeIntervalSince(lastWidgetSync) >= interval else { return }
         lastWidgetSync = now
         let sections = buildWidgetSnapshotSections(at: now)
         Task {
-            await widgetStore.updateSnapshotAsync(requestTimelineReload: force) { current in
-                WidgetSnapshot(
-                    updatedAt: now,
-                    profile: sections.profile,
-                    elapsed: sections.elapsed,
-                    milestones: sections.milestones,
-                    highlights: sections.highlights,
-                    daily: sections.daily,
-                    pulse: current.pulse
-                )
-            }
+            await WidgetSnapshotSyncCoordinator.shared.enqueueHomeSnapshot(
+                updatedAt: now,
+                profile: sections.profile,
+                elapsed: sections.elapsed,
+                milestones: sections.milestones,
+                highlights: sections.highlights,
+                daily: sections.daily,
+                requestTimelineReload: force
+            )
         }
     }
 

@@ -32,7 +32,6 @@ struct PulseView: View {
     @State var lastPeriodicRefresh: Date = .distantPast
 
     let calendar = Calendar.autoupdatingCurrent
-    let widgetStore = WidgetSnapshotStore()
 
     var body: some View {
         NavigationStack {

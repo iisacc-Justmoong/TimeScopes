@@ -44,7 +44,6 @@ struct HomeView: View {
     @StateObject var eventProvider = CalendarEventProvider()
     @StateObject var reminderProvider = ReminderProvider()
     @EnvironmentObject var locationPermission: LocationPermissionManager
-    let widgetStore = WidgetSnapshotStore()
     @State var lastWidgetSync: Date = .distantPast
 
     let dateProvider: DateProviding

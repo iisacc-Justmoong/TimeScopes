@@ -35,7 +35,6 @@ final class UserData: ObservableObject {
     private let store: UserProfileStoring
     private let ageCalculator: AgeCalculating
     private let dateProvider: DateProviding
-    private let widgetStore: WidgetSnapshotStore
     private var cancellables: Set<AnyCancellable> = []
 
     init(
@@ -47,7 +46,7 @@ final class UserData: ObservableObject {
         self.store = store
         self.ageCalculator = ageCalculator
         self.dateProvider = dateProvider
-        self.widgetStore = widgetStore
+        _ = widgetStore
 
         if let profile = store.loadProfile() {
             applyProfile(profile)
@@ -128,24 +127,11 @@ final class UserData: ObservableObject {
         let currentName = name
         let currentAge = age
         Task {
-            await widgetStore.updateSnapshotAsync { current in
-                let profile = WidgetSnapshot.Profile(
-                    name: currentName,
-                    age: currentAge,
-                    monthsLeft: current.profile.monthsLeft,
-                    weeksLeft: current.profile.weeksLeft,
-                    daysLeft: current.profile.daysLeft
-                )
-                return WidgetSnapshot(
-                    updatedAt: snapshotDate,
-                    profile: profile,
-                    elapsed: current.elapsed,
-                    milestones: current.milestones,
-                    highlights: current.highlights,
-                    daily: current.daily,
-                    pulse: current.pulse
-                )
-            }
+            await WidgetSnapshotSyncCoordinator.shared.enqueueProfileNameAge(
+                updatedAt: snapshotDate,
+                name: currentName,
+                age: currentAge
+            )
         }
     }
 }

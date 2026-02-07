@@ -1,7 +1,7 @@
 import Foundation
 
-struct WidgetSnapshot: Codable, Equatable {
-    struct Profile: Codable, Equatable {
+struct WidgetSnapshot: Codable, Equatable, Sendable {
+    struct Profile: Codable, Equatable, Sendable {
         let name: String
         let age: Int
         let monthsLeft: Int
@@ -11,7 +11,7 @@ struct WidgetSnapshot: Codable, Equatable {
         static let empty = Profile(name: "", age: 0, monthsLeft: 0, weeksLeft: 0, daysLeft: 0)
     }
 
-    struct Elapsed: Codable, Equatable {
+    struct Elapsed: Codable, Equatable, Sendable {
         let months: Int
         let weeks: Int
         let days: Int
@@ -22,7 +22,7 @@ struct WidgetSnapshot: Codable, Equatable {
         static let empty = Elapsed(months: 0, weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0)
     }
 
-    struct Milestones: Codable, Equatable {
+    struct Milestones: Codable, Equatable, Sendable {
         let nextDecadeAge: Int
         let yearsUntilNextDecade: Int
         let daysUntilNextBirthday: Int
@@ -31,7 +31,7 @@ struct WidgetSnapshot: Codable, Equatable {
         static let empty = Milestones(nextDecadeAge: 0, yearsUntilNextDecade: 0, daysUntilNextBirthday: 0, weekdaysRemaining: 0)
     }
 
-    struct Highlights: Codable, Equatable {
+    struct Highlights: Codable, Equatable, Sendable {
         let yearRemainingDays: Int
         let nextChristmasDays: Int
         let remainingMondays: Int
@@ -39,7 +39,7 @@ struct WidgetSnapshot: Codable, Equatable {
         static let empty = Highlights(yearRemainingDays: 0, nextChristmasDays: 0, remainingMondays: 0)
     }
 
-    struct DailySummary: Codable, Equatable {
+    struct DailySummary: Codable, Equatable, Sendable {
         let nextHourText: String
         let nextHourPercent: String
         let sunTitle: String
@@ -67,19 +67,19 @@ struct WidgetSnapshot: Codable, Equatable {
         )
     }
 
-    struct Pulse: Codable, Equatable {
-        struct Day: Codable, Equatable {
+    struct Pulse: Codable, Equatable, Sendable {
+        struct Day: Codable, Equatable, Sendable {
             let label: String
             let intensity: Double
         }
 
-        struct Prescription: Codable, Equatable {
+        struct Prescription: Codable, Equatable, Sendable {
             let focus: String
             let title: String
             let impact: String
         }
 
-        struct JournalEntry: Codable, Equatable {
+        struct JournalEntry: Codable, Equatable, Sendable {
             let date: Date
             let note: String
         }
@@ -109,6 +109,7 @@ struct WidgetSnapshot: Codable, Equatable {
         )
     }
 
+    let syncVersion: Int64
     let updatedAt: Date
     let profile: Profile
     let elapsed: Elapsed
@@ -118,6 +119,7 @@ struct WidgetSnapshot: Codable, Equatable {
     let pulse: Pulse
 
     enum CodingKeys: String, CodingKey {
+        case syncVersion
         case updatedAt
         case profile
         case elapsed
@@ -128,6 +130,7 @@ struct WidgetSnapshot: Codable, Equatable {
     }
 
     static let empty = WidgetSnapshot(
+        syncVersion: 0,
         updatedAt: Date(timeIntervalSince1970: 0),
         profile: .empty,
         elapsed: .empty,
@@ -137,7 +140,17 @@ struct WidgetSnapshot: Codable, Equatable {
         pulse: .empty
     )
 
-    init(updatedAt: Date, profile: Profile, elapsed: Elapsed, milestones: Milestones, highlights: Highlights, daily: DailySummary, pulse: Pulse) {
+    init(
+        syncVersion: Int64 = 0,
+        updatedAt: Date,
+        profile: Profile,
+        elapsed: Elapsed,
+        milestones: Milestones,
+        highlights: Highlights,
+        daily: DailySummary,
+        pulse: Pulse
+    ) {
+        self.syncVersion = syncVersion
         self.updatedAt = updatedAt
         self.profile = profile
         self.elapsed = elapsed
@@ -149,6 +162,7 @@ struct WidgetSnapshot: Codable, Equatable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        syncVersion = try container.decodeIfPresent(Int64.self, forKey: .syncVersion) ?? 0
         updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? Date(timeIntervalSince1970: 0)
         profile = try container.decodeIfPresent(Profile.self, forKey: .profile) ?? .empty
         elapsed = try container.decodeIfPresent(Elapsed.self, forKey: .elapsed) ?? .empty

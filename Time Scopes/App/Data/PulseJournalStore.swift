@@ -25,6 +25,7 @@ final class PulseJournalStore: ObservableObject {
     private let observeLifecycle: Bool
     private let foregroundNotificationName: Notification.Name
     private var observers: [NSObjectProtocol] = []
+    private var mutationTask: Task<Void, Never>?
 
     init(
         defaults: UserDefaults? = nil,
@@ -47,7 +48,7 @@ final class PulseJournalStore: ObservableObject {
     }
 
     deinit {
-        observers.forEach(NotificationCenter.default.removeObserver)
+        observers.forEach(notificationCenter.removeObserver)
     }
 
     func reload() {
@@ -103,11 +104,10 @@ final class PulseJournalStore: ObservableObject {
     func addEntry(note: String, date: Date = Date()) {
         let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        Task { [weak self] in
-            guard let self else { return }
-            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
-                defaults: defaults,
-                storeKey: storeKey,
+        enqueueMutation { store in
+            await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: store.defaults,
+                storeKey: store.storeKey,
                 transform: { entries in
                     entries.insert(
                         PulseJournalStoredEntry(
@@ -118,49 +118,35 @@ final class PulseJournalStore: ObservableObject {
                         at: 0
                     )
                 }
-            ) else {
-                return
-            }
-            entries = updated.map(Self.makeEntry)
-            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
+            )
         }
     }
 
     func updateEntry(id: UUID, note: String) {
         let trimmed = note.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
-        Task { [weak self] in
-            guard let self else { return }
-            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
-                defaults: defaults,
-                storeKey: storeKey,
+        enqueueMutation { store in
+            await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: store.defaults,
+                storeKey: store.storeKey,
                 transform: { entries in
                     guard let index = entries.firstIndex(where: { $0.id == id }) else { return }
                     let existing = entries[index]
                     entries[index] = PulseJournalStoredEntry(id: existing.id, date: existing.date, note: trimmed)
                 }
-            ) else {
-                return
-            }
-            entries = updated.map(Self.makeEntry)
-            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
+            )
         }
     }
 
     func deleteEntry(id: UUID) {
-        Task { [weak self] in
-            guard let self else { return }
-            guard let updated = await PulseJournalStorageCoordinator.mutateEntriesAsync(
-                defaults: defaults,
-                storeKey: storeKey,
+        enqueueMutation { store in
+            await PulseJournalStorageCoordinator.mutateEntriesAsync(
+                defaults: store.defaults,
+                storeKey: store.storeKey,
                 transform: { entries in
                     entries.removeAll { $0.id == id }
                 }
-            ) else {
-                return
-            }
-            entries = updated.map(Self.makeEntry)
-            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
+            )
         }
     }
 
@@ -187,6 +173,19 @@ final class PulseJournalStore: ObservableObject {
             legacyDefaults: legacyDefaults,
             storeKey: storeKey
         )
+    }
+
+    private func enqueueMutation(
+        _ mutation: @escaping @MainActor (PulseJournalStore) async -> [PulseJournalStoredEntry]?
+    ) {
+        let previousTask = mutationTask
+        mutationTask = Task { @MainActor [weak self] in
+            _ = await previousTask?.value
+            guard let self else { return }
+            guard let updated = await mutation(self) else { return }
+            entries = updated.map(Self.makeEntry)
+            notificationCenter.post(name: .pulseJournalDidChange, object: nil)
+        }
     }
 
     private static func makeEntry(_ stored: PulseJournalStoredEntry) -> PulseJournalEntry {
