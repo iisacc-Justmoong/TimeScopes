@@ -243,7 +243,6 @@ actor WidgetSnapshotSyncCoordinator {
                 weeklyPeakText: basePulse.weeklyPeakText,
                 weeklyLowText: basePulse.weeklyLowText,
                 prescriptions: basePulse.prescriptions,
-                journalPrompt: basePulse.journalPrompt,
                 recentEntries: pendingPatch.pulseRecentEntries ?? basePulse.recentEntries
             )
 

@@ -940,18 +940,29 @@ private struct PulseWeekBarChart: View {
             let count = max(1, safeDays.count)
             let totalSpacing = spacing * CGFloat(max(0, count - 1))
             let barWidth = max(8, (proxy.size.width - totalSpacing) / CGFloat(count))
+            let plotHeight = WidgetLayoutMetrics.weekBarPlotHeight(containerHeight: proxy.size.height)
 
             HStack(alignment: .bottom, spacing: spacing) {
                 ForEach(Array(safeDays.enumerated()), id: \.offset) { _, day in
-                    let height = max(10, proxy.size.height * CGFloat(day.intensity))
-                    VStack(spacing: 4) {
-                        RoundedRectangle(cornerRadius: 5, style: .continuous)
-                            .fill(Color.accentColor.opacity(0.8))
-                            .frame(width: barWidth, height: height)
+                    let height = WidgetLayoutMetrics.weekBarHeight(
+                        containerHeight: proxy.size.height,
+                        intensity: day.intensity
+                    )
+                    VStack(spacing: WidgetLayoutMetrics.weekBarLabelSpacing) {
+                        ZStack(alignment: .bottom) {
+                            RoundedRectangle(cornerRadius: 5, style: .continuous)
+                                .fill(Color.accentColor.opacity(0.8))
+                                .frame(width: barWidth, height: height)
+                        }
+                        .frame(width: barWidth, height: plotHeight, alignment: .bottom)
                         Text(day.label)
                             .font(.caption2)
                             .foregroundStyle(.secondary)
-                            .frame(width: barWidth, alignment: .center)
+                            .frame(
+                                width: barWidth,
+                                height: WidgetLayoutMetrics.weekBarLabelHeight,
+                                alignment: .center
+                            )
                     }
                 }
             }
@@ -1016,6 +1027,7 @@ struct PulseWeeklyRhythmWidgetView: View {
             VStack(alignment: .leading, spacing: 6) {
                 PulseWeekBarChart(days: pulse.weeklyDays)
                     .frame(height: 90)
+                    .clipped()
                 Text(pulse.weeklyPatternText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -1067,9 +1079,15 @@ struct PulseJournalWidgetView: View {
         let pulse = entry.snapshot.pulse
         WidgetCard(title: "Daily Journal") {
             VStack(alignment: .leading, spacing: 6) {
-                Text(pulse.journalPrompt)
-                    .font(.footnote)
-                    .lineLimit(3)
+                if let recentEntry = pulse.recentEntries.first {
+                    Text(recentEntry.note)
+                        .font(.footnote)
+                        .lineLimit(4)
+                } else {
+                    Text("Add today's entry.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
                 Spacer(minLength: 0)
                 Button(intent: AddPulseJournalEntryIntent()) {
                     Label("Add Entry", systemImage: "plus")

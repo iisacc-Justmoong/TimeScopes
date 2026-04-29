@@ -306,9 +306,6 @@ extension PulseView {
             WidgetSnapshot.Pulse.Day(label: $0.day, intensity: $0.intensity)
         }
         let summary = weeklySummary
-        let prompt = currentPrompt.isEmpty
-            ? (PulseJournalPrompts.all.randomElement() ?? "Write one sentence.")
-            : currentPrompt
         let prescriptionsSnapshot = prescriptions.map {
             WidgetSnapshot.Pulse.Prescription(focus: $0.focus, title: $0.title, impact: $0.impact)
         }
@@ -324,7 +321,6 @@ extension PulseView {
             weeklyPeakText: summary.peakDayText,
             weeklyLowText: summary.lowDayText,
             prescriptions: prescriptionsSnapshot,
-            journalPrompt: prompt,
             recentEntries: journalEntries
         )
     }
@@ -449,7 +445,6 @@ extension PulseView {
     func beginNewEntry() {
         editingEntry = nil
         journalDraft = ""
-        refreshPrompt()
         isPresentingJournal = true
     }
 
@@ -464,11 +459,7 @@ extension PulseView {
         isPresentingJournal = true
     }
 
-    func refreshPrompt() {
-        currentPrompt = PulseJournalPrompts.all.randomElement() ?? ""
-    }
-
-    func promptDelete(_ entry: PulseJournalEntry) {
+    func confirmDelete(_ entry: PulseJournalEntry) {
         entryToDelete = entry
         isConfirmingDelete = true
     }

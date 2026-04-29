@@ -6,6 +6,7 @@ Time Scopes is a SwiftUI iOS app for visualizing life-time metrics, calendar and
 - Home dashboard with life-time and remaining-time metrics.
 - Calendar and Reminders timeline views (read-only).
 - Pulse Screen Time reports (weekly, daily, and today).
+- Pulse Daily Journal now accepts direct entry capture without rotating prompt questions.
 - Preferences tab for managing permissions.
 
 **Requirements**
@@ -31,6 +32,8 @@ scripts/ci/run_tests_with_coverage.sh
 ```
 
 - `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.
+- Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.
+- Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.
 - Coverage threshold can be overridden per run:
   - `MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`
 - CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).

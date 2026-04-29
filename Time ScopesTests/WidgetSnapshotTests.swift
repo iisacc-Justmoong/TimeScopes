@@ -43,7 +43,6 @@ final class WidgetSnapshotTests: XCTestCase {
                 weeklyPeakText: "Wed",
                 weeklyLowText: "Sun",
                 prescriptions: [.init(focus: "Focus", title: "Keep block", impact: "2h")],
-                journalPrompt: "Write",
                 recentEntries: [.init(date: TestDateFactory.date("2026-02-05 10:00:00"), note: "Entry")]
             )
         )
@@ -55,5 +54,29 @@ final class WidgetSnapshotTests: XCTestCase {
         XCTAssertEqual(decoded.profile.name, "A")
         XCTAssertEqual(decoded.pulse.weeklyPatternText, "Pattern")
         XCTAssertEqual(decoded.daily.timeLeftText, "12h")
+    }
+
+    func testDecodeLegacyPulseQuestionFieldIsIgnored() throws {
+        let json = """
+        {
+          "pulse": {
+            "todaySeries": [0.1],
+            "todayMax": 1,
+            "currentFraction": 0.25,
+            "weeklyDays": [],
+            "weeklyPatternText": "Legacy pulse",
+            "weeklyPeakText": "No data",
+            "weeklyLowText": "No data",
+            "prescriptions": [],
+            "journalPrompt": "Legacy question",
+            "recentEntries": []
+          }
+        }
+        """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(WidgetSnapshot.self, from: json)
+
+        XCTAssertEqual(decoded.pulse.weeklyPatternText, "Legacy pulse")
+        XCTAssertEqual(decoded.pulse.recentEntries, [])
     }
 }

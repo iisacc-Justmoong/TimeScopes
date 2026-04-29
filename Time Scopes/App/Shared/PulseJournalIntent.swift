@@ -4,14 +4,11 @@ import Foundation
 @available(iOS 17.0, *)
 struct AddPulseJournalEntryIntent: AppIntent {
     static var title: LocalizedStringResource = "Add Pulse Entry"
-    static var description = IntentDescription("Add a pulse journal entry. If no text is provided, the composer opens in Time Scopes.")
+    static var description = IntentDescription("Open the Pulse journal composer. Provided entry text is saved directly.")
     static var isDiscoverable: Bool = true
     static var openAppWhenRun: Bool = true
 
-    @Parameter(
-        title: "Entry Text",
-        requestValueDialog: "What should be recorded?"
-    )
+    @Parameter(title: "Entry Text")
     var note: String?
 
     func perform() async throws -> some IntentResult {

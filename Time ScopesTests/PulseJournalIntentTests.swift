@@ -26,15 +26,14 @@ final class PulseJournalIntentTests: XCTestCase {
     }
 
     func testPerformRequestsComposerOpenActionWhenNoTextProvided() async throws {
-        var intent = AddPulseJournalEntryIntent()
-        intent.note = nil
+        let intent = AddPulseJournalEntryIntent()
         _ = try await intent.perform()
 
         XCTAssertTrue(PulseJournalWidgetAction.consumeOpenComposerRequest())
     }
 
     func testPerformStoresEntryWhenTextProvided() async throws {
-        var intent = AddPulseJournalEntryIntent()
+        let intent = AddPulseJournalEntryIntent()
         intent.note = "Capture this thought"
         _ = try await intent.perform()
 

@@ -58,7 +58,6 @@ enum WidgetPreviewData {
                 .init(focus: "Focus", title: "Protect a deep-work block in Morning 6-12", impact: "2h 10m free"),
                 .init(focus: "Flex", title: "Batch 6 quick tasks into one block", impact: "6 items"),
             ],
-            journalPrompt: "What would make your next week smoother?",
             recentEntries: [
                 .init(date: Date().addingTimeInterval(-3600), note: "Reduced one recurring meeting and reclaimed a focused block."),
                 .init(date: Date().addingTimeInterval(-10800), note: "Front-loaded difficult work before noon to reduce context switching."),

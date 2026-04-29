@@ -32,6 +32,12 @@ final class ViewRenderingCoverageTests: XCTestCase {
         render(PulseTag(text: "Focus"))
         render(PulseCallout(title: "Pattern", detail: "Wednesday remains the busiest day."))
         render(
+            PulseJournalQuickEntry(
+                draft: .constant("Captured one meaningful decision."),
+                onSave: { _ in }
+            )
+        )
+        render(
             PulseJournalRow(
                 entry: PulseJournalEntry(
                     id: UUID(),
@@ -46,7 +52,6 @@ final class ViewRenderingCoverageTests: XCTestCase {
             PulseJournalComposer(
                 title: "New Entry",
                 saveLabel: "Save",
-                prompt: "What was your highest leverage action today?",
                 draft: .constant("Captured one meaningful decision."),
                 onSave: { _ in }
             )

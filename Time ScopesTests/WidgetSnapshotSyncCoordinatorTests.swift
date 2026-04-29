@@ -169,7 +169,6 @@ final class WidgetSnapshotSyncCoordinatorTests: XCTestCase {
             prescriptions: [
                 .init(focus: "Focus", title: "Keep block", impact: "60m free")
             ],
-            journalPrompt: "Write one sentence.",
             recentEntries: recentEntries
         )
     }

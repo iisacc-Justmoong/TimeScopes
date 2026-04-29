@@ -88,18 +88,10 @@ extension PulseView {
                 title: "Daily Journal",
                 subtitle: "Capture what moved the day."
             )
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Prompt")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Text(currentPrompt)
-                    .font(.callout)
+            PulseJournalQuickEntry(draft: $quickEntryDraft) { note in
+                journalStore.addEntry(note: note)
+                quickEntryDraft = ""
             }
-            Button("Write Entry") {
-                beginNewEntry()
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(Color.accentColor)
             if recentEntries.isEmpty {
                 Text("No entries yet. Start with one sentence.")
                     .font(.callout)
@@ -110,7 +102,7 @@ extension PulseView {
                         PulseJournalRow(
                             entry: entry,
                             onEdit: { beginEdit(entry) },
-                            onDelete: { promptDelete(entry) }
+                            onDelete: { confirmDelete(entry) }
                         )
                     }
                 }

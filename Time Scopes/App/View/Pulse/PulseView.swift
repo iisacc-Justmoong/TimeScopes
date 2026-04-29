@@ -23,11 +23,11 @@ struct PulseView: View {
     @StateObject var refreshTicker = SecondTicker()
 
     @State var isPresentingJournal = false
+    @State var quickEntryDraft = ""
     @State var journalDraft = ""
     @State var editingEntry: PulseJournalEntry?
     @State var entryToDelete: PulseJournalEntry?
     @State var isConfirmingDelete = false
-    @State var currentPrompt = ""
     @State var isViewVisible = false
     @State var lastPeriodicRefresh: Date = .distantPast
 
@@ -60,7 +60,6 @@ struct PulseView: View {
         }
         .onAppear {
             isViewVisible = true
-            refreshPrompt()
             performPeriodicRefreshIfNeeded(at: Date(), force: true)
             presentComposerIfRequestedFromWidget()
         }
@@ -101,7 +100,6 @@ struct PulseView: View {
             PulseJournalComposer(
                 title: editingEntry == nil ? "New Entry" : "Edit Entry",
                 saveLabel: editingEntry == nil ? "Save" : "Update",
-                prompt: currentPrompt,
                 draft: $journalDraft
             ) { note in
                 if let editingEntry {

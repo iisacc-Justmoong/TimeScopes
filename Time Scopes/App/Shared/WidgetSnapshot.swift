@@ -92,7 +92,6 @@ struct WidgetSnapshot: Codable, Equatable, Sendable {
         let weeklyPeakText: String
         let weeklyLowText: String
         let prescriptions: [Prescription]
-        let journalPrompt: String
         let recentEntries: [JournalEntry]
 
         static let empty = Pulse(
@@ -104,7 +103,6 @@ struct WidgetSnapshot: Codable, Equatable, Sendable {
             weeklyPeakText: "No data",
             weeklyLowText: "No data",
             prescriptions: [],
-            journalPrompt: "Write one sentence.",
             recentEntries: []
         )
     }

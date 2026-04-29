@@ -288,11 +288,51 @@ struct PulseJournalRow: View {
     }
 }
 
+struct PulseJournalQuickEntry: View {
+    @Binding var draft: String
+    let onSave: (String) -> Void
+
+    private var trimmedDraft: String {
+        draft.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            ZStack(alignment: .topLeading) {
+                TextEditor(text: $draft)
+                    .frame(minHeight: 120)
+                    .scrollContentBackground(.hidden)
+                    .padding(6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(.thinMaterial)
+                    )
+                if draft.isEmpty {
+                    Text("Write today's entry")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 14)
+                        .allowsHitTesting(false)
+                }
+            }
+            HStack {
+                Spacer()
+                Button("Save Entry") {
+                    onSave(trimmedDraft)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color.accentColor)
+                .disabled(trimmedDraft.isEmpty)
+            }
+        }
+    }
+}
+
 struct PulseJournalComposer: View {
     @Environment(\.dismiss) private var dismiss
     let title: String
     let saveLabel: String
-    let prompt: String
     @Binding var draft: String
     let onSave: (String) -> Void
 
