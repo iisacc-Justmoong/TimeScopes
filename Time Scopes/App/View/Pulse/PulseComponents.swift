@@ -74,33 +74,36 @@ struct WeeklyRhythmChart: View {
     let highlightDay: String
 
     var body: some View {
-        GeometryReader { proxy in
-            let spacing: CGFloat = 8
-            let count = max(1, days.count)
-            let totalSpacing = spacing * CGFloat(max(0, count - 1))
-            let barWidth = max(10, (proxy.size.width - totalSpacing) / CGFloat(count))
+        VStack(spacing: 0) {
+            GeometryReader { proxy in
+                let spacing: CGFloat = 8
+                let count = max(1, days.count)
+                let totalSpacing = spacing * CGFloat(max(0, count - 1))
+                let barWidth = max(10, (proxy.size.width - totalSpacing) / CGFloat(count))
 
-            HStack(alignment: .bottom, spacing: spacing) {
-                ForEach(days) { day in
-                    let isHighlight = day.day == highlightDay
-                    VStack(spacing: 6) {
-                        RoundedRectangle(cornerRadius: 6, style: .continuous)
-                            .fill(isHighlight ? Color.green : Color.accentColor.opacity(0.75))
-                            .frame(width: barWidth, height: max(16, 110 * day.intensity))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .stroke(Color.white.opacity(0.25), lineWidth: 0.5)
-                            )
-                        Text(day.day)
-                            .font(.caption2)
-                            .foregroundStyle(isHighlight ? Color.green : .secondary)
-                            .frame(width: barWidth, alignment: .center)
+                HStack(alignment: .bottom, spacing: spacing) {
+                    ForEach(days) { day in
+                        let isHighlight = day.day == highlightDay
+                        VStack(spacing: 6) {
+                            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                .fill(isHighlight ? Color.green : Color.accentColor.opacity(0.75))
+                                .frame(width: barWidth, height: max(16, 110 * day.intensity))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                                        .stroke(Color.white.opacity(0.25), lineWidth: 0.5)
+                                )
+                            Text(day.day)
+                                .font(.caption2)
+                                .foregroundStyle(isHighlight ? Color.green : .secondary)
+                                .frame(width: barWidth, alignment: .center)
+                        }
                     }
                 }
+                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .bottomLeading)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height, alignment: .bottomLeading)
+            .frame(height: 140)
+            .clipped()
         }
-        .frame(height: 140)
         .frame(maxWidth: .infinity)
     }
 }
@@ -296,16 +299,6 @@ struct PulseJournalComposer: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Prompt")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                    Text(prompt)
-                        .font(.callout)
-                }
-                Text("Write one clear sentence about your day.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
                 TextEditor(text: $draft)
                     .frame(minHeight: 160)
                     .scrollContentBackground(.hidden)
