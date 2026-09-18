@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `Time Scopes/` holds the SwiftUI app source.
+- `src/Time Scopes/` holds the SwiftUI app source.
   - `App/View/` contains SwiftUI screens and reusable views.
   - `App/Domain/` contains models and calculation services.
   - `App/Data/` contains persistence and store abstractions.

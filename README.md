@@ -44,11 +44,15 @@ scripts/ci/run_tests_with_coverage.sh
 - Screen Time access (FamilyControls + DeviceActivity).
 
 **Project Structure**
-- `Time Scopes/` SwiftUI app source.
-- `Time Scopes/App/View/` screens and reusable views.
-- `Time Scopes/App/Domain/` models and calculation services.
-- `Time Scopes/App/Data/` persistence and store abstractions.
-- `Time Scopes/App/Events/` and `Time Scopes/App/User/` time/event calculations and user state.
-- `Time Scopes/App/Utility/` UI helpers and date utilities.
-- `PulseReportExtension/` DeviceActivity report extension used by Pulse.
+- `src/Time Scopes/` SwiftUI app source.
+- `src/Time Scopes/App/View/` screens and reusable views.
+- `src/Time Scopes/App/Domain/` models and calculation services.
+- `src/Time Scopes/App/Data/` persistence and store abstractions.
+- `src/Time Scopes/App/Events/` and `src/Time Scopes/App/User/` time/event calculations and user state.
+- `src/Time Scopes/App/Utility/` UI helpers and date utilities.
+- `src/PulseReportExtension/` DeviceActivity report extension used by Pulse.
 - `Resource/` design assets and screenshots (not shipped in the app bundle).
+
+## Source layout
+
+Application and library projects live under `src/`; automated test projects live under `tests/`. Build configuration stays at the root, and all build output belongs under `build/`.

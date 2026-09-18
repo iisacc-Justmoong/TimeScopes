@@ -48,22 +48,22 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PulseReportExtension;
+			path = src/PulseReportExtension;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F60718293A0002 /* Time ScopesTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Time ScopesTests";
+			path = "tests/Time ScopesTests";
 			sourceTree = "<group>";
 		};
 		AC788B7B1421F46B81FEB8FC /* Time Scopes/App/Shared */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Time Scopes/App/Shared";
+			path = "src/Time Scopes/App/Shared";
 			sourceTree = "<group>";
 		};
 		F9216D872E0AAD3D0011A560 /* Time Scopes */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Time Scopes";
+			path = "src/Time Scopes";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -270,7 +270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/TimeScopesWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/PulseReportExtension/TimeScopesWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
@@ -347,7 +347,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				CODE_SIGN_ENTITLEMENTS = PulseReportExtension/TimeScopesWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/PulseReportExtension/TimeScopesWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 5U49ST9XZH;
@@ -496,7 +496,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Time Scopes/Time Scopes.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "src/Time Scopes/Time Scopes.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
@@ -538,7 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "Time Scopes/Time Scopes.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "src/Time Scopes/Time Scopes.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
