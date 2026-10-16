@@ -189,7 +189,7 @@ final class WidgetSnapshotStore: @unchecked Sendable {
     private func encodeSnapshot(_ snapshot: WidgetSnapshot, at url: URL) -> Bool {
         guard let data = try? encoder.encode(snapshot) else { return false }
         do {
-            try data.write(to: url, options: [.atomic])
+            try IisaccFileProvider.write(data, to: url, options: [.atomic])
             return true
         } catch {
             return false
@@ -199,7 +199,7 @@ final class WidgetSnapshotStore: @unchecked Sendable {
     private func ensureParentDirectory(for url: URL) -> Bool {
         let parent = url.deletingLastPathComponent()
         do {
-            try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true, attributes: nil)
+            try IisaccFileProvider.createDirectory(at: parent, withIntermediateDirectories: true, attributes: nil)
             return true
         } catch {
             return false

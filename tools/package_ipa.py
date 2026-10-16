@@ -2,6 +2,7 @@
 import argparse
 from pathlib import Path
 import stat
+import os
 import plistlib
 import subprocess
 import zipfile
@@ -25,7 +26,15 @@ def package(app, output):
                 info.external_attr = (stat.S_IFLNK | 0o777) << 16
                 archive.writestr(info, str(path.readlink()))
             elif path.is_file():
-                archive.write(path, name)
+                if os.name == 'nt':
+                    info = zipfile.ZipInfo.from_file(path, name)
+                    info.create_system = 3
+                    executable = metadata.get('CFBundleExecutable', app.stem)
+                    mode = 0o755 if path == app / executable else 0o644
+                    info.external_attr = (stat.S_IFREG | mode) << 16
+                    archive.writestr(info, path.read_bytes())
+                else:
+                    archive.write(path, name)
 
 
 if __name__ == '__main__':

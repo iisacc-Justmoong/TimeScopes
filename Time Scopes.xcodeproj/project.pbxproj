@@ -46,6 +46,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+        E75C78BC9E2642E096B3E10A /* iiFileProvider Swift */ = {
+            isa = PBXFileSystemSynchronizedRootGroup;
+            path = ../../../SDK/iiFileProvider/swift;
+            sourceTree = SOURCE_ROOT;
+        };
 		7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = src/PulseReportExtension;
@@ -122,6 +127,7 @@
 			buildRules = (
 			);
 			fileSystemSynchronizedGroups = (
+                E75C78BC9E2642E096B3E10A /* iiFileProvider Swift */,
 				7ADD0CD2E67DB08CC0ED4C78 /* PulseReportExtension */,
 				AC788B7B1421F46B81FEB8FC /* Time Scopes/App/Shared */,
 			);
@@ -144,6 +150,7 @@
 				A1B2C3D4E5F60718293A0008 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+                E75C78BC9E2642E096B3E10A /* iiFileProvider Swift */,
 				A1B2C3D4E5F60718293A0002 /* Time ScopesTests */,
 			);
 			name = "Time ScopesTests";
@@ -166,6 +173,7 @@
 				A218841A19F739B4C732F658 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+                E75C78BC9E2642E096B3E10A /* iiFileProvider Swift */,
 				F9216D872E0AAD3D0011A560 /* Time Scopes */,
 			);
 			name = "Time Scopes";

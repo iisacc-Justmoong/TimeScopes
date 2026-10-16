@@ -102,10 +102,10 @@ enum PulseJournalStorageCoordinator {
         let lockURL = lockFileURL(storeKey: storeKey)
         let lockPath = lockURL.path
         if !FileManager.default.fileExists(atPath: lockPath) {
-            FileManager.default.createFile(atPath: lockPath, contents: nil)
+            IisaccFileProvider.createFile(atPath: lockPath, contents: nil)
         }
 
-        let fileDescriptor = open(lockPath, O_RDWR | O_CREAT, 0o600)
+        let fileDescriptor = IisaccFileProvider.open(lockPath, O_RDWR | O_CREAT, 0o600)
         guard fileDescriptor >= 0 else {
             return body()
         }
