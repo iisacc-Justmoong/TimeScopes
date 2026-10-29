@@ -1,0 +1,536 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:44cb8b9292fe99d584e70ba9e0df391aabb794d94769cc6f9145688b8eeffe07",
+  "project": {
+    "id": "urn:iisacc:project:Product%2FUtility%2FTimeScopes",
+    "name": "TimeScopes",
+    "root": "Product/Utility/TimeScopes",
+    "kind": "application"
+  },
+  "source": {
+    "path": "README.md",
+    "sha256": "845d29ca0ef00c8e0c26bd608801b1a32df97da6dd853228f71587381c898d5a",
+    "bytes": 2640,
+    "line_count": 67,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "Time Scopes",
+    "role": "overview",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# Time Scopes\n",
+      "level": 1,
+      "title": "Time Scopes"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Time Scopes is a SwiftUI iOS app for visualizing life-time metrics, calendar and reminder events, and Screen Time usage in the Pulse tab.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 5,
+      "raw": "**Features**\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "list",
+      "start_line": 6,
+      "end_line": 10,
+      "raw": "- Home dashboard with life-time and remaining-time metrics.\n- Calendar and Reminders timeline views (read-only).\n- Pulse Screen Time reports (weekly, daily, and today).\n- Pulse Daily Journal now accepts direct entry capture without rotating prompt questions.\n- Preferences tab for managing permissions.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Home dashboard with life-time and remaining-time metrics.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Calendar and Reminders timeline views (read-only).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Pulse Screen Time reports (weekly, daily, and today).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Pulse Daily Journal now accepts direct entry capture without rotating prompt questions.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Preferences tab for managing permissions.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000007",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 11,
+      "raw": "\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "paragraph",
+      "start_line": 12,
+      "end_line": 12,
+      "raw": "**Requirements**\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "list",
+      "start_line": 13,
+      "end_line": 14,
+      "raw": "- iOS 18.5 deployment target (see project settings).\n- Screen Time data requires a real device and user authorization.\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "iOS 18.5 deployment target (see project settings).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Screen Time data requires a real device and user authorization.",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000010",
+      "kind": "blank",
+      "start_line": 15,
+      "end_line": 15,
+      "raw": "\n"
+    },
+    {
+      "id": "b000011",
+      "kind": "paragraph",
+      "start_line": 16,
+      "end_line": 16,
+      "raw": "**Build**\n"
+    },
+    {
+      "id": "b000012",
+      "kind": "fenced_code",
+      "start_line": 17,
+      "end_line": 19,
+      "raw": "```bash\nopen \"Time Scopes.xcodeproj\"\n```\n",
+      "language": "bash",
+      "code": "open \"Time Scopes.xcodeproj\"\n",
+      "closed": true
+    },
+    {
+      "id": "b000013",
+      "kind": "blank",
+      "start_line": 20,
+      "end_line": 20,
+      "raw": "\n"
+    },
+    {
+      "id": "b000014",
+      "kind": "fenced_code",
+      "start_line": 21,
+      "end_line": 23,
+      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" build\n```\n",
+      "language": "bash",
+      "code": "xcodebuild -scheme \"Time Scopes\" build\n",
+      "closed": true
+    },
+    {
+      "id": "b000015",
+      "kind": "blank",
+      "start_line": 24,
+      "end_line": 24,
+      "raw": "\n"
+    },
+    {
+      "id": "b000016",
+      "kind": "paragraph",
+      "start_line": 25,
+      "end_line": 25,
+      "raw": "**Tests (TDD)**\n"
+    },
+    {
+      "id": "b000017",
+      "kind": "fenced_code",
+      "start_line": 26,
+      "end_line": 28,
+      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n```\n",
+      "language": "bash",
+      "code": "xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n",
+      "closed": true
+    },
+    {
+      "id": "b000018",
+      "kind": "blank",
+      "start_line": 29,
+      "end_line": 29,
+      "raw": "\n"
+    },
+    {
+      "id": "b000019",
+      "kind": "fenced_code",
+      "start_line": 30,
+      "end_line": 32,
+      "raw": "```bash\nscripts/ci/run_tests_with_coverage.sh\n```\n",
+      "language": "bash",
+      "code": "scripts/ci/run_tests_with_coverage.sh\n",
+      "closed": true
+    },
+    {
+      "id": "b000020",
+      "kind": "blank",
+      "start_line": 33,
+      "end_line": 33,
+      "raw": "\n"
+    },
+    {
+      "id": "b000021",
+      "kind": "list",
+      "start_line": 34,
+      "end_line": 39,
+      "raw": "- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.\n- Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.\n- Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.\n- Coverage threshold can be overridden per run:\n  - `MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`\n- CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Coverage threshold can be overridden per run:",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000022",
+      "kind": "blank",
+      "start_line": 40,
+      "end_line": 40,
+      "raw": "\n"
+    },
+    {
+      "id": "b000023",
+      "kind": "paragraph",
+      "start_line": 41,
+      "end_line": 41,
+      "raw": "**Permissions**\n"
+    },
+    {
+      "id": "b000024",
+      "kind": "list",
+      "start_line": 42,
+      "end_line": 44,
+      "raw": "- Calendar access (EventKit).\n- Reminders access (EventKit).\n- Screen Time access (FamilyControls + DeviceActivity).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Calendar access (EventKit).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Reminders access (EventKit).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Screen Time access (FamilyControls + DeviceActivity).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000025",
+      "kind": "blank",
+      "start_line": 45,
+      "end_line": 45,
+      "raw": "\n"
+    },
+    {
+      "id": "b000026",
+      "kind": "paragraph",
+      "start_line": 46,
+      "end_line": 46,
+      "raw": "**Project Structure**\n"
+    },
+    {
+      "id": "b000027",
+      "kind": "list",
+      "start_line": 47,
+      "end_line": 54,
+      "raw": "- `src/Time Scopes/` SwiftUI app source.\n- `src/Time Scopes/App/View/` screens and reusable views.\n- `src/Time Scopes/App/Domain/` models and calculation services.\n- `src/Time Scopes/App/Data/` persistence and store abstractions.\n- `src/Time Scopes/App/Events/` and `src/Time Scopes/App/User/` time/event calculations and user state.\n- `src/Time Scopes/App/Utility/` UI helpers and date utilities.\n- `src/PulseReportExtension/` DeviceActivity report extension used by Pulse.\n- `Resource/` design assets and screenshots (not shipped in the app bundle).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/` SwiftUI app source.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/View/` screens and reusable views.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Domain/` models and calculation services.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Data/` persistence and store abstractions.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Events/` and `src/Time Scopes/App/User/` time/event calculations and user state.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Utility/` UI helpers and date utilities.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/PulseReportExtension/` DeviceActivity report extension used by Pulse.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`Resource/` design assets and screenshots (not shipped in the app bundle).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000028",
+      "kind": "blank",
+      "start_line": 55,
+      "end_line": 55,
+      "raw": "\n"
+    },
+    {
+      "id": "b000029",
+      "kind": "heading",
+      "start_line": 56,
+      "end_line": 56,
+      "raw": "## Source layout\n",
+      "level": 2,
+      "title": "Source layout"
+    },
+    {
+      "id": "b000030",
+      "kind": "blank",
+      "start_line": 57,
+      "end_line": 57,
+      "raw": "\n"
+    },
+    {
+      "id": "b000031",
+      "kind": "paragraph",
+      "start_line": 58,
+      "end_line": 58,
+      "raw": "Application and library projects live under `src/`; automated test projects live under `tests/`. Build configuration stays at the root, and all build output belongs under `build/`.\n"
+    },
+    {
+      "id": "b000032",
+      "kind": "blank",
+      "start_line": 59,
+      "end_line": 59,
+      "raw": "\n"
+    },
+    {
+      "id": "b000033",
+      "kind": "html",
+      "start_line": 60,
+      "end_line": 60,
+      "raw": "<!-- workspace-docs:readme:start -->\n"
+    },
+    {
+      "id": "b000034",
+      "kind": "heading",
+      "start_line": 61,
+      "end_line": 61,
+      "raw": "## Documentation entry points\n",
+      "level": 2,
+      "title": "Documentation entry points"
+    },
+    {
+      "id": "b000035",
+      "kind": "blank",
+      "start_line": 62,
+      "end_line": 62,
+      "raw": "\n"
+    },
+    {
+      "id": "b000036",
+      "kind": "list",
+      "start_line": 63,
+      "end_line": 66,
+      "raw": "- Human overview: this English `README.md`.\n- Agent instructions: [AGENT.md](AGENT.md).\n- Human documentation: [documentation index](docs/README.md).\n- Structured agent documentation: [agent index](docs/agent-index.json).\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "Human overview: this English `README.md`.",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Agent instructions: [AGENT.md](AGENT.md).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Human documentation: [documentation index](docs/README.md).",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "Structured agent documentation: [agent index](docs/agent-index.json).",
+          "checked": null
+        }
+      ]
+    },
+    {
+      "id": "b000037",
+      "kind": "html",
+      "start_line": 67,
+      "end_line": 67,
+      "raw": "<!-- workspace-docs:readme:end -->\n"
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "Time Scopes",
+      "anchor": "time-scopes",
+      "start_line": 1
+    },
+    {
+      "block_id": "b000029",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Source layout",
+      "anchor": "source-layout",
+      "start_line": 56
+    },
+    {
+      "block_id": "b000034",
+      "parent_id": "b000001",
+      "level": 2,
+      "title": "Documentation entry points",
+      "anchor": "documentation-entry-points",
+      "start_line": 61
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [
+      {
+        "block_id": "b000012",
+        "language": "bash",
+        "code": "open \"Time Scopes.xcodeproj\"\n"
+      },
+      {
+        "block_id": "b000014",
+        "language": "bash",
+        "code": "xcodebuild -scheme \"Time Scopes\" build\n"
+      },
+      {
+        "block_id": "b000017",
+        "language": "bash",
+        "code": "xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n"
+      },
+      {
+        "block_id": "b000019",
+        "language": "bash",
+        "code": "scripts/ci/run_tests_with_coverage.sh\n"
+      }
+    ],
+    "links": [
+      {
+        "block_id": "b000036",
+        "label": "AGENT.md",
+        "target": "AGENT.md",
+        "kind": "relative",
+        "line": 64
+      },
+      {
+        "block_id": "b000036",
+        "label": "documentation index",
+        "target": "docs/README.md",
+        "kind": "relative",
+        "line": 65
+      },
+      {
+        "block_id": "b000036",
+        "label": "agent index",
+        "target": "docs/agent-index.json",
+        "kind": "relative",
+        "line": 66
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

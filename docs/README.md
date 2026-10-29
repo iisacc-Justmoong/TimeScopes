@@ -1,0 +1,16 @@
+# TimeScopes Documentation
+
+<!-- workspace-docs:document-map:start -->
+## Human and agent document map
+
+Markdown is the maintained human source. Agent JSON is a structured, source-traceable projection.
+
+| Document | Agent JSON |
+| --- | --- |
+| [`AGENT.md`](../AGENT.md) | [JSON](entrypoints/AGENT.agent.json) |
+| [`AGENTS.md`](../AGENTS.md) | [JSON](entrypoints/AGENTS.agent.json) |
+| [`README.md`](../README.md) | [JSON](entrypoints/README.agent.json) |
+| [`docs/FILE_PROVIDER.md`](FILE_PROVIDER.md) | [JSON](FILE_PROVIDER.agent.json) |
+| [`docs/SingleAppBuild.md`](SingleAppBuild.md) | [JSON](SingleAppBuild.agent.json) |
+| [`docs/documentation-structure.md`](documentation-structure.md) | [JSON](documentation-structure.agent.json) |
+<!-- workspace-docs:document-map:end -->

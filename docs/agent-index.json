@@ -1,0 +1,76 @@
+{
+  "format": "iisacc.agent-document-index",
+  "schema_version": 1,
+  "project": {
+    "id": "urn:iisacc:project:Product%2FUtility%2FTimeScopes",
+    "name": "TimeScopes",
+    "root": "Product/Utility/TimeScopes",
+    "kind": "application"
+  },
+  "documentation_root": "docs",
+  "agent_schema": "docs/agent-document.schema.json",
+  "documents": [
+    {
+      "document_id": "urn:iisacc:document:d885085d3404061a91231e43a485e35da2b6cfe2ac10d5648c2e6f972c0f08ed",
+      "source": "AGENT.md",
+      "agent_json": "docs/entrypoints/AGENT.agent.json",
+      "source_sha256": "af2599fb20d3289200b1b613596d321f9844d0367dc02135b01e0bb19c2d1b42",
+      "role": "instructions"
+    },
+    {
+      "document_id": "urn:iisacc:document:17fc26ca8a15034c6c4ba23a55817b3f4181e87459c61e8cf4f593ae64f57949",
+      "source": "AGENTS.md",
+      "agent_json": "docs/entrypoints/AGENTS.agent.json",
+      "source_sha256": "826aa4109dd5d4515b8ef7be1f56e318ea80fe241e66ddaed44d320befbefe2a",
+      "role": "compatibility"
+    },
+    {
+      "document_id": "urn:iisacc:document:44cb8b9292fe99d584e70ba9e0df391aabb794d94769cc6f9145688b8eeffe07",
+      "source": "README.md",
+      "agent_json": "docs/entrypoints/README.agent.json",
+      "source_sha256": "845d29ca0ef00c8e0c26bd608801b1a32df97da6dd853228f71587381c898d5a",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:ccbdf85a42b3c346f10b4d957939f0e9ba5173d28ca4a0b42405eb13deb28d7f",
+      "source": "docs/FILE_PROVIDER.md",
+      "agent_json": "docs/FILE_PROVIDER.agent.json",
+      "source_sha256": "f6bb1e7f6df047a02b869ec4a8e6429599045a52d08a0e99728c91502b4e569f",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:cf08b770476286fbfccac6d71b72589e00d3eaccbb30ee0ad7d8827df3f8c42a",
+      "source": "docs/README.md",
+      "agent_json": "docs/README.agent.json",
+      "source_sha256": "54f445ce18f54ccd2223faadfbd00d5c06c08aab46172aaeaec2cbc9ba348ce4",
+      "role": "overview"
+    },
+    {
+      "document_id": "urn:iisacc:document:c4a558770cd3fc66771eb67065f1a9d6f89cd75b9adf977ec89694252fd58b8f",
+      "source": "docs/SingleAppBuild.md",
+      "agent_json": "docs/SingleAppBuild.agent.json",
+      "source_sha256": "ce4915835cdf792d7763e74dbd4257523a8fd168610559fad5a0380940533ddd",
+      "role": "guide"
+    },
+    {
+      "document_id": "urn:iisacc:document:d07d12a59d37b191dbd6e00e0b59b122cf13fdb962a56fd2756edb5405e767c3",
+      "source": "docs/documentation-structure.md",
+      "agent_json": "docs/documentation-structure.agent.json",
+      "source_sha256": "a4d34efe88033d8c9ef14a90ca22374a160ae98a298f612af873098b977e7707",
+      "role": "guide"
+    }
+  ],
+  "layout": {
+    "human_entry": "README.md",
+    "agent_entry": "AGENT.md",
+    "human_format": "markdown",
+    "agent_format": "structured_json",
+    "source_authority": "markdown"
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}

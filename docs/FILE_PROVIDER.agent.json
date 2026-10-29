@@ -1,0 +1,133 @@
+{
+  "format": "iisacc.agent-document",
+  "schema_version": 1,
+  "document_id": "urn:iisacc:document:ccbdf85a42b3c346f10b4d957939f0e9ba5173d28ca4a0b42405eb13deb28d7f",
+  "project": {
+    "id": "urn:iisacc:project:Product%2FUtility%2FTimeScopes",
+    "name": "TimeScopes",
+    "root": "Product/Utility/TimeScopes",
+    "kind": "application"
+  },
+  "source": {
+    "path": "docs/FILE_PROVIDER.md",
+    "sha256": "f6bb1e7f6df047a02b869ec4a8e6429599045a52d08a0e99728c91502b4e569f",
+    "bytes": 684,
+    "line_count": 14,
+    "encoding": "utf-8",
+    "language": "en"
+  },
+  "document": {
+    "title": "File creation ownership in TimeScopes",
+    "role": "guide",
+    "authority": "markdown_source"
+  },
+  "blocks": [
+    {
+      "id": "b000001",
+      "kind": "heading",
+      "start_line": 1,
+      "end_line": 1,
+      "raw": "# File creation ownership in TimeScopes\n",
+      "level": 1,
+      "title": "File creation ownership in TimeScopes"
+    },
+    {
+      "id": "b000002",
+      "kind": "blank",
+      "start_line": 2,
+      "end_line": 2,
+      "raw": "\n"
+    },
+    {
+      "id": "b000003",
+      "kind": "paragraph",
+      "start_line": 3,
+      "end_line": 3,
+      "raw": "Journal lock creation and widget snapshot persistence use the native Swift provider. The Xcode application/widget/test source groups compile the same SDK source.\n"
+    },
+    {
+      "id": "b000004",
+      "kind": "blank",
+      "start_line": 4,
+      "end_line": 4,
+      "raw": "\n"
+    },
+    {
+      "id": "b000005",
+      "kind": "paragraph",
+      "start_line": 5,
+      "end_line": 8,
+      "raw": "The common [ownership contract](../../../../SDK/iiFileProvider/docs/FILE_OWNERSHIP.md) defines stream, staging, control-file and\ninstalled-package rules. Source regression tests remain with this module; the\nworkspace creation audit also checks these boundaries. Build/deployment and target\nruntime validation are separate evidence.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 10,
+      "end_line": 10,
+      "raw": "Changed boundaries:\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 11,
+      "end_line": 12,
+      "raw": "\n\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "list",
+      "start_line": 13,
+      "end_line": 14,
+      "raw": "- `src/Time Scopes/App/Shared/PulseJournalStorageCoordinator.swift`\n- `src/Time Scopes/App/Shared/WidgetSnapshotStore.swift`\n",
+      "items": [
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Shared/PulseJournalStorageCoordinator.swift`",
+          "checked": null
+        },
+        {
+          "marker": "-",
+          "text": "`src/Time Scopes/App/Shared/WidgetSnapshotStore.swift`",
+          "checked": null
+        }
+      ]
+    }
+  ],
+  "outline": [
+    {
+      "block_id": "b000001",
+      "parent_id": null,
+      "level": 1,
+      "title": "File creation ownership in TimeScopes",
+      "anchor": "file-creation-ownership-in-timescopes",
+      "start_line": 1
+    }
+  ],
+  "indexes": {
+    "directive_candidates": [],
+    "commands": [],
+    "links": [
+      {
+        "block_id": "b000005",
+        "label": "ownership contract",
+        "target": "../../../../SDK/iiFileProvider/docs/FILE_OWNERSHIP.md",
+        "kind": "relative",
+        "line": 5
+      }
+    ],
+    "tables": []
+  },
+  "provenance": {
+    "generator": "workspace-docs",
+    "version": "1.0.0",
+    "profile": "lossless-blocks-v1",
+    "derived": true
+  }
+}
