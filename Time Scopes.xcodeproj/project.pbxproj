@@ -277,6 +277,7 @@
 		8AA8FC02B6B8817D27E9C36C /* Debug configuration for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -304,6 +305,7 @@
 		A1B2C3D4E5F60718293A000A /* Debug configuration for PBXNativeTarget "Time ScopesTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -336,6 +338,7 @@
 		A1B2C3D4E5F60718293A000B /* Release configuration for PBXNativeTarget "Time ScopesTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -366,6 +369,7 @@
 		B1443ACBD7198EEC7353368D /* Release configuration for PBXNativeTarget "TimeScopesWidgetExtension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -393,6 +397,7 @@
 		F9216D8E2E0AAD3E0011A560 /* Debug configuration for PBXProject "Time Scopes" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -464,6 +469,7 @@
 		F9216D8F2E0AAD3E0011A560 /* Release configuration for PBXProject "Time Scopes" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -528,6 +534,7 @@
 		F9216D912E0AAD3E0011A560 /* Debug configuration for PBXNativeTarget "Time Scopes" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;
@@ -575,6 +582,7 @@
 		F9216D922E0AAD3E0011A560 /* Release configuration for PBXNativeTarget "Time Scopes" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMPILER_INDEX_STORE_ENABLE = NO;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/products";
 				DEPLOYMENT_LOCATION = NO;
 				SKIP_INSTALL = YES;

@@ -10,9 +10,9 @@
   },
   "source": {
     "path": "docs/SingleAppBuild.md",
-    "sha256": "ce4915835cdf792d7763e74dbd4257523a8fd168610559fad5a0380940533ddd",
-    "bytes": 454,
-    "line_count": 5,
+    "sha256": "9a3d12cad12e5cff88764c70eb6c1de4b1fe900d5ee9e81e5736d65df356f15a",
+    "bytes": 900,
+    "line_count": 9,
     "encoding": "utf-8",
     "language": "ko"
   },
@@ -58,6 +58,34 @@
       "start_line": 5,
       "end_line": 5,
       "raw": "제품은 [워크스페이스 단일 앱 정책](../../../build-policy/README.md)를 사용합니다. `build/` 아래에 오직 정통 애플리케이션 번들이 생성됩니다. 테스트와 헬퍼는 일반 실행 파일이며, 런타임 배포 및 패키징은 원위치로 작동합니다. 정통 경로, 플랫폼 전환 및 검증 명령에 대한 정책을 참조하십시오.\n"
+    },
+    {
+      "id": "b000006",
+      "kind": "blank",
+      "start_line": 6,
+      "end_line": 6,
+      "raw": "\n"
+    },
+    {
+      "id": "b000007",
+      "kind": "paragraph",
+      "start_line": 7,
+      "end_line": 7,
+      "raw": "Xcode 중간 산출물은 프로젝트의 `build/`에 두고, CI 테스트 결과 묶음은 `resources/.state/test-results/`에 기록한다. XCTest 앱 실행이 필요하지 않은 컴파일 검증은 `build-for-testing`을 사용한다.\n"
+    },
+    {
+      "id": "b000008",
+      "kind": "blank",
+      "start_line": 8,
+      "end_line": 8,
+      "raw": "\n"
+    },
+    {
+      "id": "b000009",
+      "kind": "paragraph",
+      "start_line": 9,
+      "end_line": 9,
+      "raw": "기본 빌드에서는 컴파일러 인덱스 저장을 끄므로 빌드에 대량의 색인 캐시가 남지 않는다. Xcode의 일부 코드 탐색 기능은 이 설정의 영향을 받을 수 있다.\n"
     }
   ],
   "outline": [

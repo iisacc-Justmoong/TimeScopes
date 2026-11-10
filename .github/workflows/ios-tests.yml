@@ -28,4 +28,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ios-test-results
-          path: build/TestResults/*.xcresult
+          path: resources/.state/test-results/*.xcresult

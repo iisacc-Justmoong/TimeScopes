@@ -14,7 +14,7 @@
       "document_id": "urn:iisacc:document:d885085d3404061a91231e43a485e35da2b6cfe2ac10d5648c2e6f972c0f08ed",
       "source": "AGENT.md",
       "agent_json": "docs/entrypoints/AGENT.agent.json",
-      "source_sha256": "af2599fb20d3289200b1b613596d321f9844d0367dc02135b01e0bb19c2d1b42",
+      "source_sha256": "44882fff739602e2c4771411212638c06e47c941567381f04116b72bafb1fed6",
       "role": "instructions"
     },
     {
@@ -28,7 +28,7 @@
       "document_id": "urn:iisacc:document:44cb8b9292fe99d584e70ba9e0df391aabb794d94769cc6f9145688b8eeffe07",
       "source": "README.md",
       "agent_json": "docs/entrypoints/README.agent.json",
-      "source_sha256": "845d29ca0ef00c8e0c26bd608801b1a32df97da6dd853228f71587381c898d5a",
+      "source_sha256": "4d5802dbab9ca6090f62977388bb776406e869d0bcd48c691c27890f5f4f0ab9",
       "role": "overview"
     },
     {
@@ -49,7 +49,7 @@
       "document_id": "urn:iisacc:document:c4a558770cd3fc66771eb67065f1a9d6f89cd75b9adf977ec89694252fd58b8f",
       "source": "docs/SingleAppBuild.md",
       "agent_json": "docs/SingleAppBuild.agent.json",
-      "source_sha256": "ce4915835cdf792d7763e74dbd4257523a8fd168610559fad5a0380940533ddd",
+      "source_sha256": "9a3d12cad12e5cff88764c70eb6c1de4b1fe900d5ee9e81e5736d65df356f15a",
       "role": "guide"
     },
     {

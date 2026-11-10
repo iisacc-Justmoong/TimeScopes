@@ -22,8 +22,8 @@
 
 ## 빌드, 테스트 및 개발 명령
 - `open "Time Scopes.xcodeproj"` — Xcode에서 프로젝트를 엽니다.
-- `xcodebuild -scheme "Time Scopes" build` — CLI에서 앱을 빌드합니다.
-- `xcodebuild -scheme "Time Scopes" test -destination "platform=iOS Simulator,name=<Device>"` — 테스트를 실행합니다(시뮬레이터 이름 추가). 참고: 현재 정의된 테스트 대상이 없습니다.
+- `xcodebuild -scheme "Time Scopes" -derivedDataPath "$PWD/build" build` — CLI에서 앱을 빌드합니다.
+- `xcodebuild -scheme "Time Scopes" -derivedDataPath "$PWD/build" test -destination "platform=iOS Simulator,name=<Device>"` — XCTest 대상을 실행합니다(시뮬레이터 이름 추가). 결과 묶음은 CI 스크립트에서 `resources/.state/test-results/`에 둡니다.
 
 <a id="coding-style--naming-conventions"></a>
 
@@ -36,7 +36,7 @@
 <a id="testing-guidelines"></a>
 
 ## 테스트 지침
-- 저장소에는 아직 XCTest 대상이 없습니다. 테스트를 추가하는 경우 Xcode 테스트 대상을 만들고 `*Tests.swift` 이름 지정을 사용하여 앱 옆에 파일을 배치합니다.
+- 기존 XCTest 대상에 `*Tests.swift` 테스트를 추가하고 앱 실행이 필요한 검증은 별도로 구분합니다.
 - 논리가 많고 UI와 독립적이기 때문에 `App/Domain/Services/`에서 도메인 서비스를 테스트하는 것을 선호합니다.
 
 <a id="commit--pull-request-guidelines"></a>

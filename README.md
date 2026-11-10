@@ -19,19 +19,19 @@ open "Time Scopes.xcodeproj"
 ```
 
 ```bash
-xcodebuild -scheme "Time Scopes" build
+xcodebuild -scheme "Time Scopes" -derivedDataPath "$PWD/build" build
 ```
 
 **Tests (TDD)**
 ```bash
-xcodebuild -scheme "Time Scopes" test -destination "platform=iOS Simulator,name=iPhone 17"
+xcodebuild -scheme "Time Scopes" -derivedDataPath "$PWD/build" test -destination "platform=iOS Simulator,name=iPhone 17"
 ```
 
 ```bash
 scripts/ci/run_tests_with_coverage.sh
 ```
 
-- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.
+- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate. Xcode build outputs use `build/`; result bundles use `resources/.state/test-results/`.
 - Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.
 - Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.
 - Coverage threshold can be overridden per run:

@@ -4,8 +4,8 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 SCHEME="${SCHEME:-Time Scopes}"
-DERIVED_DATA_PATH="${DERIVED_DATA_PATH:-$ROOT_DIR/build/DerivedData}"
-RESULTS_DIR="${RESULTS_DIR:-$ROOT_DIR/build/TestResults}"
+DERIVED_DATA_PATH="$ROOT_DIR/build"
+RESULTS_DIR="${RESULTS_DIR:-$ROOT_DIR/resources/.state/test-results}"
 
 select_destination() {
     if [[ -n "${DESTINATION:-}" ]]; then

@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "README.md",
-    "sha256": "845d29ca0ef00c8e0c26bd608801b1a32df97da6dd853228f71587381c898d5a",
-    "bytes": 2640,
+    "sha256": "4d5802dbab9ca6090f62977388bb776406e869d0bcd48c691c27890f5f4f0ab9",
+    "bytes": 2787,
     "line_count": 67,
     "encoding": "utf-8",
     "language": "en"
@@ -162,9 +162,9 @@
       "kind": "fenced_code",
       "start_line": 21,
       "end_line": 23,
-      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" build\n```\n",
+      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" build\n```\n",
       "language": "bash",
-      "code": "xcodebuild -scheme \"Time Scopes\" build\n",
+      "code": "xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" build\n",
       "closed": true
     },
     {
@@ -186,9 +186,9 @@
       "kind": "fenced_code",
       "start_line": 26,
       "end_line": 28,
-      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n```\n",
+      "raw": "```bash\nxcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n```\n",
       "language": "bash",
-      "code": "xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n",
+      "code": "xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n",
       "closed": true
     },
     {
@@ -220,11 +220,11 @@
       "kind": "list",
       "start_line": 34,
       "end_line": 39,
-      "raw": "- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.\n- Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.\n- Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.\n- Coverage threshold can be overridden per run:\n  - `MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`\n- CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).\n",
+      "raw": "- `scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate. Xcode build outputs use `build/`; result bundles use `resources/.state/test-results/`.\n- Journal changes are covered by Pulse view rendering tests and WidgetSnapshot legacy decode coverage.\n- Weekly Rhythm widget chart bounds are covered by `WidgetLayoutMetricsTests`.\n- Coverage threshold can be overridden per run:\n  - `MIN_COVERAGE=55 scripts/ci/run_tests_with_coverage.sh`\n- CI runs automatically on `main` and `codex/**` pushes and on every pull request (`.github/workflows/ios-tests.yml`).\n",
       "items": [
         {
           "marker": "-",
-          "text": "`scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate.",
+          "text": "`scripts/ci/run_tests_with_coverage.sh` executes tests with code coverage and applies a minimum coverage gate. Xcode build outputs use `build/`; result bundles use `resources/.state/test-results/`.",
           "checked": null
         },
         {
@@ -489,12 +489,12 @@
       {
         "block_id": "b000014",
         "language": "bash",
-        "code": "xcodebuild -scheme \"Time Scopes\" build\n"
+        "code": "xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" build\n"
       },
       {
         "block_id": "b000017",
         "language": "bash",
-        "code": "xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n"
+        "code": "xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" test -destination \"platform=iOS Simulator,name=iPhone 17\"\n"
       },
       {
         "block_id": "b000019",

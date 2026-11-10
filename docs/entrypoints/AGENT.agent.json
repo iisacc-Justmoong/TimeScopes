@@ -10,8 +10,8 @@
   },
   "source": {
     "path": "AGENT.md",
-    "sha256": "af2599fb20d3289200b1b613596d321f9844d0367dc02135b01e0bb19c2d1b42",
-    "bytes": 4357,
+    "sha256": "44882fff739602e2c4771411212638c06e47c941567381f04116b72bafb1fed6",
+    "bytes": 4368,
     "line_count": 65,
     "encoding": "utf-8",
     "language": "ko"
@@ -191,7 +191,7 @@
       "kind": "list",
       "start_line": 24,
       "end_line": 26,
-      "raw": "- `open \"Time Scopes.xcodeproj\"` — Xcode에서 프로젝트를 엽니다.\n- `xcodebuild -scheme \"Time Scopes\" build` — CLI에서 앱을 빌드합니다.\n- `xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=<Device>\"` — 테스트를 실행합니다(시뮬레이터 이름 추가). 참고: 현재 정의된 테스트 대상이 없습니다.\n",
+      "raw": "- `open \"Time Scopes.xcodeproj\"` — Xcode에서 프로젝트를 엽니다.\n- `xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" build` — CLI에서 앱을 빌드합니다.\n- `xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" test -destination \"platform=iOS Simulator,name=<Device>\"` — XCTest 대상을 실행합니다(시뮬레이터 이름 추가). 결과 묶음은 CI 스크립트에서 `resources/.state/test-results/`에 둡니다.\n",
       "items": [
         {
           "marker": "-",
@@ -200,12 +200,12 @@
         },
         {
           "marker": "-",
-          "text": "`xcodebuild -scheme \"Time Scopes\" build` — CLI에서 앱을 빌드합니다.",
+          "text": "`xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" build` — CLI에서 앱을 빌드합니다.",
           "checked": null
         },
         {
           "marker": "-",
-          "text": "`xcodebuild -scheme \"Time Scopes\" test -destination \"platform=iOS Simulator,name=<Device>\"` — 테스트를 실행합니다(시뮬레이터 이름 추가). 참고: 현재 정의된 테스트 대상이 없습니다.",
+          "text": "`xcodebuild -scheme \"Time Scopes\" -derivedDataPath \"$PWD/build\" test -destination \"platform=iOS Simulator,name=<Device>\"` — XCTest 대상을 실행합니다(시뮬레이터 이름 추가). 결과 묶음은 CI 스크립트에서 `resources/.state/test-results/`에 둡니다.",
           "checked": null
         }
       ]
@@ -304,11 +304,11 @@
       "kind": "list",
       "start_line": 39,
       "end_line": 40,
-      "raw": "- 저장소에는 아직 XCTest 대상이 없습니다. 테스트를 추가하는 경우 Xcode 테스트 대상을 만들고 `*Tests.swift` 이름 지정을 사용하여 앱 옆에 파일을 배치합니다.\n- 논리가 많고 UI와 독립적이기 때문에 `App/Domain/Services/`에서 도메인 서비스를 테스트하는 것을 선호합니다.\n",
+      "raw": "- 기존 XCTest 대상에 `*Tests.swift` 테스트를 추가하고 앱 실행이 필요한 검증은 별도로 구분합니다.\n- 논리가 많고 UI와 독립적이기 때문에 `App/Domain/Services/`에서 도메인 서비스를 테스트하는 것을 선호합니다.\n",
       "items": [
         {
           "marker": "-",
-          "text": "저장소에는 아직 XCTest 대상이 없습니다. 테스트를 추가하는 경우 Xcode 테스트 대상을 만들고 `*Tests.swift` 이름 지정을 사용하여 앱 옆에 파일을 배치합니다.",
+          "text": "기존 XCTest 대상에 `*Tests.swift` 테스트를 추가하고 앱 실행이 필요한 검증은 별도로 구분합니다.",
           "checked": null
         },
         {

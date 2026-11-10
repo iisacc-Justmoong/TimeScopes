@@ -8,3 +8,7 @@ DerivedData/
 
 # macOS metadata
 .DS_Store
+
+/resources/.state/
+.iisacc-temporary.lock
+.*.iisacc-preview
